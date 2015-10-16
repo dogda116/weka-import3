@@ -79,7 +79,7 @@ import weka.filters.SimpleBatchFilter;
  * <!-- options-end -->
  * 
  * @author fracpete (fracpete at waikato dot ac dot nz)
- * @version $Revision: 11497 $
+ * @version $Revision: 12037 $
  */
 public class SubsetByExpression extends SimpleBatchFilter {
 
@@ -156,7 +156,7 @@ public class SubsetByExpression extends SimpleBatchFilter {
       inst = process(inst);
       numReturnedFromParser = inst.numInstances();
       for (int i = 0; i < inst.numInstances(); i++) {
-        push(inst.instance(i));
+        push(inst.instance(i), false); // No need to copy instance
       }
       flushInput();
     }
@@ -433,7 +433,7 @@ public class SubsetByExpression extends SimpleBatchFilter {
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision: 11497 $");
+    return RevisionUtils.extract("$Revision: 12037 $");
   }
 
   /**
