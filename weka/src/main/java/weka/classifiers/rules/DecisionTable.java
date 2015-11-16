@@ -1164,7 +1164,7 @@ public class DecisionTable
     // Replace the global table majority with nearest neighbour?
     if (m_useIBk) {
       m_ibk = new IBk();
-      m_ibk.buildClassifier(m_theInstances);
+      m_ibk.buildClassifier(m_dtInstances);
     }
 
     // Save memory
