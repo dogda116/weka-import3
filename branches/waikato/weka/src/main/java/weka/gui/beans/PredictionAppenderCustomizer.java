@@ -23,17 +23,15 @@ package weka.gui.beans;
 
 import weka.gui.PropertySheetPanel;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.Customizer;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
 /**
  * GUI Customizer for the prediction appender bean
@@ -108,6 +106,7 @@ public class PredictionAppenderCustomizer
   public void setObject(Object object) {
     m_appender = ((PredictionAppender)object);
     m_paEditor.setTarget(m_appender);
+    m_appendProbsBackup = m_appender.getAppendPredictedProbabilities();
   }
 
   /**
@@ -142,6 +141,5 @@ public class PredictionAppenderCustomizer
   public void customizerClosing() {
     // restore the backup value
     m_appender.setAppendPredictedProbabilities(m_appendProbsBackup);
-    
   }
 }
