@@ -392,6 +392,11 @@
         <include name="org/**/*"/>
       </patternset>
     </unzip>
+    <unzip src="${lib}/commons-compress-1.10.jar" dest="${build}/classes">
+      <patternset>
+        <include name="org/**/*"/>
+      </patternset>
+    </unzip>
   </target>
 
   <!-- Make the javadocs -->
