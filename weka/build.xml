@@ -318,6 +318,18 @@
     <antcall target="${packageCommand}_internal">
       <param name="packageName" value="alternatingModelTrees"/>
     </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="timeSeriesFilters"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="wekaPython"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="percentageErrorMetrics"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="niftiLoader "/>
+    </antcall>
   </target>
 
   <target name="init_compile" depends="init_all">
