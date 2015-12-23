@@ -45,13 +45,16 @@ import weka.core.Capabilities;
 import weka.core.Copyright;
 import weka.core.Instances;
 import weka.core.Memory;
+import weka.core.Settings;
 import weka.core.converters.AbstractFileLoader;
 import weka.core.converters.ConverterUtils;
+import weka.gui.AbstractGUIApplication;
 import weka.gui.LogPanel;
 import weka.gui.Logger;
 import weka.gui.LookAndFeel;
 import weka.gui.WekaTaskMonitor;
 import weka.gui.beans.PluginManager;
+import weka.gui.Perspective;
 
 /**
  * The main class for the Weka explorer. Lets the user create, open, save,
@@ -404,7 +407,7 @@ public class Explorer extends JPanel {
         public void run() {
           while (true) {
             // try {
-            // // System.out.println("Before sleeping.");
+            // System.out.println("Before sleeping.");
             // Thread.sleep(10);
 
             if (m_Memory.isOutOfMemory()) {
