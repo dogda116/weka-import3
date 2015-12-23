@@ -15,20 +15,11 @@
 
 /*
  * DataGeneratorPanel.java
- * Copyright (C) 2005 University of Waikato, Hamilton, New Zealand
+ * Copyright (C) 2005-2012 University of Waikato, Hamilton, New Zealand
  *
  */
 
 package weka.gui.explorer;
-
-import weka.core.Instances;
-import weka.core.OptionHandler;
-import weka.core.Utils;
-import weka.datagenerators.DataGenerator;
-import weka.gui.GenericObjectEditor;
-import weka.gui.Logger;
-import weka.gui.PropertyPanel;
-import weka.gui.SysErrLog;
 
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
@@ -39,6 +30,15 @@ import java.io.StringWriter;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import weka.core.Instances;
+import weka.core.OptionHandler;
+import weka.core.Utils;
+import weka.datagenerators.DataGenerator;
+import weka.gui.GenericObjectEditor;
+import weka.gui.Logger;
+import weka.gui.PropertyPanel;
+import weka.gui.SysErrLog;
 
 /** 
  * A panel for generating artificial data via DataGenerators.
