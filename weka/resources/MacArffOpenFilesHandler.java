@@ -45,12 +45,12 @@ public class MacArffOpenFilesHandler implements OpenFilesHandler {
 
     if (toOpen.toString().toLowerCase().endsWith(".arff") || 
         toOpen.toString().toLowerCase().endsWith(".xrff")) {
-      weka.gui.GUIChooser.createSingleton();
-      weka.gui.GUIChooser.getSingleton().showExplorer(toOpen.toString());    
+      GUIChooserApp.createSingleton();
+      GUIChooserApp.getSingleton().showExplorer(toOpen.toString());
     } else if (toOpen.toString().toLowerCase().endsWith(".kf") ||
                toOpen.toString().toLowerCase().endsWith(".kfml")) {
-      weka.gui.GUIChooser.createSingleton();
-      weka.gui.GUIChooser.getSingleton().showKnowledgeFlow(toOpen.toString());
+      GUIChooserApp.createSingleton();
+      GUIChooserApp.getSingleton().showKnowledgeFlow(toOpen.toString());
     }
   }
 }

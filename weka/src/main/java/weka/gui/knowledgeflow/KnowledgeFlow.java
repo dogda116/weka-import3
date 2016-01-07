@@ -14,12 +14,12 @@
  */
 
 /*
- *    GUIChooserApp.java
+ *    KnowledgeFlow.java
  *    Copyright (C) 2016 University of Waikato, Hamilton, New Zealand
  *
  */
 
-package weka.gui;
+package weka.gui.knowledgeflow;
 
 import weka.core.Copyright;
 import weka.core.Version;
@@ -28,23 +28,22 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Launcher class for the Weka GUIChooser. Displays a splash window and
- * launches the actual GUIChooser app (GUIChooserApp).
+ * Launcher class for the Weka Knowledge Flow. Displays a splash screen and
+ * launches the actual Knowledge Flow app (KnowledgeFlowApp).
  *
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
  * @version $Revision: $
  */
-public class GUIChooser {
-
+public class KnowledgeFlow {
   public static void main(String[] args) {
     List<String> message =
-      Arrays.asList("Waikato Environment for Knowledge Analysis",
-        "Version " + Version.VERSION,
+      Arrays.asList("WEKA Knowledge Flow", "Version " + Version.VERSION,
         "(c) " + Copyright.getFromYear() + " - " + Copyright.getToYear(),
         "The University of Waikato", "Hamilton, New Zealand");
     weka.gui.SplashWindow.splash(
       ClassLoader.getSystemResource("weka/gui/weka_icon_new.png"), message);
-    weka.gui.SplashWindow.invokeMain("weka.gui.GUIChooserApp", args);
+    weka.gui.SplashWindow.invokeMain("weka.gui.knowledgeflow.KnowledgeFlowApp",
+      args);
     weka.gui.SplashWindow.disposeSplash();
   }
 }
