@@ -32,7 +32,10 @@ import weka.core.SystemInfo;
 import weka.core.Utils;
 import weka.core.Version;
 import weka.core.WekaPackageManager;
+import weka.core.scripting.Groovy;
+import weka.core.scripting.Jython;
 import weka.gui.arffviewer.ArffViewer;
+import weka.gui.beans.PluginManager;
 import weka.gui.boundaryvisualizer.BoundaryVisualizer;
 import weka.gui.experiment.Experimenter;
 import weka.gui.explorer.Explorer;
@@ -86,11 +89,13 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -167,8 +172,12 @@ public class GUIChooserApp extends JFrame {
   /** The frame containing the Jython console. */
   protected JFrame m_JythonConsoleFrame;
 
-  /** keeps track of the opened ArffViewer instancs */
+  /** keeps track of the opened ArffViewer instances */
   protected Vector<ArffViewer> m_ArffViewers = new Vector<ArffViewer>();
+
+  /** keeps track of the opened GUIChooserMenuPlugins (if any) */
+  protected List<GUIChooser.GUIChooserMenuPlugin> m_menuPlugins =
+    new ArrayList<GUIChooser.GUIChooserMenuPlugin>();
 
   /** The frame containing the SqlViewer */
   protected JFrame m_SqlViewerFrame;
@@ -923,6 +932,137 @@ public class GUIChooserApp extends JFrame {
         }
       }
     });
+
+    // Tools/Groovy console
+    if (Groovy.isPresent()) {
+      final JMenuItem jMenuItemGroovyConsole = new JMenuItem();
+      m_jMenuTools.add(jMenuItemGroovyConsole);
+      jMenuItemGroovyConsole.setText("Groovy console");
+      jMenuItemGroovyConsole.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_G, KeyEvent.CTRL_MASK));
+      jMenuItemGroovyConsole.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          try {
+            Class groovyConsoleClass = Class.forName("groovy.ui.Console");
+
+            if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+
+              // Awful hack to prevent the Groovy console from taking over the Mac menu bar.
+              // Could potentially cause problems due to multi-threading, but hopefully
+              // not problematic in practice.
+              String realOS = System.getProperty("os.name");
+              System.setProperty("os.name", "pretending_not_to_be_an_apple");
+              groovyConsoleClass.getMethod("run").invoke(groovyConsoleClass.newInstance());
+              System.setProperty("os.name", realOS);
+            } else {
+              groovyConsoleClass.getMethod("run").invoke(groovyConsoleClass.newInstance());
+            }
+          } catch (Exception ex) {
+            System.err.println("Failed to start Groovy console.");
+          }
+        }
+      });
+    }
+
+    // Tools/Jython console
+    if (Jython.isPresent()) {
+      final JMenuItem jMenuItemJythonConsole = new JMenuItem();
+      m_jMenuTools.add(jMenuItemJythonConsole);
+      jMenuItemJythonConsole.setText("Jython console");
+      jMenuItemJythonConsole.setAccelerator(KeyStroke.getKeyStroke(
+        KeyEvent.VK_J, KeyEvent.CTRL_MASK));
+      jMenuItemJythonConsole.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+          // Do we have TigerJython?
+          try {
+            Class tigerJythonClass = Class.forName("tigerjython.core.TigerJython");
+            Object[] args = new Object[1];
+            args[0] = new String[0];
+
+            if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+
+              // Awful hack to prevent TigerJython from taking over the Mac menu bar.
+              // Could potentially cause problems due to multi-threading, but hopefully
+              // not problematic in practice.
+              String realOS = System.getProperty("os.name");
+              System.setProperty("os.name", "pretending_not_to_be_an_apple");
+              tigerJythonClass.getMethod("main", String[].class).invoke(null, args);
+              System.setProperty("os.name", realOS);
+            } else {
+              tigerJythonClass.getMethod("main", String[].class).invoke(null, args);
+            }
+
+          } catch (Exception ex) {
+            // Don't complain - no tiger jython available
+          }
+        }
+      });
+    }
+
+    // plugins for Visualization and Tools
+    Set<String> pluginNames =
+      PluginManager
+        .getPluginNamesOfType("weka.gui.GUIChooser.GUIChooserMenuPlugin");
+    if (pluginNames != null) {
+      boolean firstVis = true;
+      boolean firstTools = true;
+      for (String name : pluginNames) {
+        try {
+          final GUIChooser.GUIChooserMenuPlugin p =
+            (GUIChooser.GUIChooserMenuPlugin) PluginManager.getPluginInstance(
+              "weka.gui.GUIChooser.GUIChooserMenuPlugin", name);
+
+          if (p instanceof JComponent) {
+            final JMenuItem mItem = new JMenuItem(p.getMenuEntryText());
+            mItem.addActionListener(new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                JFrame appFrame = new JFrame(p.getApplicationName());
+                appFrame.setIconImage(m_Icon);
+                appFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                JMenuBar appMenu = p.getMenuBar();
+                if (appMenu != null) {
+                  appFrame.setJMenuBar(appMenu);
+                }
+
+                appFrame.getContentPane().add((JComponent) p,
+                  BorderLayout.CENTER);
+                appFrame.addWindowListener(new WindowAdapter() {
+                  @Override
+                  public void windowClosed(WindowEvent e) {
+                    m_menuPlugins.remove(p);
+                    checkExit();
+                  }
+                });
+                appFrame.setSize(800, 600);
+                appFrame.setVisible(true);
+              }
+            });
+
+            if (p.getMenuToDisplayIn() == GUIChooser.GUIChooserMenuPlugin.Menu.VISUALIZATION) {
+              if (firstVis) {
+                m_jMenuVisualization.add(new JSeparator());
+                firstVis = false;
+              }
+              m_jMenuVisualization.add(mItem);
+            } else {
+              if (firstTools) {
+                m_jMenuTools.add(new JSeparator());
+                firstTools = false;
+              }
+              m_jMenuTools.add(mItem);
+            }
+
+            m_menuPlugins.add(p);
+          }
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
+      }
+    }
 
     // Help
     m_jMenuHelp = new JMenu();
