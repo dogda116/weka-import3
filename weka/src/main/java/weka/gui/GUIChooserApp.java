@@ -276,7 +276,12 @@ public class GUIChooserApp extends JFrame {
     m_Self = this;
 
     m_settings = new Settings("weka", GUIChooserDefaults.APP_ID);
-    m_settings.applyDefaults(new GUIChooserDefaults());
+    GUIChooserDefaults guiChooserDefaults = new GUIChooserDefaults();
+    Defaults pmDefaults =
+      WekaPackageManager.getUnderlyingPackageManager().getDefaultSettings();
+    guiChooserDefaults.add(pmDefaults);
+    m_settings.applyDefaults(guiChooserDefaults);
+    WekaPackageManager.getUnderlyingPackageManager().applySettings(m_settings);
 
     // filechoosers
     m_FileChooserGraphVisualizer
@@ -404,10 +409,14 @@ public class GUIChooserApp extends JFrame {
     jMenuItemSettings.addActionListener(new ActionListener() {
       @Override public void actionPerformed(ActionEvent e) {
         try {
-          SettingsEditor.showSingleSettingsEditor(m_settings,
+          int result = SettingsEditor.showSingleSettingsEditor(m_settings,
             GUIChooserDefaults.APP_ID, "GUIChooser",
             (JComponent) GUIChooserApp.this.getContentPane().getComponent(0),
             550, 100);
+          if (result == JOptionPane.OK_OPTION) {
+            WekaPackageManager.getUnderlyingPackageManager()
+              .applySettings(m_settings);
+          }
         } catch (Exception ex) {
           ex.printStackTrace();
         }
