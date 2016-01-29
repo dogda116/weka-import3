@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import weka.gui.beans.PluginManager;
+import weka.core.PluginManager;
 
 /**
  * Abstract base class for pluggable classification/regression evaluation

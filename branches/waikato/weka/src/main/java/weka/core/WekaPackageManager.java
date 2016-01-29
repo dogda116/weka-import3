@@ -32,7 +32,7 @@ import weka.gui.GenericObjectEditor;
 import weka.gui.GenericPropertiesCreator;
 import weka.gui.beans.BeansProperties;
 import weka.gui.beans.KnowledgeFlowApp;
-import weka.gui.beans.PluginManager;
+import weka.core.PluginManager;
 import weka.gui.explorer.ExplorerDefaults;
 
 import java.io.BufferedInputStream;
