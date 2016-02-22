@@ -70,7 +70,7 @@ import weka.core.matrix.Matrix;
  * <!-- options-end -->
  * 
  * @author Eibe Frank (eibe@cs.waikato.ac.nz)
- * @version $Revision: 10169 $
+ * @version $Revision: 12518 $
  */
 public class PrecomputedKernelMatrixKernel extends Kernel implements Copyable {
 
@@ -257,6 +257,7 @@ public class PrecomputedKernelMatrixKernel extends Kernel implements Copyable {
     result.enable(Capability.NOMINAL_ATTRIBUTES);
     result.enableAllClasses();
     result.enable(Capability.MISSING_CLASS_VALUES);
+    result.enable(Capability.NO_CLASS);
 
     return result;
   }
@@ -347,6 +348,6 @@ public class PrecomputedKernelMatrixKernel extends Kernel implements Copyable {
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision: 10169 $");
+    return RevisionUtils.extract("$Revision: 12518 $");
   }
 }
