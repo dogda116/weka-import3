@@ -20,19 +20,18 @@
 
 package weka.core;
 
+import weka.core.converters.ConverterUtils;
+import weka.core.logging.Logger;
 import weka.core.packageManagement.DefaultPackageManager;
 import weka.core.packageManagement.Dependency;
 import weka.core.packageManagement.Package;
 import weka.core.packageManagement.PackageConstraint;
 import weka.core.packageManagement.PackageManager;
 import weka.core.packageManagement.VersionPackageConstraint;
-import weka.core.converters.ConverterUtils;
-import weka.core.logging.Logger;
 import weka.gui.GenericObjectEditor;
 import weka.gui.GenericPropertiesCreator;
 import weka.gui.beans.BeansProperties;
 import weka.gui.beans.KnowledgeFlowApp;
-import weka.core.PluginManager;
 import weka.gui.explorer.ExplorerDefaults;
 
 import java.io.BufferedInputStream;
@@ -632,6 +631,7 @@ public class WekaPackageManager {
     try {
       PluginManager.addFromProperties(propsFile);
     } catch (Exception ex) {
+      ex.printStackTrace();
     }
   }
 
