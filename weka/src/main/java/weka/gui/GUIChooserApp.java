@@ -108,7 +108,7 @@ import java.util.Vector;
  * @version $Revision$
  */
 public class GUIChooserApp extends JFrame {
-  
+
   /** for serialization */
   private static final long serialVersionUID = 9001529425230247914L;
 
@@ -301,9 +301,10 @@ public class GUIChooserApp extends JFrame {
         + ")"));
 
     // general layout
-    m_Icon = Toolkit.getDefaultToolkit().getImage(
-      GUIChooserApp.class.getClassLoader().getResource(
-        "weka/gui/weka_icon_new_48.png"));
+    m_Icon =
+      Toolkit.getDefaultToolkit().getImage(
+        GUIChooserApp.class.getClassLoader().getResource(
+          "weka/gui/weka_icon_new_48.png"));
     setIconImage(m_Icon);
     this.getContentPane().setLayout(new BorderLayout());
 
@@ -327,11 +328,12 @@ public class GUIChooserApp extends JFrame {
     ImageIcon wii = new ImageIcon(m_weka);
     JLabel wekaLab = new JLabel(wii);
     wekaPan.add(wekaLab, BorderLayout.CENTER);
-    String infoString = "<html>" + "<font size=-2>"
-      + "Waikato Environment for Knowledge Analysis<br>" + "Version "
-      + Version.VERSION + "<br>" + "(c) " + Copyright.getFromYear() + " - "
-      + Copyright.getToYear() + "<br>" + Copyright.getOwner() + "<br>"
-      + Copyright.getAddress() + "</font>" + "</html>";
+    String infoString =
+      "<html>" + "<font size=-2>"
+        + "Waikato Environment for Knowledge Analysis<br>" + "Version "
+        + Version.VERSION + "<br>" + "(c) " + Copyright.getFromYear() + " - "
+        + Copyright.getToYear() + "<br>" + Copyright.getOwner() + "<br>"
+        + Copyright.getAddress() + "</font>" + "</html>";
     JLabel infoLab = new JLabel(infoString);
     infoLab.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     wekaPan.add(infoLab, BorderLayout.SOUTH);
@@ -407,15 +409,17 @@ public class GUIChooserApp extends JFrame {
     m_jMenuProgram.add(jMenuItemSettings);
     jMenuItemSettings.setText("Settings");
     jMenuItemSettings.addActionListener(new ActionListener() {
-      @Override public void actionPerformed(ActionEvent e) {
+      @Override
+      public void actionPerformed(ActionEvent e) {
         try {
-          int result = SettingsEditor.showSingleSettingsEditor(m_settings,
-            GUIChooserDefaults.APP_ID, "GUIChooser",
-            (JComponent) GUIChooserApp.this.getContentPane().getComponent(0),
-            550, 100);
+          int result =
+            SettingsEditor.showSingleSettingsEditor(m_settings,
+              GUIChooserDefaults.APP_ID, "GUIChooser",
+              (JComponent) GUIChooserApp.this.getContentPane().getComponent(0),
+              550, 100);
           if (result == JOptionPane.OK_OPTION) {
-            WekaPackageManager.getUnderlyingPackageManager()
-              .applySettings(m_settings);
+            WekaPackageManager.getUnderlyingPackageManager().applySettings(
+              m_settings);
           }
         } catch (Exception ex) {
           ex.printStackTrace();
@@ -599,8 +603,8 @@ public class GUIChooserApp extends JFrame {
         }
 
         // build tree
-        String filename = m_FileChooserTreeVisualizer.getSelectedFile()
-          .getAbsolutePath();
+        String filename =
+          m_FileChooserTreeVisualizer.getSelectedFile().getAbsolutePath();
         TreeBuild builder = new TreeBuild();
         Node top = null;
         NodePlace arrange = new PlaceNode2();
@@ -652,8 +656,8 @@ public class GUIChooserApp extends JFrame {
         }
 
         // build graph
-        String filename = m_FileChooserGraphVisualizer.getSelectedFile()
-          .getAbsolutePath();
+        String filename =
+          m_FileChooserGraphVisualizer.getSelectedFile().getAbsolutePath();
         GraphVisualizer panel = new GraphVisualizer();
         try {
           if (filename.toLowerCase().endsWith(".xml")
@@ -736,20 +740,22 @@ public class GUIChooserApp extends JFrame {
     m_jMenuBar.add(jMenuExtensions);
     jMenuExtensions.setVisible(false);
 
-    String extensions = GenericObjectEditor.EDITOR_PROPERTIES.getProperty(
-      MainMenuExtension.class.getName(), "");
+    String extensions =
+      GenericObjectEditor.EDITOR_PROPERTIES.getProperty(
+        MainMenuExtension.class.getName(), "");
 
     if (extensions.length() > 0) {
       jMenuExtensions.setVisible(true);
-      String[] classnames = GenericObjectEditor.EDITOR_PROPERTIES.getProperty(
-        MainMenuExtension.class.getName(), "").split(",");
+      String[] classnames =
+        GenericObjectEditor.EDITOR_PROPERTIES.getProperty(
+          MainMenuExtension.class.getName(), "").split(",");
       Hashtable<String, JMenu> submenus = new Hashtable<String, JMenu>();
 
       // add all extensions
       for (String classname : classnames) {
         try {
-          MainMenuExtension ext = (MainMenuExtension) Class.forName(classname)
-            .newInstance();
+          MainMenuExtension ext =
+            (MainMenuExtension) Class.forName(classname).newInstance();
 
           // menuitem in a submenu?
           JMenu submenu = null;
@@ -776,8 +782,9 @@ public class GUIChooserApp extends JFrame {
             menuitem.addActionListener(new ActionListener() {
               @Override
               public void actionPerformed(ActionEvent e) {
-                Component frame = createFrame(m_Self, finalMenuitem.getText(),
-                  null, null, null, -1, -1, null, false, false);
+                Component frame =
+                  createFrame(m_Self, finalMenuitem.getText(), null, null,
+                    null, -1, -1, null, false, false);
                 finalExt.fillFrame(frame);
                 frame.setVisible(true);
               }
@@ -835,8 +842,8 @@ public class GUIChooserApp extends JFrame {
                     checkExit();
                   }
                 });
-                Dimension screenSize = m_PackageManagerFrame.getToolkit()
-                  .getScreenSize();
+                Dimension screenSize =
+                  m_PackageManagerFrame.getToolkit().getScreenSize();
                 int width = screenSize.width * 8 / 10;
                 int height = screenSize.height * 8 / 10;
                 m_PackageManagerFrame.setBounds(width / 8, height / 8, width,
@@ -957,15 +964,19 @@ public class GUIChooserApp extends JFrame {
 
             if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
 
-              // Awful hack to prevent the Groovy console from taking over the Mac menu bar.
-              // Could potentially cause problems due to multi-threading, but hopefully
+              // Awful hack to prevent the Groovy console from taking over the
+              // Mac menu bar.
+              // Could potentially cause problems due to multi-threading, but
+              // hopefully
               // not problematic in practice.
               String realOS = System.getProperty("os.name");
               System.setProperty("os.name", "pretending_not_to_be_an_apple");
-              groovyConsoleClass.getMethod("run").invoke(groovyConsoleClass.newInstance());
+              groovyConsoleClass.getMethod("run").invoke(
+                groovyConsoleClass.newInstance());
               System.setProperty("os.name", realOS);
             } else {
-              groovyConsoleClass.getMethod("run").invoke(groovyConsoleClass.newInstance());
+              groovyConsoleClass.getMethod("run").invoke(
+                groovyConsoleClass.newInstance());
             }
           } catch (Exception ex) {
             System.err.println("Failed to start Groovy console.");
@@ -987,21 +998,26 @@ public class GUIChooserApp extends JFrame {
 
           // Do we have TigerJython?
           try {
-            Class tigerJythonClass = Class.forName("tigerjython.core.TigerJython");
+            Class tigerJythonClass =
+              Class.forName("tigerjython.core.TigerJython");
             Object[] args = new Object[1];
             args[0] = new String[0];
 
             if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
 
-              // Awful hack to prevent TigerJython from taking over the Mac menu bar.
-              // Could potentially cause problems due to multi-threading, but hopefully
+              // Awful hack to prevent TigerJython from taking over the Mac menu
+              // bar.
+              // Could potentially cause problems due to multi-threading, but
+              // hopefully
               // not problematic in practice.
               String realOS = System.getProperty("os.name");
               System.setProperty("os.name", "pretending_not_to_be_an_apple");
-              tigerJythonClass.getMethod("main", String[].class).invoke(null, args);
+              tigerJythonClass.getMethod("main", String[].class).invoke(null,
+                args);
               System.setProperty("os.name", realOS);
             } else {
-              tigerJythonClass.getMethod("main", String[].class).invoke(null, args);
+              tigerJythonClass.getMethod("main", String[].class).invoke(null,
+                args);
             }
 
           } catch (Exception ex) {
@@ -1217,7 +1233,8 @@ public class GUIChooserApp extends JFrame {
 
     m_WorkbenchBut.addActionListener(new ActionListener() {
 
-      @Override public void actionPerformed(ActionEvent e) {
+      @Override
+      public void actionPerformed(ActionEvent e) {
         if (m_WorkbenchFrame == null) {
           WorkbenchApp app = new WorkbenchApp();
           m_WorkbenchBut.setEnabled(false);
@@ -1225,7 +1242,8 @@ public class GUIChooserApp extends JFrame {
           m_WorkbenchFrame.setIconImage(m_Icon);
           m_WorkbenchFrame.add(app, BorderLayout.CENTER);
           m_WorkbenchFrame.addWindowListener(new WindowAdapter() {
-            @Override public void windowClosing(WindowEvent e) {
+            @Override
+            public void windowClosing(WindowEvent e) {
               m_WorkbenchFrame.dispose();
               m_WorkbenchFrame = null;
               m_WorkbenchBut.setEnabled(true);
@@ -1308,9 +1326,10 @@ public class GUIChooserApp extends JFrame {
         public void run() {
           JCheckBox dontShow = new JCheckBox("Do not show this message again");
           Object[] stuff = new Object[2];
-          stuff[0] = "Weka has a package manager that you\n"
-            + "can use to install many learning schemes and tools.\nThe package manager can be "
-            + "found under the \"Tools\" menu.\n";
+          stuff[0] =
+            "Weka has a package manager that you\n"
+              + "can use to install many learning schemes and tools.\nThe package manager can be "
+              + "found under the \"Tools\" menu.\n";
           stuff[1] = dontShow;
           // Display the tip on finding/using the package manager
           JOptionPane.showMessageDialog(GUIChooserApp.this, stuff,
@@ -1339,17 +1358,19 @@ public class GUIChooserApp extends JFrame {
       m_KnowledgeFlowBut.setEnabled(false);
       if (m_pendingKnowledgeFlowLoad != null
         && m_pendingKnowledgeFlowLoad.length() > 0) {
-            /* KnowledgeFlowApp.getSingleton().loadLayout(
-              new File(m_pendingKnowledgeFlowLoad), true); */
-        ((MainKFPerspective) m_knowledgeFlow.getMainPerspective())
-          .loadLayout(new File(m_pendingKnowledgeFlowLoad), true);
+        /*
+         * KnowledgeFlowApp.getSingleton().loadLayout( new
+         * File(m_pendingKnowledgeFlowLoad), true);
+         */
+        ((MainKFPerspective) m_knowledgeFlow.getMainPerspective()).loadLayout(
+          new File(m_pendingKnowledgeFlowLoad), true);
         m_pendingKnowledgeFlowLoad = null;
       }
       m_KnowledgeFlowFrame = new JFrame("Weka KnowledgeFlow Environment");
       m_KnowledgeFlowFrame.setIconImage(m_Icon);
       m_KnowledgeFlowFrame.getContentPane().setLayout(new BorderLayout());
-      m_KnowledgeFlowFrame.getContentPane().
-        add(m_knowledgeFlow, BorderLayout.CENTER);
+      m_KnowledgeFlowFrame.getContentPane().add(m_knowledgeFlow,
+        BorderLayout.CENTER);
       m_knowledgeFlow.showMenuBar(m_KnowledgeFlowFrame);
       m_KnowledgeFlowFrame.addWindowListener(new WindowAdapter() {
         @Override
@@ -1357,12 +1378,13 @@ public class GUIChooserApp extends JFrame {
 
           ((MainKFPerspective) m_knowledgeFlow.getMainPerspective())
             .closeAllTabs();
-          ((MainKFPerspective) m_knowledgeFlow.getMainPerspective()).
-            addUntitledTab();
+          ((MainKFPerspective) m_knowledgeFlow.getMainPerspective())
+            .addUntitledTab();
 
-              /*kna.closeAllTabs();
-              kna.clearLayout(); // add a single "Untitled" tab ready for next
-                                 // time */
+          /*
+           * kna.closeAllTabs(); kna.clearLayout(); // add a single "Untitled"
+           * tab ready for next // time
+           */
           m_KnowledgeFlowFrame.dispose();
           m_KnowledgeFlowFrame = null;
           m_knowledgeFlow = null;
@@ -1375,7 +1397,6 @@ public class GUIChooserApp extends JFrame {
       m_KnowledgeFlowFrame.setVisible(true);
     }
   }
-
 
   public void showExplorer(String fileToLoad) {
     Explorer expl = null;
@@ -1408,8 +1429,8 @@ public class GUIChooserApp extends JFrame {
 
     if (fileToLoad != null) {
       try {
-        weka.core.converters.AbstractFileLoader loader = weka.core.converters.ConverterUtils
-          .getLoaderForFile(fileToLoad);
+        weka.core.converters.AbstractFileLoader loader =
+          weka.core.converters.ConverterUtils.getLoaderForFile(fileToLoad);
         loader.setFile(new File(fileToLoad));
         expl.getPreprocessPanel().setInstancesFromFile(loader);
       } catch (Exception ex) {
@@ -1481,9 +1502,9 @@ public class GUIChooserApp extends JFrame {
    * @param visible if true then the frame is made visible immediately
    * @return the generated frame
    */
-  protected Container createFrame(GUIChooserApp parent, String title, Component c,
-    LayoutManager layout, Object layoutConstraints, int width, int height,
-    JMenuBar menu, boolean listener, boolean visible) {
+  protected Container createFrame(GUIChooserApp parent, String title,
+    Component c, LayoutManager layout, Object layoutConstraints, int width,
+    int height, JMenuBar menu, boolean listener, boolean visible) {
 
     Container result = null;
 
@@ -1670,12 +1691,13 @@ public class GUIChooserApp extends JFrame {
     public static final String APP_ID = "guichooser";
 
     /** Settings key for LAF */
-    protected static final Settings.SettingKey LAF_KEY = new Settings.SettingKey(
-      APP_ID + ".lookAndFeel", "Look and feel for UI",
-      "Note: a restart is required for this setting to come into effect");
+    protected static final Settings.SettingKey LAF_KEY =
+      new Settings.SettingKey(APP_ID + ".lookAndFeel", "Look and feel for UI",
+        "Note: a restart is required for this setting to come into effect");
 
     /** Default value for LAF */
-    protected static final String LAF = "";
+    protected static final String LAF =
+      "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 
     private static final long serialVersionUID = -8524894440289936685L;
 
@@ -1711,7 +1733,7 @@ public class GUIChooserApp extends JFrame {
       "Logging started");
     try {
       LookAndFeel.setLookAndFeel(GUIChooserDefaults.APP_ID,
-        GUIChooserDefaults.APP_ID + ".lookAndFeel");
+        GUIChooserDefaults.APP_ID + ".lookAndFeel", GUIChooserDefaults.LAF);
     } catch (IOException ex) {
       ex.printStackTrace();
     }
