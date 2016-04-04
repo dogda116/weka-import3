@@ -367,6 +367,8 @@ public class ClassifierPanel extends AbstractPerspective implements
    * Creates the classifier panel.
    */
   public ClassifierPanel() {
+    m_selectedEvalMetrics.remove("Coverage");
+    m_selectedEvalMetrics.remove("Region size");
 
     // Connect / configure the components
     m_OutText.setEditable(false);
@@ -2866,6 +2868,7 @@ public class ClassifierPanel extends AbstractPerspective implements
 
                     temp.setClassifier(classifierToUse);
                     temp.setModelHeader(trainHeader);
+                    temp.setTestStructure(userTestStructure);
                     classifierToUse = temp;
                   } else {
                     throw new Exception(
@@ -2912,7 +2915,6 @@ public class ClassifierPanel extends AbstractPerspective implements
             plotInstances.setClassIndex(trainHeader != null ? trainHeader.classIndex() : userTestStructure.classIndex());
             plotInstances.setSaveForVisualization(saveVis);
             plotInstances.setEvaluation(eval);
-            // }
 
             outBuff.append("\n=== Re-evaluation on test set ===\n\n");
             outBuff.append("User supplied test set\n");
