@@ -15,7 +15,7 @@
 
 /*
  *    OffscreenChartRenderer.java
- *    Copyright (C) 2011-2012 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2011 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -95,7 +95,7 @@ public interface OffscreenChartRenderer {
    * @param width the width of the resulting chart in pixels
    * @param height the height of the resulting chart in pixels
    * @param series a list of Instances - one for each series to be plotted
-   * @param attsToPlot the name of the attribute to plot (the attribute, with the,
+   * @param attToPlot the name of the attribute to plot (the attribute, with the,
    * same type, must be present in each series) 
    * @param optionalArgs optional arguments to the renderer (may be null)
    * 

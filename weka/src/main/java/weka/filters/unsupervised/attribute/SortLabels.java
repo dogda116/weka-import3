@@ -529,9 +529,6 @@ public class SortLabels extends SimpleStreamFilter {
     // create new instance
     result = new DenseInstance(instance.weight(), values);
 
-    // copy possible strings, relational values...
-    copyValues(result, false, instance.dataset(), outputFormatPeek());
-
     return result;
   }
 
