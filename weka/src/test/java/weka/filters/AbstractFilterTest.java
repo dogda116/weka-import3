@@ -1,29 +1,27 @@
 /*
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
+ *    This program is free software; you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation; either version 2 of the License, or
+ *    (at your option) any later version.
  *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *    You should have received a copy of the GNU General Public License
+ *    along with this program; if not, write to the Free Software
+ *    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
 /*
- * Copyright (C) 2002-2016 University of Waikato
+ * Copyright (C) 2002 University of Waikato 
  */
 
 package weka.filters;
 
-import junit.framework.TestCase;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.FilteredClassifier;
-import weka.core.Attribute;
-import weka.core.Capabilities.Capability;
 import weka.core.CheckGOE;
 import weka.core.CheckOptionHandler;
 import weka.core.Instance;
@@ -31,18 +29,21 @@ import weka.core.Instances;
 import weka.core.OptionHandler;
 import weka.core.SerializationHelper;
 import weka.core.TestInstances;
+import weka.core.Capabilities.Capability;
 import weka.test.Regression;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
+import junit.framework.TestCase;
+
 /**
  * Abstract Test class for Filters.
  *
  * @author <a href="mailto:len@reeltwo.com">Len Trigg</a>
  * @authro FracPete (fracpete at waikato dot ac dot nz)
- * @version $Revision$
+ * @version $Revision: 1.14 $
  */
 public abstract class AbstractFilterTest
   extends TestCase {
@@ -586,12 +587,6 @@ public abstract class AbstractFilterTest
     Instances		data;
     int			i;
     
-    // skip this test if a subclass has set the
-    // filtered classifier to null
-    if (m_FilteredClassifier == null) {
-      return;
-    }
-    
     try {
       // generate data
       data = getFilteredClassifierData();
@@ -870,104 +865,5 @@ public abstract class AbstractFilterTest
   public void testToolTips() {
     if (!m_GOETester.checkToolTips())
       fail("Tool tips inconsistent");
-  }
-
-  /**
-   * Compares the two datasets.
-   *
-   * @param data1	first dataset
-   * @param data2	second dataset
-   * @return		null if the same, otherwise first difference
-   */
-  protected String compareDatasets(Instances data1, Instances data2) {
-    int		x;
-    int		y;
-    Comparable	c1;
-    Comparable	c2;
-
-    if (data1.numInstances() != data2.numInstances())
-      System.err.println(
-	getName() + " [compareDatasets] datasets differ in number of instances: "
-	  + data1.numInstances() + " != " + data2.numInstances());
-    if (data1.numAttributes() != data2.numAttributes())
-      System.err.println(
-	getName() + " [compareDatasets] datasets differ in number of attributes: "
-	  + data1.numAttributes() + " != " + data2.numAttributes());
-    for (x = 0; x < data1.numAttributes() && x < data2.numAttributes(); x++) {
-      if (data1.attribute(x).type() != data2.attribute(x).type()) {
-	System.err.println(
-	  getName() + " [compareDatasets] datasets differ in attribute type at " + (x+1) + ": "
-	    + Attribute.typeToString(data1.attribute(x).type()) + " != " + Attribute.typeToString(data2.attribute(x).type()));
-      }
-    }
-
-    for (y = 0; y < data1.numInstances() && y < data2.numInstances(); y++) {
-      for (x = 0; x < data1.numAttributes() && x < data2.numAttributes(); x++) {
-	if (data1.attribute(x).type() == data2.attribute(x).type()) {
-	  switch (data1.attribute(x).type()) {
-	    case Attribute.STRING:
-	      c1 = data1.instance(y).stringValue(x);
-	      c2 = data2.instance(y).stringValue(x);
-	      break;
-	    case Attribute.RELATIONAL:
-	      c1 = data1.instance(y).relationalValue(x).toString();
-	      c2 = data2.instance(y).relationalValue(x).toString();
-	      break;
-	    default:
-	      c1 = data1.instance(y).value(x);
-	      c2 = data2.instance(y).value(x);
-	      break;
-	  }
-	  if (c1.compareTo(c2) != 0)
-	    return "Values differ in instance " + (y + 1) + " at attribute " + (x + 1) + ":\n"
-	      + c1 + "\n"
-	      + "!=\n"
-	      + c2;
-	}
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   * Tests whether applying filter data changes input data.
-   */
-  public void testChangesInputData() {
-    Instances 	result;
-    String 	msg;
-    Instances 	icopy;
-
-    icopy = new Instances(m_Instances);
-
-    // initializing filter
-    try {
-      m_Filter.setInputFormat(m_Instances);
-    }
-    catch (Exception e) {
-      fail("Failed to use setInputFormat: " + e);
-    }
-
-    // 1st filtering
-    try {
-      result = Filter.useFilter(m_Instances, m_Filter);
-      msg = compareDatasets(m_Instances, icopy);
-      assertNotNull("Filtered data is null", result);
-      assertNull("1st filtering changed input data: " + msg, msg);
-    }
-    catch (Exception e) {
-      fail("Failed to apply filter for 1st time: " + e);
-    }
-
-    // 1st filtering
-    try {
-      result = Filter.useFilter(m_Instances, m_Filter);
-      msg = compareDatasets(m_Instances, icopy);
-      assertNotNull("Filtered data is null", result);
-      assertNull("2nd filtering changed input data: " + msg, msg);
-    }
-    catch (Exception e) {
-      fail("Failed to apply filter for 2nd time: " + e);
-    }
   }
 }

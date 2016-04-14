@@ -1,21 +1,22 @@
 /*
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
 /*
  * HierarchicalClusterer.java
- * Copyright (C) 2009-2012 University of Waikato, Hamilton, New Zealand
+ * Copyright (C) 2009 University of Waikato, Hamilton, New Zealand
 */
 
 package weka.gui.hierarchyvisualizer;
@@ -31,6 +32,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 
@@ -242,7 +244,7 @@ public class HierarchyVisualizer extends PrintablePanel implements ComponentList
 			if (sStr.charAt(i) == ':') {
 				i++;
 				c = sStr.charAt(i);
-				while (i < sStr.length() && (c=='.' || Character.isDigit(c)) || c=='-') {
+				while (i < sStr.length() && (c=='.' || Character.isDigit(c))) {
 					i++;
 					if (i < sStr.length()) {
 						c = sStr.charAt(i);
@@ -257,7 +259,7 @@ public class HierarchyVisualizer extends PrintablePanel implements ComponentList
 	 * convert string containing Newick tree into tree datastructure but only in
 	 * the limited format as contained in m_sTrees
 	 *
-	 * @param sNewick
+	 * @param sStr
 	 * @return tree consisting of a Node
 	 */
 	void parseNewick(String sNewick) throws Exception {
@@ -293,7 +295,7 @@ public class HierarchyVisualizer extends PrintablePanel implements ComponentList
 				sStr = sStr.substring(sStr.lastIndexOf('['));
 				i2 = sStr.indexOf(']');
 				if (i2 < 0) {
-					throw new Exception("unbalanced square bracket found:" + sStr);
+					throw new Exception(Messages.getInstance().getString("HierarchicalClusterer_ParseNewick2_Exception_Text_First") + sStr);
 				}
 				sStr2 = sStr.substring(1, i2);
 				node.m_sMetaData = sStr2;
@@ -312,7 +314,7 @@ public class HierarchyVisualizer extends PrintablePanel implements ComponentList
 				int i1 = sStr.indexOf('[');
 				int i2 = sStr.indexOf(']');
 				if (i2 < 0) {
-					throw new Exception("unbalanced square bracket found:" + sStr);
+					throw new Exception(Messages.getInstance().getString("HierarchicalClusterer_ParseNewick2_Exception_Text_Second") + sStr);
 				}
 				String sStr2 = sStr.substring(i1+1, i2);
 				sStr = sStr.substring(0, i1) +sStr.substring(i2+1);
@@ -398,10 +400,9 @@ public class HierarchyVisualizer extends PrintablePanel implements ComponentList
 	public static void main(String[] args) {
 	      //HierarchyVisualizer a = new HierarchyVisualizer("((((human:2.0,(chimp:1.0,bonobo:1.0):1.0):1.0,gorilla:3.0):1.0,siamang:4.0):1.0,orangutan:5.0)");
 	      //HierarchyVisualizer a = new HierarchyVisualizer("(((human:2.0,(chimp:1.0,bonobo:1.0):1.0):1.0,gorilla:3.0):1.0,siamang:4.0)");
-	      //HierarchyVisualizer a = new HierarchyVisualizer(" (((5[theta=0.121335,lxg=0.122437]:0.00742795,3[theta=0.0972485,lxg=0.152762]:0.00742795)[theta=0.490359,lxg=0.0746703]:0.0183076,((2[theta=0.0866056,lxg=0.2295]:0.00993801,4[theta=0.135512,lxg=0.146674]:0.00993801)[theta=0.897783,lxg=0.0200762]:0.00901206,1[theta=0.200265,lxg=0.18925]:0.0189501)[theta=0.0946195,lxg=0.143427]:0.00678551)[theta=0.185562,lxg=0.139681]:0.0129598,(7[theta=0.176022,lxg=0.364039]:0.0320395,((0[theta=0.224286,lxg=0.156485]:0.0175487,8[theta=0.223313,lxg=0.157166]:0.0175487)[theta=0.631287,lxg=0.024042]:0.00758871,6[theta=0.337871,lxg=0.148799]:0.0251374)[theta=0.33847,lxg=0.040784]:0.00690208)[theta=0.209238,lxg=0.0636202]:0.00665587)[theta=0.560453,lxg=-0.138086]:0.01");
+	      HierarchyVisualizer a = new HierarchyVisualizer(" (((5[theta=0.121335,lxg=0.122437]:0.00742795,3[theta=0.0972485,lxg=0.152762]:0.00742795)[theta=0.490359,lxg=0.0746703]:0.0183076,((2[theta=0.0866056,lxg=0.2295]:0.00993801,4[theta=0.135512,lxg=0.146674]:0.00993801)[theta=0.897783,lxg=0.0200762]:0.00901206,1[theta=0.200265,lxg=0.18925]:0.0189501)[theta=0.0946195,lxg=0.143427]:0.00678551)[theta=0.185562,lxg=0.139681]:0.0129598,(7[theta=0.176022,lxg=0.364039]:0.0320395,((0[theta=0.224286,lxg=0.156485]:0.0175487,8[theta=0.223313,lxg=0.157166]:0.0175487)[theta=0.631287,lxg=0.024042]:0.00758871,6[theta=0.337871,lxg=0.148799]:0.0251374)[theta=0.33847,lxg=0.040784]:0.00690208)[theta=0.209238,lxg=0.0636202]:0.00665587)[theta=0.560453,lxg=-0.138086]:0.01");
 		  //HierarchyVisualizer a = new HierarchyVisualizer(" ((5[theta=0.121335,lxg=0.122437]:0.00742795,3[theta=0.0972485,lxg=0.152762]:0.00742795)[theta=0.490359,lxg=0.0746703]:0.0183076,2[theta=0.0866056,lxg=0.2295]:0.00993801)[theta=0.897783,lxg=0.0200762]:0.00901206");
-	      HierarchyVisualizer a = new HierarchyVisualizer("((1:0.4,2:0.6):-0.4,3:0.4)");
-		  a.setSize(800 ,600);
+	      a.setSize(800 ,600);
 	      JFrame f;
 	      f = new JFrame();
 	      Container contentPane = f.getContentPane();
