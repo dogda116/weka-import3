@@ -32,7 +32,7 @@
   <!-- Define the bundleapp task. Java Application Bundler (http://java.net/projects/appbundler) makes Mac OS application 
        bundles for Java 1.7 or higher (jarbundler does not work for Java 1.7). This requires Oracle Java 1.7 or 
        higher at build time too - uncomment this taskdef if building a Mac app for Java 1.7 -->
-<!--  <taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask"/> -->
+  <taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask"/>
 
   <target name="init_all" depends="requirements_instructions, clean, checkout_trunk_resources">
     <!-- Create the time stamp and various dirs -->
@@ -256,6 +256,7 @@
         <runtime dir="${env.JAVA_HOME}" />
         <classpath file="${temp}/weka-${release}/weka.jar"/>
         <option value="-Xmx1024M"/>
+        <option value="-Xss20M"/>
     </bundleapp>
 
     <antcall target="dmg_${os}">
@@ -279,7 +280,7 @@
                 icon="weka/src/main/java/weka/gui/weka_icon_new.icns"
                 version="${release}"
                 verbose="true"
-                VMOptions="-Xmx1Gb"
+                VMOptions="-Xmx1Gb -Xss20M"
                 shortname="Weka-${release}"
                 arguments=""
                 workingdirectory="/Users"
