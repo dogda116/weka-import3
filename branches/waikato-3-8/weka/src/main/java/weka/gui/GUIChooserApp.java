@@ -27,6 +27,7 @@ import weka.core.Copyright;
 import weka.core.Defaults;
 import weka.core.Instances;
 import weka.core.Memory;
+import weka.core.PluginManager;
 import weka.core.Settings;
 import weka.core.SystemInfo;
 import weka.core.Utils;
@@ -35,7 +36,6 @@ import weka.core.WekaPackageManager;
 import weka.core.scripting.Groovy;
 import weka.core.scripting.Jython;
 import weka.gui.arffviewer.ArffViewer;
-import weka.core.PluginManager;
 import weka.gui.boundaryvisualizer.BoundaryVisualizer;
 import weka.gui.experiment.Experimenter;
 import weka.gui.explorer.Explorer;
@@ -73,6 +73,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.LayoutManager;
@@ -88,7 +89,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Reader;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -1002,24 +1005,7 @@ public class GUIChooserApp extends JFrame {
               Class.forName("tigerjython.core.TigerJython");
             Object[] args = new Object[1];
             args[0] = new String[0];
-
-            if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
-
-              // Awful hack to prevent TigerJython from taking over the Mac menu
-              // bar.
-              // Could potentially cause problems due to multi-threading, but
-              // hopefully
-              // not problematic in practice.
-              String realOS = System.getProperty("os.name");
-              System.setProperty("os.name", "pretending_not_to_be_an_apple");
-              tigerJythonClass.getMethod("main", String[].class).invoke(null,
-                args);
-              System.setProperty("os.name", realOS);
-            } else {
-              tigerJythonClass.getMethod("main", String[].class).invoke(null,
-                args);
-            }
-
+            tigerJythonClass.getMethod("main", String[].class).invoke(null, args);
           } catch (Exception ex) {
             // Don't complain - no tiger jython available
           }
@@ -1737,6 +1723,53 @@ public class GUIChooserApp extends JFrame {
     } catch (IOException ex) {
       ex.printStackTrace();
     }
+
+    // Save std err and std out because they may be redirected by external code
+    final PrintStream savedStdOut = System.out;
+    final PrintStream savedStdErr = System.err;
+
+    // Set up security manager to intercept System.exit() calls in external code
+    final SecurityManager sm = System.getSecurityManager();
+    System.setSecurityManager(new SecurityManager() {
+      public void checkExit(int status) {
+        if (sm != null) {
+          sm.checkExit(status);
+        }
+
+        // Currently, we are just checking for calls from TigerJython code
+        for (Class cl : getClassContext()) {
+          if (cl.getName().equals("tigerjython.gui.MainWindow")) {
+            for (Frame frame : Frame.getFrames()) {
+              if (frame.getTitle().toLowerCase().startsWith("tigerjython")) {
+                frame.dispose();
+              }
+            }
+
+            // Set std err and std out back to original values
+            System.setOut(savedStdOut);
+            System.setErr(savedStdErr);
+
+            // Make entry in log and
+            weka.core.logging.Logger.log(weka.core.logging.Logger.Level.INFO,
+                    "Intercepted System.exit() from TigerJython. Please ignore");
+            throw new SecurityException(
+                    "Intercepted System.exit() from TigerJython. Please ignore!");
+          }
+        }
+      }
+
+      public void checkPermission(Permission perm) {
+        if (sm != null) {
+          sm.checkPermission(perm);
+        }
+      }
+
+      public void checkPermission(Permission perm, Object context) {
+        if (sm != null) {
+          sm.checkPermission(perm, context);
+        }
+      }
+    });
 
     try {
 
