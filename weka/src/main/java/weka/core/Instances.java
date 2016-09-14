@@ -1074,6 +1074,9 @@ RevisionHandler {
       instance(i).setMissing(position);
       instance(i).setDataset(this);
     }
+    if (m_ClassIndex > position) {
+      m_ClassIndex++;
+    }
   }
 
   /**
