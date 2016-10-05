@@ -31,6 +31,8 @@ import weka.core.Utils;
 import weka.gui.visualize.PrintableComponent;
 import weka.gui.visualize.PrintablePanel;
 
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -43,9 +45,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.io.FileReader;
-
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 
 /**
  * Creates a panel that shows a visualization of an
@@ -1081,7 +1080,8 @@ public class AttributeVisualizationPanel
    * @param g The graphics object for this component
    */
   public void paintComponent(Graphics g) {
-    g.clearRect(0,0,this.getWidth(), this.getHeight());
+    g.setColor(Color.WHITE);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
     
     if(m_as!=null) {    //If calculations have been done and histogram/barplot
       if (!m_doneCurrentAttribute && !m_threadRun) {
