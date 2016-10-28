@@ -32,6 +32,7 @@ import weka.core.Settings;
 import weka.core.SystemInfo;
 import weka.core.Utils;
 import weka.core.Version;
+import weka.core.WekaPackageClassLoaderManager;
 import weka.core.WekaPackageManager;
 import weka.core.scripting.Groovy;
 import weka.core.scripting.Jython;
@@ -989,7 +990,7 @@ public class GUIChooserApp extends JFrame {
     }
 
     // Tools/Jython console
-    if (Jython.isPresent()) {
+    if (Jython.isPresent() || WekaPackageClassLoaderManager.getWekaPackageClassLoaderManager().getPackageClassLoader("tigerjython") != null) {
       final JMenuItem jMenuItemJythonConsole = new JMenuItem();
       m_jMenuTools.add(jMenuItemJythonConsole);
       jMenuItemJythonConsole.setText("Jython console");
@@ -1001,8 +1002,12 @@ public class GUIChooserApp extends JFrame {
 
           // Do we have TigerJython?
           try {
+            ClassLoader tigerLoader = WekaPackageClassLoaderManager.getWekaPackageClassLoaderManager().getPackageClassLoader("tigerjython");
+            if (tigerLoader == null) {
+              throw new Exception("no tigerjython");
+            }
             Class tigerJythonClass =
-              Class.forName("tigerjython.core.TigerJython");
+              Class.forName("tigerjython.core.TigerJython", true, tigerLoader);
             Object[] args = new Object[1];
             args[0] = new String[0];
             tigerJythonClass.getMethod("main", String[].class).invoke(null, args);
