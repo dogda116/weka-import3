@@ -1,0 +1,68 @@
+\documentclass[a4paper]{book}
+
+\usepackage{epsfig}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfig}
+\usepackage{fancyvrb}
+\usepackage{mdframed}
+
+\input{hyphenation}
+\input{extensions}
+
+\newsavebox{\verbbox}
+
+\title{\epsfig{file=images/coat_of_arms.eps,width=10cm}\vspace{3cm}\\Introduction to the Weka Data Mining Workbench}
+\author{Ian H. Witten\\Eibe Frank\\Mark A. Hall\\Chris Pal}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+
+\thispagestyle{empty}
+\center
+\begin{table}[b]
+\copyright 2002-2016 \\
+ \\
+University of Waikato, Hamilton, New Zealand \\
+\end{table}
+
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Introduction to Weka}
+\input{introduction}
+
+\chapter{The Explorer}
+\label{chapt:explorer}
+\input{explorer}
+
+\chapter{The Knowledge Flow interface}
+\label{chapt:knowledge_flow}
+\input{knowledgeflow}
+
+\chapter{The Experimenter}
+\label{chapt:experimenter}
+\input{experimenter}
+
+\chapter{The command-line interface}
+\label{chapt:command_line}
+\input{command_line}
+
+\chapter{Embedded machine learning}
+\label{chapt:embedded}
+\input{embedded}
+
+\chapter{Writing new learning schemes}
+\label{chapt:writing_learning_schemes}
+\input{schemes}
+
+\end{document}
+
+
