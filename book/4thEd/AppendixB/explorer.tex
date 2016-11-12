@@ -5,11 +5,13 @@
 \label{fig:explorer}
 \end{figure}
 
-Weka's main graphical user interface, the Explorer, gives access to
+WEKA's main graphical user interface, the Explorer, gives access to
 all its facilities using menu selection and form filling. It is
-illustrated in Figure~\ref{fig:explorer}. There are six different
-panels, selected by the tabs at the top, corresponding to the various
-data mining tasks that Weka supports.
+illustrated in Figure~\ref{fig:explorer}. To begin, there are six
+different panels, selected by the tabs at the top, corresponding to
+the various data mining tasks that WEKA supports. Further panels can
+become available by installing appropriate packages.
+
 
 \section{Getting started}
 \label{sect:getting_started}
@@ -17,12 +19,12 @@ data mining tasks that Weka supports.
 Suppose you have some data and you want to build a decision tree from
 it. First, you need to prepare the data, then fire up the Explorer and
 load in the data. Next you select a decision tree construction method,
-build a tree, and interpret the output. It’s easy to do it again with
+build a tree, and interpret the output. It is easy to do it again with
 a different tree construction algorithm or a different evaluation
 method. In the Explorer you can flip back and forth between the
 results you have obtained, evaluate the models that have been built on
 different datasets, and visualize graphically both the models and the
-datasets themselves—including any classification errors the models
+datasets themselves---including any classification errors the models
 make.
 
 \begin{figure}[!th]
@@ -38,19 +40,19 @@ make.
 \subsection{Preparing the data}
 
 The data is often presented in a spreadsheet or database. However,
-Weka's native data storage method is ARFF format. You can easily
+WEKA's native data storage method is ARFF format. You can easily
 convert from a spreadsheet to ARFF. The bulk of an ARFF file consists
 of a list of the instances, and the attribute values for each instance
 are separated by commas. Most spreadsheet and database programs allow
 you to export data into a file in comma-separated value (CSV) format
 as a list of records with commas between items. Having done this, you
 need only load the file into a text editor or word processor; add the
-dataset’s name using the @relation tag, the attribute information
+dataset's name using the @relation tag, the attribute information
 using @attribute, and a @data line; and save the file as raw text. For
 example, Figure~\ref{fig:weather} shows an Excel spreadsheet
 containing the weather data, the data in CSV form loaded into
 Microsoft Word, and the result of converting it manually into an ARFF
-file. However, you don’t actually have to go through these steps to
+file. However, you do not actually have to go through these steps to
 create the ARFF file yourself, because the Explorer can read CSV
 spreadsheet files directly, as described later.
 
@@ -64,8 +66,8 @@ spreadsheet files directly, as described later.
 \caption{\label{fig:weather_explorer}Weather data in the Explorer.}
 \end{figure}
 
-Let's load this data into the Explorer and start analyzing it. Fire up
-Weka to get the \textit{GUI Chooser panel} in Figure~\ref{subfig:explorer_1}. Select
+Let us load this data into the Explorer and start analyzing it. Fire up
+WEKA to get the \textit{GUI Chooser panel} in Figure~\ref{subfig:explorer_1}. Select
 \textit{Explorer} from the five choices on the right-hand side. (The
 others were mentioned earlier: \textit{Simple CLI} is the
 old-fashioned command-line interface.)
@@ -128,27 +130,27 @@ corresponding context menus.
 \end{figure}
 
 To see what the C4.5 decision tree learner does with this dataset, use
-the J4.8 algorithm, which is Weka’s implementation of this
+the J4.8 algorithm, which is WEKA's implementation of this
 algorithm. (J4.8 actually implements a later and slightly improved
 version called C4.5 revision 8, which was the last public version of
-this family of algorithms before the commercial implementation C5.0
-was released.) Click the \textit{Classify} tab to get a screen that
-looks like Figure~\ref{subfig:j48_2}. Actually, the figure shows what
-it will look like \textit{after} you have analyzed the weather data.
+this family of algorithms before C5.0 was released.) Click the
+\textit{Classify} tab to get a screen that looks like
+Figure~\ref{subfig:j48_2}. Actually, the figure shows what it will
+look like \textit{after} you have analyzed the weather data.
 
 First select the classifier by clicking the \textit{Choose} button at
 the top left, opening up the trees section of the hierarchical menu in
 Figure~\ref{subfig:j48_1}, and finding \textit{J48}. The menu
-structure represents the organization of the Weka code into modules
+structure represents the organization of the WEKA code into modules
 and the items you need to select are always at the lowest level. Once
 selected, \textit{J48} appears in the line beside the \textit{Choose}
 button as shown in Figure~\ref{subfig:j48_2}, along with its default parameter
-values. If you click that line, the J4.8 classifier’s object editor
+values. If you click that line, the J4.8 classifier's object editor
 opens up and you can see what the parameters mean and alter their
 values if you wish. The Explorer generally chooses sensible defaults.
 
 Having chosen the classifier, invoke it by clicking the \textit{Start}
-button. Weka works for a brief period—--when it is working, the little
+button. WEKA works for a brief period—--when it is working, the little
 bird at the lower right of Figure 2.4b jumps up and dances--—and then
 produces the output shown in the main panel of
 Figure~\ref{subfig:j48_2}.
@@ -234,13 +236,13 @@ introduces the class label that has been assigned to a particular
 leaf, followed by the number of instances that reach that leaf,
 expressed as a decimal number because of the way the algorithm uses
 fractional instances to handle missing values. If there were
-incorrectly classified instances (there aren’t in this example) their
+incorrectly classified instances (there aren't in this example) their
 number would appear too: thus \textit{2.0/1.0} means that two
 instances reached that leaf, of which one is classified
 incorrectly. Beneath the tree structure the number of leaves is
 printed; then the total number of nodes (\textit{Size of the
-  tree}). There is a way to view decision trees more graphically: see
-page 484 later in this chapter.
+  tree}). There is a way to view decision trees more graphically,
+which we will encounter later.
 
 %% Fix the reference above to page 484
 
@@ -273,17 +275,17 @@ discussed in Chapter 5 of the book.
 \label{subsec:doing_it_again}
 
 You can easily run J4.8 again with a different evaluation
-method. Select Use training set (near the top left in
+method. Select {\em Use training set} (near the top left in
 Figure~\ref{subfig:j48_2}) and click \textit{Start} again. The
 classifier output is quickly replaced to show how well the derived
 model performs on the training set, instead of showing the
 cross-validation results. This evaluation is highly optimistic. It may
 still be useful, because it generally represents an upper bound to the
-model’s performance on fresh data. In this case, all 14 training
+model's performance on fresh data. In this case, all 14 training
 instances are classified correctly. In some cases a classifier may
 decide to leave some instances unclassified, in which case these will
 be listed as \textit{Unclassified Instances}. This does not happen for
-most learning schemes in Weka.
+most learning schemes in WEKA.
 
 The panel in Figure~\ref{subfig:j48_2} has further test options:
 \textit{Supplied test set}, in which you specify a separate file
@@ -298,6 +300,8 @@ number of classes into the \textit{Classes} box (and terminate it with
 the \textit{Enter} or \textit{Return} key) to get a default cost
 matrix, then edit the values as required.
 
+\subsection{Working with models}
+
 The small pane at the lower left of Figure~\ref{subfig:j48_2}, which
 contains one highlighted line, is a history list of the results. The
 Explorer adds a new line whenever you run a classifier. Because you
@@ -307,12 +311,10 @@ output for that run will appear in the Classifier Output pane. This
 makes it easy to explore different classifiers or evaluation schemes
 and revisit the results to compare them.
 
-\subsection{Working with models}
-
 The result history list is the entry point to some powerful features
 of the Explorer. When you \textit{right}-click an entry a menu appears that
 allows you to view the results in a separate window, or save the
-result buffer. More importantly, you can save the model that Weka has
+result buffer. More importantly, you can save the model that WEKA has
 generated in the form of a Java object file. You can reload a model
 that was saved previously, which generates a new entry in the result
 list. If you now supply a test set, you can reevaluate the old model
@@ -350,7 +352,7 @@ weather data because it produces more interesting
 pictures. Figure~\ref{subfig:j48_3} shows the tree. Right-click a
 blank space in this window to bring up a menu enabling you to
 automatically scale the view or force the tree into the window. Drag
-the mouse to pan around the space. It’s also possible to visualize the
+the mouse to pan around the space. It's also possible to visualize the
 instance data at any node, if it has been saved by the learning
 algorithm.
 
@@ -382,13 +384,13 @@ panel. Most of the time the interface grays out inappropriate
 selections and refuses to let you choose them. But occasionally the
 interactions are more complex, and you can end up selecting an
 incompatible set of options. In this case, the status line changes
-when Weka discovers the incompatibility—--typically when you press
+when WEKA discovers the incompatibility—--typically when you press
 \textit{Start}. To see the error, click the \textit{Log} button to the
-left of the bird in the lower right-hand corner of the interface. Weka
+left of the bird in the lower right-hand corner of the interface. WEKA
 also writes a detailed log to a file, called \textit{weka.log}, under
 the \textit{wekafiles} directory in the user's home directory. This
 often contains more information about the causes of problems than the
-Explorer’s Log window because it captures debugging output directed to
+Explorer's Log window because it captures debugging output directed to
 the standard out and error channels.
 
 \section{Exploring the Explorer}
@@ -413,20 +415,20 @@ and \textit{Classify} panels.
 
 At the bottom of every panel is a \textit{Status} box and a
 \textit{Log} button. The status box displays messages that keep you
-informed about what’s going on. For example, if the Explorer is busy
+informed about what's going on. For example, if the Explorer is busy
 loading a file, the status box will say so. Right-clicking anywhere
 inside this box brings up a little menu with two options: display the
-amount of memory available to Weka, and run the Java garbage
+amount of memory available to WEKA, and run the Java garbage
 collector. Note that the garbage collector runs constantly as a
 background task anyway.
 
-Clicking the \textit{Log} button opens a textual log of the actions that Weka
+Clicking the \textit{Log} button opens a textual log of the actions that WEKA
 has performed in this session, with timestamps.
 
 As noted earlier, the little bird at the lower right of the window
-jumps up and dances when Weka is active. The number beside the $\times$
+jumps up and dances when WEKA is active. The number beside the $\times$
 shows how many concurrent processes are running. If the bird is
-standing but stops moving, it’s sick! Something has gone wrong, and
+standing but stops moving, it's sick! Something has gone wrong, and
 you may have to restart the Explorer.
 
 \subsection{Loading and filtering files}
@@ -439,7 +441,7 @@ item in the file selection box.
 
 \subsection{Converting files to ARFF}
 
-Weka has converters for the following file formats: 
+WEKA has converters for the following file formats: 
 
 \begin{itemize}
 \item spreadsheet files with extension \textit{.csv},
@@ -462,11 +464,11 @@ Weka has converters for the following file formats:
 \caption{\label{fig:goe}The Generic Object Editor.}
 \end{figure}
 
-The appropriate converter is used based on the file extension. If Weka
+The appropriate converter is used based on the file extension. If WEKA
 cannot load the data, it tries to interpret it as ARFF. If that fails,
 it pops up the box shown in Figure~\ref{subfig:goe_1}.
 
-This is a generic object editor, used throughout Weka for selecting
+This is a generic object editor, used throughout WEKA for selecting
 and configuring object. For example, when you set parameters for a
 classifier, you use the same kind of box. The \textit{CSVLoader} for
 \textit{.csv} files is selected by default, and the \textit{More}
@@ -523,15 +525,15 @@ many editable properties, and having gone to some trouble to set them
 up you may want to save the configured object to reuse later.
 
 Files on your computer are not the only source of datasets for
-Weka. You can open a URL, and Weka will use the hypertext transfer
+WEKA. You can open a URL, and WEKA will use the hypertext transfer
 protocol (HTTP) to download an ARFF file from the Web. Or you can open
 a database (Open DB)--—any database that has a Java database
 connectivity (JDBC) driver—and retrieve instances using the SQL
-\textit{Select} statement. This returns a relation that Weka reads in
+\textit{Select} statement. This returns a relation that WEKA reads in
 as an ARFF file. To make this work with your database, you may need to
 modify the file \textit{weka/experiment/DatabaseUtils.props} in the
-Weka distribution by adding your database driver to it. (To access
-this file, expand the weka.jar file in the Weka distribution.)
+WEKA distribution by adding your database driver to it. (To access
+this file, expand the weka.jar file in the WEKA distribution.)
 Figure~\ref{fig:sql_viewer} shows the SQLViewer tool that appears when
 \textit{Open DB} is clicked. In this example, the iris dataset has been
 extracted from a single database table.
@@ -547,7 +549,7 @@ data can be generated according to mathematical expressions. There are
 also several generators for producing artificial data for clustering
 purposes. Apart from loading and saving datasets, the
 \textit{Preprocess} panel also allows you to filter them. Filters are
-an important component of Weka.
+an important component of WEKA.
 
 \subsection{Using filters}
 
@@ -581,9 +583,9 @@ must scroll further down the list. When selected, it appears in the
 line beside the \textit{Choose} button, along with its parameter
 values---in this case the line reads simply ``Remove''. Click that line
 to bring up a generic object editor with which you can examine and
-alter the filter’s properties. (You did the same thing earlier by
+alter the filter's properties. (You did the same thing earlier by
 clicking the \textit{J48} line in Figure~\ref{subfig:j48_2} to open
-the \textit{J4.8} classifier’s object editor.) The object editor for
+the \textit{J4.8} classifier's object editor.) The object editor for
 the Remove filter shown in Figure~\ref{subfig:filters_2}.
 
 To learn about it, click \textit{More} to show the information in
@@ -600,11 +602,11 @@ to set these properties and close the box. Notice that the line beside
 the \textit{Choose} button now reads \textit{Remove --R 1,2}. In the
 command-line version of the \textit{Remove} filter, the option
 \textit{--R} is used to specify which attributes to remove. After
-configuring an object it’s often worth glancing at the resulting
+configuring an object it's often worth glancing at the resulting
 command-line formulation that the Explorer sets up.
 
 Figure~\ref{fig:filters} demonstrates a further feature of the generic
-object editor, namely ``capabilities.'' Algorithms in Weka may provide
+object editor, namely ``capabilities.'' Algorithms in WEKA may provide
 information about what data characteristics they can handle, and, if
 they do, a \textit{Capabilities} button appears underneath
 \textit{More} in the generic object editor
@@ -612,7 +614,7 @@ they do, a \textit{Capabilities} button appears underneath
 Figure~\ref{subfig:filters_4}, which gives information about what the
 method can do. Here it states that \textit{Remove} can handle many
 attribute characteristics, such as different types (nominal, numeric,
-relational etc.) and missing values. It shows the minimum number of
+relational, etc.) and missing values. It shows the minimum number of
 instances that are required for \textit{Remove} to operate on.
 
 Figure~\ref{subfig:filters_5} shows a list of selected constraints on
@@ -665,7 +667,7 @@ interpret the output of a decision tree learner and showed the
 performance figures that are automatically generated by the evaluation
 module. The interpretation of these is the same for all models that
 predict a categorical class. However, when evaluating models for
-numeric prediction, Weka produces a different set of performance
+numeric prediction, WEKA produces a different set of performance
 measures
 
 \begin{figure}[!ht]
@@ -677,7 +679,7 @@ measures
 \end{figure}
 
 As an example, in Figure~\ref{subfig:cpu_1} the CPU performance
-dataset has been loaded into Weka. You can see the histogram of values
+dataset has been loaded into WEKA. You can see the histogram of values
 of the first attribute, \textit{MYCT}, at the lower right. In
 Figure~\ref{subfig:cpu_2} the model tree inducer M5' has been chosen
 as the classifier by going to the \textit{Classify} panel, clicking
@@ -773,10 +775,10 @@ of the class attribute computed over all the training data. The
 description of the tree is followed by several figures that measure
 its performance. These are derived from the test option chosen in
 Figure 2.11b, 10-fold cross-validation (not stratified, because
-stratification doesn’t make sense for numeric prediction).
+stratification does not apply when the class is numeric).
 
 Ordinary linear regression, another scheme for numeric prediction, is
-found under \textit{LinearRegression} in the functions section of the
+found under \textit{LinearRegression} in the {\em functions} section of the
 menu in Figure~\ref{subfig:j48_1}. It builds a single linear
 regression model rather than the five in Figure~\ref{fig:m5p_output};
 not surprisingly, its performance is slightly worse.
@@ -790,7 +792,7 @@ not surprisingly, its performance is slightly worse.
 \end{figure}
 
 
-To get a feel for their relative performance, let’s visualize the
+To get a feel for their relative performance, let us visualize the
 errors these schemes make, as we did for the iris dataset in
 Figure~\ref{subfig:j48_4}. Right-click the entry in the history list
 and select \textit{Visualize classifier errors} to bring up the
@@ -827,7 +829,7 @@ its own classifier field, which we set to \textit{DecisionStump} (as
 shown). This method could itself be configured by clicking (except
 that \textit{DecisionStump} happens to have no editable
 properties). Click \textit{OK} to return to the main \textit{Classify}
-panel and Start to try out boosting decision stumps up to 10 times. It
+panel and {\em Start} to try out boosting decision stumps up to 10 times. It
 turns out that this mislabels only 7 of the 150 instances in the iris
 data---good performance considering the rudimentary nature of decision
 stumps and the rather small number of boosting iterations.
@@ -836,10 +838,10 @@ stumps and the rather small number of boosting iterations.
 
 Use the \textit{Cluster} and \textit{Associate} panels to invoke
 clustering algorithms and methods for finding association rules. When
-clustering, Weka shows the number of clusters and how many instances
+clustering, WEKA shows the number of clusters and how many instances
 each cluster contains. For some algorithms the number of clusters can
 be specified by setting a parameter in the object editor. For
-probabilistic clustering methods, Weka measures the log-likelihood of
+probabilistic clustering methods, WEKA measures the log-likelihood of
 the clusters on the training data: the larger this quantity, the
 better the model fits the data. Increasing the number of clusters
 normally increases the likelihood, but may overfit.
@@ -851,7 +853,7 @@ methods---use training set, supplied test set, and percentage split
 classes to clusters evaluation, compares how well the chosen clusters
 match a preassigned class in the data. You select an attribute (which
 must be nominal) that represents the ``true'' class. Having clustered
-the data, Weka determines the majority class in each cluster and
+the data, WEKA determines the majority class in each cluster and
 prints a confusion matrix showing how many errors there would be if
 the clusters were used instead of the true class. If your dataset has
 a class attribute, you can ignore it during clustering by selecting it
@@ -885,7 +887,7 @@ evaluation, the class assignment errors are shown. For the
 \end{figure}
 
 The \textit{Associate} panel is simpler than \textit{Classify} or
-\textit{Cluster}. Weka contains three algorithms for determining
+\textit{Cluster}. WEKA contains several algorithms for determining
 association rules and no methods for evaluating such
 rules. Figure~\ref{fig:apriori_output} shows the output from the
 Apriori program for association rules on the nominal version of the
@@ -905,7 +907,7 @@ search method. Both are chosen in the usual way and configured with
 the object editor. You must also decide which attribute to use as the
 class. Attribute selection can be performed using the full training
 set or using cross-validation. In the latter case it is done
-separately for each fold, and the output shows how many times—that is,
+separately for each fold, and the output shows how many times---that is,
 in how many of the folds---each attribute was selected. The results are
 stored in the history list. When you right-click an entry here you can
 visualize the dataset in terms of the selected attributes (choose
@@ -951,15 +953,14 @@ the viewing area.
 \section{Filtering algorithms}
 
 Now we take a detailed look at the filtering algorithms implemented
-within Weka. These are accessible from the Explorer, and also from the
-Knowledge Flow and Experimenter interfaces described in
-Chapters~\ref{chapt:knowledge_flow} and~\ref{chapt:experimenter}. All
+within WEKA. These are accessible from the Explorer, and also from the
+Knowledge Flow and Experimenter interfaces described later. All
 filters transform the input dataset in some way. When a filter is
 selected using the \textit{Choose} button, its name appears in the line beside
 that button. Click that line to get a generic object editor to specify
 its properties. What appears in the line is the command-line version
 of the filter, and the parameters are specified with minus signs. This
-is a good way of learning how to use the Weka commands directly.
+is a good way of learning how to use the WEKA commands directly.
 
 There are two kinds of filter: unsupervised and supervised. This
 seemingly innocuous distinction masks a rather fundamental
@@ -971,19 +972,20 @@ results. It is the discretization intervals derived from the
 \textit{training} data that must be applied to the test data. When
 using supervised filters you must to be careful to ensure that the
 results are evaluated fairly, an issue that does not arise with
-unsupervised filters.
+unsupervised filters.  
 
-We treat Weka’s unsupervised and supervised filtering methods
+We treat WEKA's unsupervised and supervised filtering methods
 separately. Within each type there is a further distinction between
 \textit{attribute filters}, which work on the attributes in the
 datasets, and \textit{instance filters}, which work on the
 instances. To learn more about a particular filter, select it in the
-Weka Explorer and look at its associated object editor, which defines
+WEKA Explorer and look at its associated object editor, which defines
 what the filter does and the parameters it takes.
 
 \subsection{Unsupervised attribute filters}
 
-This section discusses Weka's unsupervised attribute filters.
+We will first discuss WEKA's unsupervised attribute filters, which do
+not require a class attribute to be set.
 
 \subsubsection{Adding and removing attributes}
 
@@ -991,7 +993,7 @@ This section discusses Weka's unsupervised attribute filters.
 declared to be missing for all instances. Use the generic object
 editor to specify the attribute's name, where it will appear in the
 list of attributes, and its possible values (for nominal attributes);
-for data attributes you can also specify the date
+for date attributes you can also specify the date
 format. \textit{Copy} copies existing attributes so that you can
 preserve them when experimenting with filters that overwrite attribute
 values. Several attributes can be copied together using an expression
@@ -1026,7 +1028,7 @@ and \textit{RemoveUseless} both skip the class attribute.
 the values of instances can be considered outliers, or extreme
 values. The definition of outlier and extreme value is based on the
 difference between the 25\textsuperscript{th} and
-75\textsuperscript{th} quartile of an attribute’s values. Values are
+75\textsuperscript{th} quartile of an attribute's values. Values are
 flagged as extreme if they exceed the 75\textsuperscript{th} quartile
 (or fall below the 25\textsuperscript{th} quartile) by the product of
 the user-specified extreme value factor and the interquartile
@@ -1036,9 +1038,9 @@ range. Values that are not extreme values but exceed the
 and the interquartile range are flagged as outliers. The filter can be
 configured to flag an instance as an outlier or extreme if any of its
 attribute values are deemed outliers or extreme, or to generate an
-outlier–extreme indicator pair for each attribute. It is also possible
+outlier/extreme indicator pair for each attribute. It is also possible
 to flag all extreme values as outliers, and to output attributes that
-indicate by how many interquartile ranges an attribute’s value
+indicate by how many interquartile ranges an attribute's value
 deviates from the median.
 
 \textit{AddCluster} applies a clustering algorithm to the data before
@@ -1049,12 +1051,12 @@ button for the clusterer, and you configure the clusterer by clicking
 its line and getting another object editor panel, which must be filled
 in before returning to the \textit{AddCluster} object editor. This is
 probably easier to understand when you do it in practice than when you
-read about it in a book! At any rate, once you have chosen a
+read about it here! At any rate, once you have chosen a
 clusterer, \textit{AddCluster} uses it to assign a cluster number to
 each instance, as a new attribute. The object editor also allows you
 to ignore certain attributes when clustering, specified as described
 previously for \textit{Copy}. \textit{ClusterMembership} uses a
-clusterer, again specified in the filter’s object editor, to generate
+clusterer, again specified in the filter's object editor, to generate
 membership values. A new version of each instance is created whose
 attributes are these values. The class attribute, if set, is ignored
 during clustering.
@@ -1072,7 +1074,7 @@ is \newline
 
 a1\string^2*a5/log(a7*4.0)\newline
 
-There is a debug option that replaces the new attribute’s value with a
+There is a debug option that replaces the new attribute's value with a
 postfix parse of the supplied expression.  
 
 \textit{MathExpression} is similar to \textit{AddExpression} but can
@@ -1082,7 +1084,7 @@ expression in \textit{situ}; because of this, the expression cannot
 reference the value of other attributes. All the operators that apply
 to \textit{AddExpression} can be used, as well as the minimum,
 maximum, mean, sum, sum-squared and standard deviation of the
-attribute being processed. Furthermore, simple if–then–else
+attribute being processed. Furthermore, simple if-then-else
 expressions involving the operators and functions can be applied as
 well.
 
@@ -1107,7 +1109,7 @@ the number of attributes). The class attribute, if set, is always
 included.
 
 \textit{CartesianProduct} produces a new attribute with values
-resulting from performing the cartesian product between two or more
+resulting from performing the Cartesian product between two or more
 nominal attributes. The name of the new attribute is a concatenation
 of the names of the original attributes.
 
@@ -1117,20 +1119,21 @@ dataset. The user supplies and configures each filter, and defines the
 range of attributes for them to work with. There is an option to
 delete attributes that are not covered by any of the ranges. Only
 filters that operate on attributes are allowed. The output of the
-individual filters is assembled into a new dataset. \textit{Reorder}
-alters the order of the attributes in the data; the new order is
-specified by supplying a list of attribute indices. By omitting or
-duplicating indices it is possible to delete attributes or make
-several copies of them.
+individual filters is assembled into a new dataset. 
+
+\textit{Reorder} alters the order of the attributes in the data; the
+new order is specified by supplying a list of attribute indices. By
+omitting or duplicating indices it is possible to delete attributes or
+make several copies of them.
 
 \subsubsection{Changing values}
 
 \textit{SwapValues} swaps the positions of two values of a nominal
-attribute. The order of values is entirely cosmetic—it does not affect
-learning at all—but if the class is selected, changing the order
+attribute. The order of values is entirely cosmetic---it does not affect
+learning at all---but if the class is selected, changing the order
 affects the layout of the confusion matrix. \textit{MergeTwoValues}
 merges values of a nominal attribute into a single category. The new
-value’s name is a concatenation of the two original ones, and every
+value's name is a concatenation of the two original ones, and every
 occurrence of either of the original values is replaced by the new
 one. The index of the new value is the smaller of the original
 indices. For example, if you merge the first two values of the
@@ -1162,19 +1165,19 @@ specify a constant value to use. This constant can be specified
 separately for numeric, nominal and date attributes.
 
 \textit{ReplaceWithMissingValue} is a filter that does the opposite of
-the ones we've just discussed---it replaces non-missing values, for a
+the ones we have just discussed---it replaces non-missing values, for a
 user-specified range of attributes, with missing values at random. The
-probability that a given value will be replaced with missing value can
+probability that a given value will be replaced with a missing value can
 be set as an option.
 
 \textit{NumericCleaner} replaces the values of numeric attributes that are too
 small, too large or too close to a particular value with default
 values. A different default can be specified for each case, along with
 thresholds for what is considered to be too large or small and a
-tolerance value for defining ``too close.''
+tolerance value for defining ``too close'' can be specified as well.
 
-\textit{AddValues} adds any values that are not already present in a
-nominal attribute from a user-supplied list. The labels can optionally
+\textit{AddValues} adds any values from a user-supplied list that are
+not already present in a nominal attribute. The labels can optionally
 be sorted. \textit{ClassAssigner} can be used to set or unset a
 dataset's class attribute. The user supplies the index of the new
 class attribute; a value of zero unsets the existing class attribute.
@@ -1184,7 +1187,7 @@ attributes.
 
 \subsubsection{Conversions}
 
-Many filters convert attributes from one form to another. Discretize
+Many filters convert attributes from one form to another. {\em Discretize}
 uses equal-width or equal-frequency binning to discretize a range of
 numeric attributes, specified in the usual way. For the former method
 the number of bins can be specified or chosen automatically by
@@ -1210,8 +1213,8 @@ multivalued nominal attributes must be converted to binary ones. The
 \textit{NominalToBinary} filter transforms all specified multivalued
 nominal attributes in a dataset into binary ones, replacing each
 attribute with \textit{k} values by \textit{k} binary attributes using
-a simple one-per-value encoding. The new attributes will be numeric by
-default. Attributes that are already binary are left
+a simple one-per-value (``one-hot'') encoding. The new attributes will
+be numeric by default. Attributes that are already binary are left
 untouched. \textit{NumericToBinary} converts all numeric attributes
 into nominal binary ones (except the class, if set). If the value of
 the numeric attribute is exactly 0, the new attribute will be 0, and
@@ -1220,10 +1223,10 @@ value of the new attribute will be 1. These filters also skip the
 class attribute. \textit{NumericToNominal} converts numeric attributes
 to nominal ones by simply adding every distinct numeric value to the
 list of nominal values. This can be a useful filter to apply after
-importing a .csv file---Weka's csv import facility creates a numeric
+importing a .csv file---WEKA's CSV import facility creates a numeric
 attribute for any data column whose values can all be parsed as
-numbers, but it might make sense to interpret the values of an integer
-attribute as discrete instead.
+numbers, unless configured to do otherwise, but it might make sense to
+interpret the values of an integer attribute as discrete instead.
 
 \textit{FirstOrder} takes a range of \textit{N} numeric attributes and
 replaces them with \textit{N} -- 1 numeric attributes whose values are the
@@ -1231,12 +1234,13 @@ differences between consecutive attribute values from the original
 instances. For example, if the original attribute values were 3, 2,
 and 1, the new ones will be --1 and --1.
 
-\textit{KernelFilter} converts the data to a kernel matrix: it outputs a new
-dataset, containing the same number of instances as before, in which
-each value is the result of evaluating a kernel function on a pair of
-original instances. By default, all values are transformed to center
-them around zero, though they are not rescaled to unit
-variance. However, different filters can be specified.
+\textit{KernelFilter} converts the data to a kernel matrix: it outputs
+a new dataset, containing the same number of instances as before, in
+which each value is the result of evaluating a kernel function on a
+pair of the original instances. By default, all attributes are transformed
+to center them around zero before the kernels are computed, though
+they are not rescaled to unit variance. However, different filters can
+be specified.
 
 \textit{PrincipalComponents} performs a principal components
 transformation on the dataset. First, any multi-valued nominal
@@ -1265,7 +1269,7 @@ dataset. \textit{NominalToString} converts the other way.
 
 \textit{StringToWordVector} produces numeric attributes that represent
 the frequency of words in the value of a string attribute. The set of
-words—that is, the new attribute set---is determined from the full set
+words---that is, the new attribute set---is determined from the full set
 of values in the string attribute. The new attributes can be named
 with a user-determined prefix to keep attributes derived from
 different string attributes distinct.
@@ -1273,12 +1277,12 @@ different string attributes distinct.
 There are many options that affect tokenization. Words can be formed
 from contiguous alphabetic sequences or separated by a given set of
 delimiter characters. In the latter case, they can be further split
-into n-grams (with user-supplied minimum and maximum length), or be
+into $n$-grams (with user-supplied minimum and maximum length), or be
 processed by a stemming algorithm. They can be converted to lowercase
 before being added to the dictionary, or all words on a supplied list
 of stopwords can be ignored. Words that are not among the top
 \textit{k} words ranked by frequency can be discarded (slightly more
-than k words will be retained if there are ties at the \textit{k}th
+than $k$ words will be retained if there are ties at the \textit{k}th
 position). If a class attribute has been assigned, the top \textit{k}
 words for each class will be kept (this can be turned off by the
 user). The value of each word attribute reflects its presence or
@@ -1298,7 +1302,7 @@ dictionary file containing the words that will form the attributes,
 rather than building a dictionary on the fly.  The format of the
 dictionary file is that of one word per line, with each followed by an
 optional count (separated by a comma) of how many documents in the
-corpus, from which the dictionary was derived, contained that word.
+corpus from which the dictionary was derived contained that word.
 
 \textit{ChangeDateFormat} alters the formatting string that is used to
 parse date attributes. Any format supported by Java's
@@ -1314,7 +1318,7 @@ current instance with the difference between the current value and the
 value in some other instance. In both cases instances in which the
 time-shifted value is unknown may be removed, or missing values used.
 
-\subsubsection{Randomizing}
+\subsubsection{Randomizing the attributes}
 
 Other attribute filters degrade the data. \textit{AddNoise} takes a
 nominal attribute and changes a given percentage of its
@@ -1327,24 +1331,24 @@ length. The class attribute is not included in the projection.
 
 \subsection{Unsupervised instance filters}
 
-Weka's instance filters affect all instances in a dataset rather than
-all values of a particular attribute or attributes.
+WEKA's instance filters affect all instances in a dataset rather than
+all values of a particular attribute or set of attributes.
 
 \subsubsection{Randomizing and subsampling}
 
-\textit{Randomize} does just what the name suggests---randomizes the
+\textit{Randomize} does just what the name suggests---it randomizes the
 order of the instances in the dataset. The user can specify a random
 number seed to use in this process.
 
 There are various ways of generating subsets of the data. Use
 \textit{Resample} to produce a random sample by sampling with or
-without replacement, or \textit{RemoveFolds} to split it into a given
+without replacement, or \textit{RemoveFolds} to split the data into a given
 number of cross-validation folds and reduce it to just one of them. If
 a random number seed is provided, the dataset will be shuffled before
 the subset is extracted. \textit{ReservoirSample} uses the reservoir
 sampling algorithm to produce a random sample (without replacement)
 from a dataset. When used from the Knowledge Flow
-interface~\ref{chapt:knowledge_flow} or from the command line), the
+interface (see Chapter~\ref{chapt:knowledge_flow}) or from the command line, the
 dataset is read incrementally, so that datasets that exceed main
 memory can be sampled.
 
@@ -1395,40 +1399,40 @@ representation.
 \label{subsection:supervised_filters}
 
 Supervised filters are available from the Explorer's
-\textit{Preprocess} panel, just as unsupervised ones are. You need to
-be careful with them because, despite appearances, they are not really
-preprocessing operations. We noted this earlier with regard to
-discretization---the test data splits must not use the test data’s
-class values because these are supposed to be unknown---and it is true
-for supervised filters in general.
+\textit{Preprocess} panel, just as unsupervised ones are. As mentioned
+earlier, you need to be careful with them because, despite
+appearances, they are not really preprocessing operations. We noted
+this earlier with regard to discretization---it must
+not use the test data's class values because these are supposed to be
+unknown---and this is true for supervised filters in general.
 
 \begin{figure}[!th]
 \centering
 \subfloat[Configuring \textit{FilteredClassifier}.]{\label{subfig:filtered_classifier_1}\includegraphics[width=0.45\textwidth]{images/B2_17a.png}}
 \qquad
 \subfloat[The menu of filters.]{\label{subfig:filtered_classifier_2}\includegraphics[width=0.45\textwidth]{images/B2_17b.png}}
-\caption{\label{fig:filtered_classifier}Using Weka's metalearner for discretization.}
+\caption{\label{fig:filtered_classifier}Using WEKA's metalearner for discretization.}
 \end{figure}
 
-Because of popular demand, Weka allows you to invoke supervised
+Because of popular demand, WEKA allows you to invoke supervised
 filters as a preprocessing operation, just like unsupervised
-filters. However, if you intend using them for classification you
+filters. However, if you intend to use them for classification you
 should adopt a different methodology. A \textit{metalearner} is
-provided that invokes a filter in a way that wraps the learning
-algorithm into the filtering mechanism. This filters the test data
-using the filter that has been created by the training data. It is
-also useful for some unsupervised filters. For example, in
+provided so that the process of building the filtering model becomes
+part of the learning process. This filters the test data using the
+filter that has been created from the training data. It is also useful
+for some unsupervised filters. For example, in
 \textit{StringToWordVector} the dictionary will be created from the
 training data alone: words that are novel in the test data will be
 discarded. To use a supervised filter in this way, invoke the
-\textit{FilteredClassifier} metalearning scheme from in the
+\textit{FilteredClassifier} metalearning scheme from the
 \textit{meta} section of the menu displayed by the Classify panel's
 Choose button. Figure~\ref{subfig:filtered_classifier_1} shows the
 object editor for this metalearning scheme. With it you choose a
 classifier and a filter. Figure~\ref{subfig:filtered_classifier_2}
 shows the menu of filters.
 
-Supervised filters, such as unsupervised ones, are divided into
+Supervised filters, just like unsupervised ones, are divided into
 attribute and instance filters.
 
 \subsubsection{Supervised attribute filters}
@@ -1437,8 +1441,8 @@ attribute and instance filters.
 Figure~\ref{fig:filtered_classifier}, uses the MDL method of
 supervised discretization. You can specify a range of attributes or
 force the discretized attribute to be binary. The class must be
-nominal. By default Fayyad and Irani’s (1993) criterion is used, but
-Kononenko’s method (1995) is an option.
+nominal. By default Fayyad and Irani's (1993) criterion is used, but
+Kononenko's method (1995) is an option.
 
 There is a supervised version of the \textit{NominalToBinary} filter
 that transforms all multivalued nominal attributes to binary ones. In
@@ -1446,16 +1450,13 @@ this version, the transformation depends on whether the class is
 nominal or numeric. If nominal, the same method as before is used: an
 attribute with \textit{k} values is transformed into \textit{k} binary
 attributes. If the class is numeric, however, the method described in
-Section 7.3 (page 276) is applied. In either case the class itself is
+used by the model tree learner M5' is applied. In either case the class itself is
 not transformed.
 
 \textit{ClassOrder} changes the ordering of the class values. The user
 determines whether the new ordering is random or in ascending or
 descending class frequency. This filter must not be used with the
 \textit{FilteredClassifier} metalearning scheme!
-\textit{AttributeSelection} can be used for automatic attribute
-selection and provides the same functionality as the Explorer’s
-\textit{Select attributes} panel (described later).
 
 \textit{AddClassification} adds to the data the predictions of a given
 classifier, which can be either trained on the input dataset or loaded
@@ -1473,10 +1474,9 @@ method.
 
 \textit{ClassConditionalProbabilities} converts the values of nominal
 and numeric attributes into class conditional probability
-estimates. For each original attribute converted, it creates as many
-new attributes as there are class values, where the value of a new
-attribute corresponding to class \textit{k} is pr(original attribute
-value | class \textit{k}). This is essentially the same as what the
+estimates. For each original attribute $A$ converted, it creates as many
+new attributes as there are class values, where the value of the new
+attribute corresponding to class $C_k$ is $P(A | C_k)$. This is essentially the same as what the
 naive Bayes classifier computes and, in fact, the implementation uses
 naive Bayes internally. Like the unsupervised filters that merge
 nominal values, this filter can help when dealing with nominal
@@ -1491,7 +1491,7 @@ configured to bias the class distribution towards a uniform
 one. Sampling can be performed with (default) or without
 replacement. \textit{SpreadSubsample} also produces a random
 subsample, but the frequency difference between the rarest and the
-most common class can be controlled—for example, you can specify at
+most common class can be controlled---for example, you can specify at
 most a 2 : 1 difference in class frequencies. You can also limit the
 number of instances in any class by specifying an explicit maximum
 count.
@@ -1516,12 +1516,12 @@ On the \textit{Classify} panel, when you select a learning algorithm
 using the \textit{Choose} button the command-line version of the
 classifier appears in the line beside the button, including the
 parameters specified with minus signs. To change them, click that line
-to get an appropriate object editor. The classifiers in Weka are
+to get an appropriate object editor. The classifiers in WEKA are
 divided into Bayesian classifiers, trees, rules, functions, lazy
 classifiers and a final miscellaneous category. We describe them
 briefly here, along with their parameters. To learn more, choose one
-in the Weka Explorer interface and examine its object editor. A
-further kind of classifier, the Metalearner, is described in the next
+in the WEKA Explorer interface and examine its object editor. A
+further kind of classifier, the metalearner, is described in the next
 section.
 
 \subsection{Bayesian classifiers}
@@ -1647,15 +1647,14 @@ on the fly.
 Section 6.7: nominal attributes (numeric ones are prediscretized) and
 no missing values (any such values are replaced globally). There are
 four different algorithms for estimating the conditional probability
-tables of the network. Search is done using K2 or the TAN algorithm,
-or more sophisticated methods based on hill-climbing, simulated
-annealing, tabu search, and genetic algorithms. Optionally search
-speed can be improved using AD trees. There are also two algorithms
-that use conditional independence tests to learn the structure of the
-network; alternatively, the network structure can be loaded from an
-XML (extensible markup language) file. More details on the
-implementation of Bayesian networks in Weka can be found in Bouckaert
-(2004).
+tables of the network. Search is done using the K2 or the TAN
+algorithms, or more sophisticated methods based on hill-climbing,
+simulated annealing, tabu search, and genetic algorithms. Optionally
+search speed can be improved using AD trees. There are also two
+algorithms that use conditional independence tests to learn the
+structure of the network; alternatively, the network structure can be
+loaded from an XML file. More details on the implementation of
+Bayesian networks in WEKA can be found in Bouckaert (2004).
 
 \begin{figure}[!th]
 \centering
@@ -1676,7 +1675,7 @@ defaults to K2 with the maximum number of parents of a node set to
 one. Reconfiguring this to three by clicking on K2 in the
 configuration panel yields the more interesting network in
 Figure~\ref{subfig:bayes_net_2}. Clicking on a node shows its
-probability distribution—Figure~\ref{subfig:bayes_net_3} is obtained
+probability distribution---Figure~\ref{subfig:bayes_net_3} is obtained
 by clicking on the windy node in Figure~\ref{subfig:bayes_net_2}.
 
 \subsection{Trees}
@@ -1688,7 +1687,7 @@ by clicking on the windy node in Figure~\ref{subfig:bayes_net_2}.
 \label{fig:goe_j48}
 \end{figure}
 
-Of the tree classifiers in Weka, we have already seen how to use J4.8,
+Of the tree classifiers in WEKA, we have already seen how to use J4.8,
 which reimplements C4.5. To see the options, click the line beside the
 \textit{Choose} button in Figure~\ref{subfig:j48_2} to bring up the
 object editor in Figure~\ref{fig:goe_j48}. You can build a binary tree
@@ -1710,7 +1709,7 @@ use Laplace smoothing for predicted probabilities.
 described later, builds one-level binary decision trees for datasets
 with a categorical or numeric class, dealing with missing values by
 treating them as a separate value and extending a third branch from
-the stump. Trees built by \textit{RandomTree} test a given number of
+the stump. Trees built by \textit{RandomTree} consider a given number of
 random features at each node, performing no
 pruning. \textit{RandomForest} constructs random forests by bagging
 ensembles of random trees.
@@ -1724,7 +1723,7 @@ minimum number of instances per leaf, maximum tree depth (useful when
 boosting trees), minimum proportion of training set variance for a
 split (numeric classes only), and number of folds for pruning.
 
-\textit{M5P} is the model tree learner described in Section 7.3. 
+\textit{M5P} is the model tree learner M5$\prime$ described in Chapter 7 of the book.
 
 \textit{LMT} builds logistic model trees. It can deal with binary and
 multiclass target variables, numeric and nominal attributes, and
@@ -1736,28 +1735,28 @@ node. This heuristic (which you can switch off) improves the run time
 considerably, with little effect on accuracy. Alternatively, you can
 set the number of boosting iterations to be used throughout the tree
 manually, or use a fast heuristic based on the Akaike Information
-Criterion instead of cross-validation. Weight trimming can be used to
-further improve run time. Normally, it is the misclassification error
-that cross-validation minimizes, but the root mean-squared error of
-the probabilities can be chosen instead. The splitting criterion can
-be based on C4.5’s information gain (the default) or on the LogitBoost
-residuals, striving to improve the purity of the residuals. LMT
-employs the minimal cost-complexity pruning mechanism to produce a
-compact tree structure.
+Criterion instead of cross-validation. Weight trimming during the
+boosting process can be used to further improve run time. Normally, it
+is the misclassification error that cross-validation minimizes, but
+the mean absolute error of the probability estimates can be chosen
+instead. The splitting criterion can be based on C4.5's information
+gain (the default) or on the LogitBoost residuals, striving to improve
+the purity of the residuals. LMT employs the minimal cost-complexity
+pruning mechanism to produce a compact tree structure.
 
 \textit{HoeffdingTree} is an implementation of the incremental decision tree
-algorithm algorithm described in Section 13.3. It offers options to
+algorithm algorithm described in Chapter 13 of the book. It offers options to
 create splits based on information gain or the Gini index. Predictions
 at the leaves of the tree can be made by either majority class or
 naive Bayes models.
 
 \subsection{Rules}
 
-\textit{DecisionTable} builds a decision table majority classifier. It
+\textit{DecisionTable} builds a decision table classifier. It
 evaluates feature subsets using best-first search and can use
 cross-validation for evaluation (Kohavi 1995b). An option uses the
 nearest-neighbor method to determine the class for each instance that
-is not covered by a decision table entry, instead of the table’s
+is not covered by a decision table entry, instead of the table's
 global majority, based on the same set of features.
 
 \begin{figure}[!p]
@@ -1835,8 +1834,8 @@ output for the labor negotiations data. The Classifier model part
 shows that wage-increase-first-year has been identified as the basis
 of the rule produced, with a split at the value 2.9 dividing bad
 outcomes from good ones (the class is also good if the value of that
-attribute is missing). Beneath the rule the fraction of training
-instances correctly classified by the rule is given in parentheses.
+attribute is missing). Beneath the rules the fraction of training
+instances correctly classified by the rules is given in parentheses.
 
 \begin{figure}[!p]
 %\centering
@@ -1921,7 +1920,7 @@ J4.8. Figure~\ref{fig:part_output} shows the output of Part for the
 labor negotiations data. Three rules are found, and are intended to be
 processed in order, the prediction generated for any test instance
 being the outcome of the first rule that fires. The last, ``catch-all,''
-rule will always fire. As with J48, the numbers in parentheses that
+rule will always fire if no other rule fires. As with J48, the numbers in parentheses that
 follow each rule give the number of instances that are covered by the
 rule followed by the number that are misclassified (if any).
 
@@ -1995,23 +1994,22 @@ the output of \textit{SimpleLinearRegression} for the CPU performance
 data. The attribute that has the smallest squared error in this case
 is \textit{MMAX}.
 
-\textit{LinearRegression} performs standard least-squares multiple
-linear regression and can optionally perform attribute selection,
+\textit{LinearRegression} performs least-squares multiple
+linear regression including attribute selection,
 either greedily using backward elimination or by building a full model
 from all attributes and dropping terms one by one in decreasing order
 of their standardized coefficients until a stopping criteria is
 reached. Both methods use a version of the AIC termination
-criterion. The implementation has two further refinements: a heuristic
+criterion. Attribute selection can be turned off. The implementation has two further refinements: a heuristic
 mechanism for detecting collinear attributes (which can be turned off)
 and a ridge parameter that stabilizes degenerate cases and can reduce
 overfitting by penalizing large coefficients. Technically,
-\textit{LinearRegression} implements ridge regression, which is
-described in standard statistics texts.
+\textit{LinearRegression} implements ridge regression.
 
 \textit{SMO} implements the sequential minimal optimization algorithm for
-training a support vector classifier, using kernel
-functions such as polynomial or Gaussian kernels (Platt, 1998; Keerthi
-et al., 2001). Missing values are replaced globally, nominal
+training a support vector classifier (Platt, 1998; Keerthi
+et al., 2001), using kernel
+functions such as polynomial or Gaussian kernels. Missing values are replaced globally, nominal
 attributes are transformed into binary ones, and attributes are
 normalized by default---note that the coefficients in the output are
 based on the normalized data. Normalization can be turned off, or the
@@ -2019,8 +2017,8 @@ input standardized to zero mean and unit variance. Pairwise
 classification is used for multiclass problems. Logistic regression
 models can be fitted to the support vector machine output to obtain
 probability estimates. In the multiclass case the predicted
-probabilities will be coupled pairwise (Hastie and
-Tibshirani. 1998). When working with sparse instances, turn
+probabilities will be combined using pairwise coupling (Hastie and
+Tibshirani, 1998). When working with sparse instances, turn
 normalization off for faster operation.
 
 \begin{figure}[!p]
@@ -2283,14 +2281,13 @@ contains three class values, three binary SMO models have been
 output---one hyperplane to separate each possible pair of class
 values. Furthermore, since the machine is linear, the hyperplanes are
 expressed as functions of the attribute values in the original (albeit
-normalized) space. Figures~\ref{fig:smo_nonlinear_output} and
-~\ref{fig:smo_nonlinear_cont} show the result when the exponent of the
+normalized) space. Figures~\ref{fig:smo_nonlinear_output} and~\ref{fig:smo_nonlinear_cont} show the result when the exponent of the
 polynomial kernel is set to 2, making the support vector machine
 nonlinear. There are three binary SMO models as before, but this time
-the hyperplanes are expressed as functions of the support
+the classifiers are expressed as functions of the support
 vectors. Each support vector is shown enclosed in angle brackets,
 along with the value of its coefficient $\alpha$. The value of the
-offset parameter, $\beta$ (which is the same as $\alpha_0$), is shown
+offset parameter, $b$, is shown
 as the last component of each function.
 
 \textit{SMOreg} implements the sequential minimal optimization algorithm for
@@ -2300,9 +2297,9 @@ learning a support vector regression model (Smola and Schölkopf,
 \textit{VotedPerceptron} is the voted perceptron
 algorithm. \textit{Winnow} modifies the basic perceptron to use
 multiplicative updates. The implementation allows for a second
-multiplier $\beta$---different from $1/\alpha$---to be used in place
-of the divisions in Figure 4.12, and also provides the balanced
-version of the algorithm.
+multiplier $\beta$---different from $1/\alpha$---to be used, which
+makes the algorithm slightly more flexible than the version of
+balanced Winnow discussed in the book.
 
 \textit{GaussianProcesses} implements the Bayesian Gaussian process
 technique for non-linear regression. Users can specify the kernel
@@ -2316,7 +2313,7 @@ models. Models can be learned in either a batch or incremental
 fashion. The loss function chosen determines the type of model
 learned. Available loss functions include the hinge loss (linear
 support vector classifier), log loss (logistic regression), squared
-loss (least squares linear regression), epsilon-insenstive loss
+loss (least squares linear regression), epsilon-insensitive loss
 (support vector regression) and Huber loss (robust
 regression). \textit{SGDText}, like
 \textit{NaiveBayesMultinomialText}, is a version that is designed for
@@ -2413,15 +2410,15 @@ on work by le Cessie and van Houwelingen
 (1992). Figure~\ref{fig:logistic_output} shows its output on the iris
 data. The coefficients of the regression functions are shown in
 tabular form, one for each class value except for the last
-class. Given m input attributes and k classes, the probability
-predicted for class j (with the exception of the last class) is given
+class. Given $m$ input attributes and $k$ classes, the probability
+predicted for class $j$ (with the exception of the last class) is given
 by\newline
 
-$Pr[j|a_1,a_2,...,a_m]=\frac{exp(w^j_0+w^j_1a_1+w^j_2a_2+...+w^j_ma_m)}{1 + \sum_{j=1}^{k-1}exp(w^j_0+w^j_1a_1+w^j_2a_2+...+w^j_ma_m)}$\newline
+$P(j|a_1,a_2,...,a_m)=\frac{exp(w^j_0+w^j_1a_1+w^j_2a_2+...+w^j_ma_m)}{1 + \sum_{j=1}^{k-1}exp(w^j_0+w^j_1a_1+w^j_2a_2+...+w^j_ma_m)}$\newline
 
 where $w^j_0$ is the intercept term for class $j$. The probability of the last class $k$ is given by\newline
 
-$1-\sum_{j=1}^{k-1}Pr[j|a_1,a_2,...,a_m]$\newline
+$1-\sum_{j=1}^{k-1}P(j|a_1,a_2,...,a_m)$\newline
 
 Beneath the table of regression coefficients is a second table giving
 an estimate of the odds ratio for each input attribute and class
@@ -2436,10 +2433,10 @@ held fixed.
 \subfloat[Beginning the process of editing the network to add a second hidden layer.]{\label{subfig:mlp_editor_1}\includegraphics[width=0.75\textwidth]{images/B2_27a.png}}
 \qquad
 \subfloat[The finished network with two hidden layers.]{\label{subfig:mlp_editor_2}\includegraphics[width=0.75\textwidth]{images/B2_27b.png}}
-\caption{\label{fig:mlp_editor}Using Weka's neural-network graphical user interface.}
+\caption{\label{fig:mlp_editor}Using WEKA's neural-network graphical user interface.}
 \end{figure}
 
-\textit{MultilayerPerceptron} is a neural network that trains using
+\textit{MultilayerPerceptron} is a neural network that is trained using
 back propagation. Although listed under functions, it differs from the
 other schemes because it has its own user interface. If you load up
 the numeric version of the weather data, invoke
@@ -2478,7 +2475,7 @@ node at the other end.
 As well as configuring the structure of the network, you can control
 the learning rate, the momentum, and the number of passes that will be
 taken through the data, called \textit{epochs}. The network begins to
-train when you click Start, and a running indication of the epoch and
+train when you click {\em Start}, and a running indication of the epoch and
 the error for that epoch is shown at the lower left of the panel in
 Figure~\ref{fig:mlp_editor}. Note that the error is based on a network
 that changes as the value is computed. For numeric classes the error
@@ -2508,8 +2505,8 @@ number of attributes, $o$ the number of class values, $a$ the average
 of the two, and $t$ their sum. The default, $a$, was used to generate
 Figure~\ref{subfig:mlp_editor_1}.
 
-The parameters \textit{learningRate} and \textit{momentum} set values
-for these variables, which can be overridden in the graphical
+The options \textit{learningRate} and \textit{momentum} set values
+for these parameters, which can be overridden in the graphical
 interface. A \textit{decay} parameter causes the learning rate to
 decrease with time: it divides the starting value by the epoch number
 to obtain the current rate. This sometimes improves performance and
@@ -2539,44 +2536,43 @@ performance; these options are turned on by default.
 \subsection{Lazy classifiers}
 
 Lazy learners store the training instances and do no real work until
-classification time.
-
-\textit{IBk} is a \textit{k}-nearest-neighbor classifier. A variety of
-different search algorithms can be used to speed up the task of
-finding the nearest neighbors. A linear search is the default, but
-other options include kD-trees, ball trees and so-called ``cover
-trees'' (Beygelzimer et al., 2006). The distance function used is a
-parameter of the search method. The default is the same as for
-\textit{IB1}, that is, the Euclidean distance; other options include
-Chebyshev, Manhattan and Minkowski distances. The number of nearest
-neighbors (default $k$ = 1) can be specified explicitly in the object
-editor or determined automatically using leave-one-out
-cross-validation, subject to an upper limit given by the specified
-value. Predictions from more than one neighbor can be weighted
-according to their distance from the test instance, and two different
-formulas are implemented for converting the distance into a
+classification time. The simplest lazy learner is the
+\textit{k}-nearest-neighbor classifier, which is implemented by
+\textit{IBk}. A variety of different search algorithms can be used to
+speed up the task of finding the nearest neighbors. A linear search is
+the default, but other options include kD-trees, ball trees and
+so-called ``cover trees'' (Beygelzimer et al., 2006). The distance
+function used is a parameter of the search method. The default is the
+same as for \textit{IB1}, that is, the Euclidean distance; other
+options include Chebyshev, Manhattan and Minkowski distances. The
+number of nearest neighbors (default $k$ = 1) can be specified
+explicitly in the object editor or determined automatically using
+leave-one-out cross-validation, subject to an upper limit given by the
+specified value. Predictions from more than one neighbor can be
+weighted according to their distance from the test instance, and two
+different formulas are implemented for converting the distance into a
 weight. The number of training instances kept by the classifier can be
 restricted by setting the window size option. As new training
 instances are added, the oldest ones are removed to maintain the
-number of training instances at this size
-
-\textit{KStar} is a nearest-neighbor method with generalized distance
-function based on transformations.
+number of training instances at this size \textit{KStar} is a
+nearest-neighbor method with generalized distance function based on
+transformations, discussed in Chapter 7 of the book.
 
 \textit{LWL} is a general algorithm for locally weighted learning. It
 assigns weights using an instance-based method and builds a classifier
 from the weighted instances. The classifier is selected in
-\textit{LWL’s} object editor: a good choice is Naïve Bayes for
-classification problems and linear regression for regression
-problems. You can set the number of neighbors used, which determines
-the kernel bandwidth, and the kernel shape to use for
-weighting—linear, inverse, or Gaussian. Attribute normalization is
+\textit{LWL's} object editor: a good choice is naive Bayes or logistic
+regression for classification problems and linear regression for
+regression problems. You can set the number of neighbors used, which
+determines the kernel bandwidth, and the kernel shape to use for
+weighting---linear, inverse, or Gaussian. Attribute normalization is
 turned on by default.
 
 \subsection{Miscellaneous classifiers}
 
-The ``Misc.'' category includes just two
-classifiers. \textit{SerializedClassifier} loads a model that has been
+The ``Misc.'' category includes just two classifiers, unless further
+corresponding WEKA packages have been
+installed. \textit{SerializedClassifier} loads a model that has been
 serialized to a file and uses it for prediction. Providing a new
 training dataset has no effect, because it encapsulates a static
 model. Similarly, performing cross-validation using
@@ -2593,13 +2589,13 @@ values are used for incoming nominal values not seen during training.
 \subsection{Metalearning algorithms}
 
 Metalearning algorithms take classifiers and turn them into more
-powerful learners. One parameter specifies the base classifier; others
+powerful learners. One parameter specifies the base classifier(s); others
 specify the number of iterations for iterative schemes such as bagging
 and boosting and an initial seed for the random number generator. We
 already met \textit{FilteredClassifier} in
 Section~\ref{subsection:supervised_filters}: it runs a classifier on
 data that has been passed through a filter, which is a parameter. The
-filter’s own parameters are based exclusively on the training data,
+filter's own parameters are based exclusively on the training data,
 which is the appropriate way to apply a supervised filter to test
 data.
 
@@ -2626,10 +2622,10 @@ use, it provides a parameter to control the size of the attribute
 subsets. \textit{RotationForest} implements the rotation forest
 ensemble learner. Although the classic paper on rotation forests,
 Rodriguez et al. (2006), uses random subspaces and principal
-components to create an ensemble of decision trees, Weka's
+components to create an ensemble of decision trees, WEKA's
 implementation allows the base classifier to be any classification or
 regression scheme. The principal components transformation is
-performed by Weka's filter of the same name. \textit{RotationForest}
+performed by WEKA's filter of the same name. \textit{RotationForest}
 can be configured to use other projections such as random projections
 or partial least squares. Other parameters control the size of the
 subspaces and the number of instances that are input to the projection
@@ -2637,12 +2633,12 @@ filter.
 
 \subsubsection{Boosting}
 
-\textit{AdaBoostM1} implements the algorithm described in Section 12.4
-(Figure 12.2). It can be accelerated by specifying a threshold for
-weight pruning. AdaBoostM1 resamples if the base classifier cannot
-handle weighted instances (you can also force resampling anyway).
+\textit{AdaBoostM1} implements the classic boosting algorithm. It can
+be accelerated by specifying a threshold for weight
+pruning. AdaBoostM1 resamples if the base classifier cannot handle
+weighted instances (you can also force resampling anyway).
 
-Whereas boosting only applies to nominal classes,
+Whereas \textit{AdaBoostM1} only applies to nominal classes,
 \textit{AdditiveRegression} enhances the performance of a regression
 learner. There are two parameters: shrinkage, which governs the
 learning rate, and the maximum number of models to generate. If the
@@ -2661,23 +2657,11 @@ resampling instead of reweighting.
 classifiers. The default scheme is to average their probability
 estimates or numeric predictions, for classification and regression
 respectively. Other combination schemes are available, for example,
-using majority voting for classification. \textit{MultiScheme} selects
-the best classifier from a set of candidates using cross-validation of
-percentage accuracy or mean-squared error for classification and
-regression respectively. The number of folds is a
-parameter. Performance on training data can be used instead.
+using majority voting for classification.
 
-Stacking combines classifiers using stacking for both classification
+{\em Stacking} combines classifiers using stacking for both classification
 and regression problems. You specify the base classifiers, the
-metalearner, and the number of cross-validation folds. \textit{StackingC}
-implements a more efficient variant for which the metalearner must be
-a numeric prediction scheme (Seewald, 2002). In \textit{Grading}, the inputs to
-the metalearner are base-level predictions that have been marked
-(i.e., ``graded'') as correct or incorrect. For each base classifier, a
-metalearner is learned that predicts when the base classifier will
-err. Just as stacking may be viewed as a generalization of voting,
-grading generalizes selection by cross-validation (Seewald and
-F{\"u}rnkranz, 2001).
+metalearner, and the number of cross-validation folds.
 
 \subsubsection{Cost-sensitive learning}
 
@@ -2685,18 +2669,18 @@ There is one metalearner, called \textit{CostSensitiveLearning}, for
 cost-sensitive learning. The cost matrix can be supplied as a
 parameter or loaded from a file in the directory set by the
 \textit{onDemandDirectory} property, named by the relation name and
-with the extension cost. \textit{CostSensitiveClassifier} either
+with the extension {\em cost}. \textit{CostSensitiveClassifier} either
 reweights training instances according to the total cost assigned to
-each class or predicts the class with the least expected
+each class or predicts the class with the minimum expected
 misclassification cost rather than the most likely one.
 
 \subsubsection{Optimizing performance}
 
 Five metalearners use the wrapper technique to optimize the base
-classifier’s performance. \textit{AttributeSelectedClassifier} selects
+classifier's performance. \textit{AttributeSelectedClassifier} selects
 attributes, reducing the data's dimensionality before passing it to
 the classifier. You can choose the attribute evaluator and search
-method as in the Select attributes panel described in
+method as in the {\em Select attributes} panel described in
 Section~\ref{section:exploring_the_explorer}. \textit{CVParameterSelection}
 optimizes performance by using cross-validation to select
 parameters. For each parameter you give a string containing its lower
@@ -2715,7 +2699,7 @@ case of classification and mean squared error for regression.
 \textit{IterativeClassifierOptimizer} optimizes the number of iterations
 performed by iterative classifiers, such as boosting methods, using
 cross-validation on the training data. Performance can be measured
-using any of the metrics described in Chapter 5. The user can specify
+using any of the metrics described in Chapter 5 of the book. The user can specify
 parameters such as how many cross-validation folds to use, how many
 iterations to look ahead in order to find a better solution, and how
 often to perform the evaluation (if evaluation of every iteration is
@@ -2727,7 +2711,7 @@ precision, recall, accuracy and true positive rate, by selecting a
 probability threshold on the classifier's output. Performance can
 measured on the training data, on a holdout set, or by
 cross-validation. The probabilities returned by the base learner can
-be rescaled into the full range [0,1], which is useful if the scheme’s
+be rescaled into the full range [0,1], which is useful if the scheme's
 probabilities are restricted to a narrow subrange. The metalearner can
 be applied to multiclass problems by specifying the class value for
 which the optimization is performed as
@@ -2763,22 +2747,24 @@ two-class classifiers using any of these methods:
 \end{enumerate}
 
 Random code vectors are known to have good error-correcting
-properties: a parameter specifies the length of the code vector (in
-bits). For pairwise classification, pairwise coupling of probability
-estimates can be turned on.
+properties: a parameter specifies the length of the code vector as a
+factor that is multiplied by the number of classes in the data. For
+pairwise classification, pairwise coupling of probability estimates
+can be turned on.
 
 \section{Clustering algorithms}
 
-\textit{Cobweb} and \textit{SimpleKMeans} are described in Section
-4.8; \textit{EM} is described in Section 9.3. For the \textit{EM}
-implementation you can specify how many clusters to generate, or the
-algorithm can decide using cross-validation—in which case the number
-of folds is fixed at 10 (unless there are fewer than 10 training
-instances). You can specify the maximum number of iterations and set
-the minimum allowable standard deviation for the normal density
-calculation. Clusters are Gaussian distributions with diagonal
-covariance matrices. \textit{SimpleKMeans} clusters data using
-\textit{k}-means; the number of clusters is specified by a
+The {\em Cluster} panel provides access to clustering
+algorithms. \textit{Cobweb} and \textit{SimpleKMeans} are described in
+Chapter 4 of the book; \textit{EM} is described in Chapter 9. For the
+\textit{EM} implementation you can specify how many clusters to
+generate, or the algorithm can decide by cross-validating the loglikelihood---in which
+case the number of folds is fixed at 10 (unless there are fewer than
+10 training instances). You can specify the maximum number of
+iterations and set the minimum allowable standard deviation for the
+normal density calculation. Clusters are Gaussian distributions with
+diagonal covariance matrices. \textit{SimpleKMeans} clusters data
+using \textit{k}-means; the number of clusters is specified by a
 parameter. The user can choose between the Euclidean and Manhattan
 distance metrics. In the latter case the algorithm is actually
 \textit{k}-medians instead \textit{k}-means, and the centroids are
@@ -2944,10 +2930,10 @@ the number of clusters set to two. Although there is no notion of the
 number of instances in each cluster, the columns are again headed by
 its prior probability in parentheses. The table entries show the
 parameters of normal distributions for numeric attributes or frequency
-counts for the values of nominal attributes—and here the fractional
+counts for the values of nominal attributes---and here the fractional
 count values reveal the ``soft'' nature of the clusters produced by the
 EM algorithm, in that any instance can be split between several
-clusters. At the bottom the log likelihood of the model (again with
+clusters. At the bottom the loglikelihood of the model (again with
 respect to the training data) is shown, as well as the number of
 instances assigned to each cluster when the learned model is applied
 to the data as a classifier.
@@ -2955,7 +2941,7 @@ to the data as a classifier.
 \textit{Cobweb} implements both the Cobweb algorithm for nominal
 attributes and the Classit algorithm for numeric attributes. The
 ordering and priority of the merging and splitting operators differs
-between the original Cobweb and Classit papers (where it is somewhat
+from the original Cobweb and Classit papers (where it is somewhat
 ambiguous). This implementation always compares four different ways of
 treating a new instance and chooses the best: adding it to the best
 host, making it into a new leaf, merging the two best hosts and adding
@@ -2963,14 +2949,14 @@ it to the merged node, and splitting the best host and adding it to
 one of the splits. \textit{Acuity} and \textit{cutoff} are parameters.
 
 \textit{HierarchicalClusterer} implements agglomerative (bottom-up)
-generation of hierarchical clusters (Section 6.8). Several different
-link types, which are ways of measuring the distance between clusters,
-are available as options.
+generation of hierarchical clusters (Section 6.8 of the book). Several
+different link types, which are ways of measuring the distance between
+clusters, are available as options.
 
 \textit{FarthestFirst} implements the farthest-first traversal
 algorithm of Hochbaum and Shmoys (1985), cited by Sanjoy Dasgupta
 (2002); a fast, simple, approximate clusterer modeled on
-k-means. \textit{MakeDensityBasedClusterer} is a metaclusterer that
+$k$-means. \textit{MakeDensityBasedClusterer} is a metaclusterer that
 wraps a clustering algorithm to make it return a probability
 distribution and density. To each cluster and attribute it fits a
 discrete distribution or a symmetric normal distribution (whose
@@ -2978,7 +2964,7 @@ minimum standard deviation is a parameter).
 
 \textit{Canopy} implements the canopy clustering algorithm algorithm
 of McCallum, Nigam and Ungar (2000). Canopy clustering is often used
-as an initialzation strategy for \textit{k}-means or as a fast
+as an initialization strategy for \textit{k}-means or as a fast
 approximate clustering method for use on large datasets, where
 applying another algorithm directly might be impractical. The
 algorithm partitions the input data into proximity regions (canopies)
@@ -2997,9 +2983,9 @@ distance. Because canopies can overlap according to \textit{T1}
 distance, it is possible for a given instance to belong to more than
 one canopy.
 
-\section{Association-rule learners}
+\section{Association rule learners}
 
-Weka has three association-rule learners. \textit{Apriori} implements
+WEKA has three association rule learners. \textit{Apriori} implements
 the Apriori algorithm. It starts with a minimum support of 100\% of
 the data items and decreases this in steps of 5\% until there are at
 least 10 rules with the required minimum confidence of 0.9 or until
@@ -3035,7 +3021,7 @@ of the two values is to be treated as positive, i.e., indicates
 presence in the basket (the default is to use the second
 value). FPGrowth can operate on either standard or sparse
 instances. Most of its options are the same as for Apriori. It finds
-the requested number of rules in the same way—by iteratively
+the requested number of rules in the same way---by iteratively
 decreasing the minimum support. Optionally, the user can have FPGrowth
 find all the rules that meet the lower bound for the minimum support
 and the minimum value set for the ranking metric (confidence, lift,
@@ -3050,11 +3036,11 @@ associator are options that the user can configure.
 \begin{figure}[!th]
 \centering
 \includegraphics[width=0.9\textwidth]{images/B2_30.png}
-\caption{Attribute selection: specifying an evaluator and a search method..}
+\caption{Attribute selection: specifying an evaluator and a search method.}
 \label{fig:att_selection_config}
 \end{figure}
 
-Figure~\ref{fig:att_selection_config} shows that part of Weka's
+Figure~\ref{fig:att_selection_config} shows that part of WEKA's
 attribute selection panel where you specify the attribute evaluator
 and search method. Attribute selection is normally done by searching
 the space of attribute subsets, evaluating each one. A potentially
@@ -3066,7 +3052,7 @@ chosen cut-off point.
 
 Subset evaluators take a subset of attributes and return a numerical
 measure that guides the search. They are configured like any other
-Weka object. \textit{CfsSubsetEval} assesses the predictive ability of
+WEKA object. \textit{CfsSubsetEval} assesses the predictive ability of
 each attribute individually and the degree of redundancy among them,
 preferring sets of attributes that are highly correlated with the
 class but with low intercorrelation. An option iteratively adds
@@ -3111,7 +3097,7 @@ by measuring its symmetrical uncertainty with respect to the class.
 \textit{OneRAttributeEval} uses the simple accuracy measure adopted by
 the \textit{OneR} classifier. It can use the training data for
 evaluation, as OneR does, or it can apply internal cross-validation:
-the number of folds is a parameter. It adopts \textit{OneR’s} simple
+the number of folds is a parameter. It adopts \textit{OneR's} simple
 discretization method: the minimum bucket size is a parameter.
 
 Unlike other single-attribute evaluators, \textit{PrincipalComponents}
@@ -3125,7 +3111,7 @@ transformed back to the original space.
 
 Search methods traverse the attribute space to find a good
 subset. Quality is measured by the chosen attribute subset
-evaluator. Each search method can be configured with Weka's object
+evaluator. Each search method can be configured with WEKA's object
 editor. \textit{BestFirst} performs greedy hill climbing with
 backtracking; you can specify how many consecutive nonimproving nodes
 must be encountered before the system backtracks. It can search

@@ -1,4 +1,4 @@
-With the Knowledge Flow interface, users select Weka components from a
+With the Knowledge Flow interface, users select WEKA components from a
 tool bar, place them on a layout canvas, and connect them into a
 directed graph that processes and analyzes data. It provides an
 alternative to the Explorer for those who like thinking in terms of
@@ -108,16 +108,16 @@ The flow that you've just laboriously created is actually available
 built-in \textit{template}. Example templates can be accessed from the
 \textit{Template} button, which is the third icon from the right in the toolbar
 at the top of the Knowledge Flow interface. There are a number of
-templates that come with Weka, and certain packages, once installed
+templates that come with WEKA, and certain packages, once installed
 via the package manager, add further ones to the menu. The majority of
 template flows can be executed without further modification as they
-have been configured to load datasets that come with the Weka
+have been configured to load datasets that come with the WEKA
 distribution.
 
 \section{Knowledge Flow components}
 
 Most of the Knowledge Flow components will be familiar from the
-Explorer. The \textit{Classifiers} folder contains all of Weka's
+Explorer. The \textit{Classifiers} folder contains all of WEKA's
 classifiers, the \textit{Filters} folder contains the filters,
 the \textit{Clusterers} folder holds the clusterers,
 the \textit{AttSelection} folder contains evaluators and search
@@ -139,7 +139,7 @@ called
 of instances via a graphical interface. There is a data sink that
 corresponds to each data source, with the exception of the
 \textit{TextDirectoryLoader} and \textit{DataGrid}. In addition, there are data sinks
-that can save raw text, static image data and Weka serialized models.
+that can save raw text, static image data and WEKA serialized models.
 
 Under the \textit{Visualization} folder, the \textit{DataVisualizer}
 pops up a panel for visualizing data in a two-dimensional scatter plot
@@ -180,7 +180,7 @@ performs the same function for incremental classifiers: it computes
 running squared errors and so on. There is also a
 \textit{ClustererPerformanceEvaluator}, which is similar to the
 \textit{ClassifierPerformanceEvaluator}. The \textit{PredictionAppender} takes a
-classifier and a dataset and appends the classifier’s predictions to
+classifier and a dataset and appends the classifier's predictions to
 the dataset.
 
 Components under the \textit{Flow} folder tend to affect the flow of
@@ -296,7 +296,7 @@ some additional flexibility—for example, you can see the tree that J48
 makes for each cross-validation fold. But its real strength is the
 potential for incremental operation.
 
-Weka has several classifiers that can handle data incrementally: \textit{SGD},
+WEKA has several classifiers that can handle data incrementally: \textit{SGD},
 \textit{SGDText}, \textit{HoeffdingTree}, \textit{NaiveBayesMultinomialText}, a version of Naive
 Bayes (\textit{NaiveBayesUpdateable}), instance-based learners (\textit{IBk}, \textit{KStar},
 \textit{LWL}), and \textit{NaiveBayesMultinomialUpdateable}. All filters that work
@@ -345,7 +345,7 @@ window of the most recent time units. The strip chart can be conﬁgured
 to alter the number of instances shown on the $x$ axis.
 
 This particular Knowledge Flow configuration can process input files
-of any size, even ones that do not fit into the computer’s main
+of any size, even ones that do not fit into the computer's main
 memory. However, it all depends on how the classifier operates
 internally. For example, although they are incremental, many
 instance-based learners store the entire dataset internally.

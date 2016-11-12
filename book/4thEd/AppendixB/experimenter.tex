@@ -78,7 +78,7 @@ results---in this case the file \textit{Experiment1}---and choose
 \textit{CSV file}. Underneath, select the datasets---we have only one,
 the iris data. To the right of the datasets, select the algorithms to
 be tested---we have three. Click \textit{Add} new to get a standard
-Weka object editor from which you can choose and configure a
+WEKA object editor from which you can choose and configure a
 classifier. Repeat this operation to add the three classifiers. Now
 the experiment is ready.
 
@@ -187,18 +187,18 @@ set and one-third test set).
 
 Experimental setups can be saved and reopened. You can make notes
 about the setup by pressing the \textit{Notes button}, which brings up
-an editor window. Serious Weka users soon find the need to open up an
+an editor window. Serious WEKA users soon find the need to open up an
 experiment and rerun it with some modifications---perhaps with a new
 dataset or a new learning algorithm. It would be nice to avoid having
 to recalculate all the results that have already been obtained! If the
 results have been placed in a database rather than an ARFF or CSV
 file, this is exactly what happens. You can choose \textit{JDBC
   database} in the results destination selector and connect to any
-database that has a JDBC driver. You need to specify the database’s
+database that has a JDBC driver. You need to specify the database's
 URL and enter a username and password. To make this work with your
 database you may need to modify the
-\textit{weka/experiment/DatabaseUtils.props} file in the Weka
-distribution. If you alter an experiment that uses a database, Weka
+\textit{weka/experiment/DatabaseUtils.props} file in the WEKA
+distribution. If you alter an experiment that uses a database, WEKA
 will reuse previously computed results whenever they are
 available. This greatly simplifies the kind of iterative
 experimentation that typically characterizes data mining research.
@@ -362,7 +362,7 @@ measures that are available in the \textit{Comparison field}.
 
 A remarkable feature of the Experimenter is that it can split up an
 experiment and distribute it across several processors. This is for
-advanced Weka users and is only available from the advanced version of
+advanced WEKA users and is only available from the advanced version of
 the \textit{Setup} panel. Some users avoid working with this panel by
 setting the experiment up on the simple version and switching to the
 advanced version to distribute it, because the experiment's structure
@@ -386,7 +386,7 @@ must be installed on each host. Getting all this right is the
 difficult part of running distributed experiments.
 
 To initiate a remote engine experiment server on a host machine, first
-copy remoteExperimentServer.jar from the Weka distribution to a
+copy remoteExperimentServer.jar from the WEKA distribution to a
 directory on the host. Unpack it with\newline
 
 \verb=jar -xvf remoteExperimentServer.jar=\newline
@@ -446,7 +446,7 @@ java -Djava.rmi.server.codebase=<URL_for_weka_code>
 \end{Verbatim}
 
 The URL specifies where the remote engines can find the code to be
-executed. If it denotes a directory (i.e., one that contains the Weka
+executed. If it denotes a directory (i.e., one that contains the WEKA
 directory) rather than a jar file, it must end with path separator
 (e.g., /).
 

@@ -6,7 +6,7 @@ programming language will become clear. From now on, we assume that
 you have at least some rudimentary knowledge of Java. In most
 practical applications of data mining the learning component is an
 integrated part of a far larger software environment. If the
-environment is written in Java, you can use Weka to solve the learning
+environment is written in Java, you can use WEKA to solve the learning
 problem without writing any machine learning code yourself.
 
 \section{A simple data mining application}
@@ -291,18 +291,18 @@ Each time a new \textit{MessageClassifier} is created, objects for
 holding the filter and classifier are generated automatically. The
 only nontrivial part of the process is creating a dataset, which is
 done by the constructor \textit{MessageClassifier()}. First the
-dataset’s name is stored as a string. Then an \textit{Attribute}
+dataset's name is stored as a string. Then an \textit{Attribute}
 object is created for each attribute, one to hold the string
 corresponding to a text message and the other for its class. These
 objects are stored in a dynamic array of type \textit{ArrayList}.
 
 Attributes are created by invoking one of the constructors in the
 class \textit{Attribute}. This class has a constructor that takes one
-parameter---the attribute’s name---and creates a numeric
+parameter---the attribute's name---and creates a numeric
 attribute. However, the constructor we use here takes two parameters:
 the attribute's name and a reference to an \textit{ArrayList}. If this
 reference is null, as in the first application of this constructor in
-our program, Weka creates an attribute of type
+our program, WEKA creates an attribute of type
 \textit{string}. Otherwise, a nominal attribute is created. This is
 how we create a class attribute with two values \textit{hit} and
 \textit{miss}: by passing the attribute's name (\textit{class}) and
@@ -313,7 +313,7 @@ To create a dataset from this attribute information,
 \textit{MessageClassifier()} must create an object of the class
 \textit{Instances} from the \textit{core} package. The constructor of
 \textit{Instances} used by MessageClassifier() takes three arguments:
-the dataset’s name, a \textit{ArrayList} containing the attributes,
+the dataset's name, a \textit{ArrayList} containing the attributes,
 and an integer indicating the dataset's initial capacity. We set the
 initial capacity to 100; it is expanded automatically if more
 instances are added. After constructing the dataset,
@@ -328,13 +328,13 @@ message. The method \textit{updateData()} does this job. It first
 converts the given message into a training instance by calling
 \textit{makeInstance()}, which begins by creating an object of class
 Instance that corresponds to an instance with two attributes. The
-constructor of the Instance object sets all the instance’s values to
+constructor of the Instance object sets all the instance's values to
 be missing and its weight to 1. The next step in
 \textit{makeInstance()} is to set the value of the string attribute
 holding the text of the message. This is done by applying the
 \textit{setValue()} method of the \textit{Instance} object, providing
 it with the attribute whose value needs to be changed, and a second
-parameter that corresponds to the new value’s index in the definition
+parameter that corresponds to the new value's index in the definition
 of the string attribute. This index is returned by the
 \textit{addStringValue()} method, which adds the message text as a new
 value to the string attribute and returns the position of this new
@@ -353,7 +353,7 @@ definition of the attribute.
 Once the value for the string attribute has been set,
 \textit{makeInstance()} gives the newly created instance access to the
 data's attribute information by passing it a reference to the
-dataset. In Weka, an \textit{Instance} object does not store the type
+dataset. In WEKA, an \textit{Instance} object does not store the type
 of each attribute explicitly; instead, it stores a reference to a
 dataset with the corresponding attribute information.
 
@@ -381,16 +381,16 @@ are reset. In the next step, the data is transformed by
 class applies a filter to a dataset. In this case, because
 \textit{StringToWordVector} has just been initialized, it computes a
 dictionary from the training dataset and then uses it to form a word
-vector. After returning from \textit{useFilter()}, all the filter’s
+vector. After returning from \textit{useFilter()}, all the filter's
 internal settings are fixed until it is initialized by another call of
 \textit{inputFormat()}. This makes it possible to filter a test
-instance without updating the filter’s internal settings (in this
+instance without updating the filter's internal settings (in this
 case, the dictionary).
 
 Once the data has been filtered, the program rebuilds the
 classifier---in our case a \textit{J48} decision tree---by passing the
 training data to its \textit{buildClassifier()} method. Then it sets
-\textit{m\_UpToDate} to true. It is an important convention in Weka
+\textit{m\_UpToDate} to true. It is an important convention in WEKA
 that the \textit{buildClassifier()} method completely initializes the
 model's internal settings before generating a new classifier. Hence we
 do not need to construct a new J48 object before we call
@@ -420,7 +420,7 @@ object, and the transformed instance is obtained by calling
 \textit{output()}. Then a prediction is produced by passing the
 instance to the classifier's \textit{classifyInstance()} method. As
 you can see, the prediction is coded as a double value. This allows
-Weka's evaluation module to treat models for categorical and numeric
+WEKA's evaluation module to treat models for categorical and numeric
 prediction similarly. In the case of categorical prediction, as in
 this example, the double variable holds the index of the predicted
 class value. To output the string corresponding to this class value,
