@@ -83,9 +83,9 @@ classifier. Repeat this operation to add the three classifiers. Now
 the experiment is ready.
 
 The other settings in Figure~\ref{subfig:experimenter_1} are all
-default values. If you want to reconﬁgure a classiﬁer that is already
+default values. If you want to reconfigure a classifier that is already
 in the list, you can use the \textit{Edit selected} button. You can
-also save the options for a particular classiﬁer in XML format for
+also save the options for a particular classifier in XML format for
 later reuse. You can right-click on an entry to copy the configuration
 to the clipboard, and add or enter a configuration from the clipboard.
 
@@ -169,6 +169,11 @@ once, and method 3 was worse than it once. (The annotation ($v$/  /*) is
 placed at the bottom of column 1 to help you remember the meanings of
 the three counts x/y/z.)
 
+The output in the Analyze panel can be saved into a file by clicking
+the ``Save output'' button. It is also possible to open a WEKA Explorer
+window to further analyze the experimental results obtained, by
+clicking on the ``Open Explorer'' button.
+
 \section{Simple setup}
 
 In the \textit{Setup} panel of Figure~\ref{subfig:experimenter_1} we
@@ -208,7 +213,7 @@ experimentation that typically characterizes data mining research.
 \begin{figure}[!th]
 \centering
 \includegraphics[width=0.95\textwidth]{images/B4_3.png}
-\caption{Setting up an experimenter in advanced mode.}
+\caption{Setting up an Experimenter in advanced mode.}
 \label{fig:experimenter_advanced}
 \end{figure}
 
@@ -239,9 +244,9 @@ into the list several times with different parameter values.
 One thing you can do in advanced mode but not in simple mode is run
 experiments using clustering algorithms. Here, experiments are limited
 to those clusterers that can compute probability or density estimates,
-and the main evaluation measure for comparison purposes is the log
-likelihood. To set this up quickly, first click the \textit{Result
-  generator} to bring up an object editor for the
+and the main evaluation measure for comparison purposes is the
+log-likelihood. To set this up quickly, first click the \textit{Result
+generator} to bring up an object editor for the
 \textit{CrossValidationResultProducer}. Then click the \textit{Choose}
 button for the split evaluator and select
 \textit{DensityBasedClustererSplitEvaluator} from the list. At this
@@ -250,8 +255,8 @@ classifiers goes blank and the \textit{Generator properties} drop-down
 box displays \textit{Disabled}. Re-enable this, and a new window
 appears with a list of properties
 (Figure~\ref{subfig:experimenter_cluster_1}). Expand the
-splitEvaluator entry, select clusterer (as shown in the Figure), and
-click the Select button. Now the active list will reappear in the
+{\em splitEvaluator} entry, select clusterer (as shown in the figure), and
+click the {\em Select button}. Now the active list will reappear in the
 bottom right-hand panel, along with the ability to add clustering
 schemes, just as we did with classifiers.
 
@@ -260,7 +265,7 @@ clustering schemes configured: \textit{EM} and the
 \textit{MakeDensityBasedClusterer} wrapped around
 \textit{SimpleKMeans}. After running this experiment, these two can be
 compared in the \textit{Analyze} panel. The comparison field is not
-set up with a meaningful default, so choose Log\_likelihood from the
+set up with a meaningful default, so choose {\em Log\_likelihood} from the
 drop-down box before pressing the \textit{Perform test}
 button. Figure~\ref{subfig:experimenter_cluster_3} shows the results
 for these clustering algorithms.
@@ -278,7 +283,7 @@ the error rate---the \textit{Comparison} field in
 Figure~\ref{fig:experimenter_analyze}. Other statistics can be
 selected from the drop-down menu instead: percentage incorrect,
 percentage unclassified, root mean-squared error, the remaining error
-measures from Table 5.8 (page 195), and various entropy
+measures discussed in Chapter 5 of the book, and various entropy
 figures. Moreover, you can see the standard deviation of the attribute
 being evaluated by ticking the \textit{Show std deviations} checkbox.
 
@@ -306,7 +311,7 @@ difference between the number of wins and the number of losses.
 \subfloat[Result of swapping the row and column selections.]{\label{subfig:experimenter_rows_and_cols_3}\includegraphics[width=0.45\textwidth]{images/B4_5c.png}}
 \qquad
 \subfloat[Substituting \textit{Run} for \textit{Dataset} as the rows.]{\label{subfig:experimenter_rows_and_cols_4}\includegraphics[width=0.45\textwidth]{images/B4_5d.png}}
-\caption{\label{fig:experimenter_rows_and_cols}Rows and columns of Figure~\ref{fig:experimenter_analyze}.}
+\caption{\label{fig:experimenter_rows_and_cols}Configuring rows and columns.}
 \end{figure}
 
 The \textit{Row} and \textit{Column} fields determine the dimensions
@@ -336,7 +341,7 @@ by \textit{Run} and the test were performed again, the result would be
 as in Figure 4.5d. Run refers to the runs of the cross-validation, of
 which there are 10, so there are now 10 rows. The number in
 parentheses after each row label (100 in Figure 4.5c and 10 in Figure
-4.5d) is the number of results corresponding to that row—in other
+4.5d) is the number of results corresponding to that row---in other
 words, the number of measurements that participate in the averages
 displayed by the cells in that row.
 
@@ -378,7 +383,7 @@ been tested on several freely available databases. Alternatively, you
 could instruct each host to save its results to a different ARFF file
 and merge the files afterwards.
 
-To distribute an experiment, each host must (a) have Java installed,
+To distribute an experiment across multiple hosts, each host must (a) have Java installed,
 (b) have access to whatever datasets you are using, and (c) be running
 the \textit{weka.experiment.RemoteEngine} experiment server. If
 results are sent to a central data base, the appropriate JDBC drivers
@@ -386,7 +391,7 @@ must be installed on each host. Getting all this right is the
 difficult part of running distributed experiments.
 
 To initiate a remote engine experiment server on a host machine, first
-copy remoteExperimentServer.jar from the WEKA distribution to a
+copy {\em remoteExperimentServer.jar} from the WEKA distribution to a
 directory on the host. Unpack it with\newline
 
 \verb=jar -xvf remoteExperimentServer.jar=\newline

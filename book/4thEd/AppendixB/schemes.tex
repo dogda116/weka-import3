@@ -38,11 +38,14 @@ a similar manner.
 %\centering
 \begin{mdframed}[innermargin=-1cm]
 \begin{Verbatim}[fontsize=\scriptsize]
+import weka.classifiers.*;
+import weka.core.*
+import java.util.Enumeration;
+
 /**
  * Class implementing an Id3 decision tree learner
  */
-public class Id3 extends AbstractClassifier implements
-  TechnicalInformationHandler, Sourcable {
+public class Id3 extends AbstractClassifier implements TechnicalInformationHandler, Sourcable {
 
   /** for serialization */
   static final long serialVersionUID = -2693678647096322561L;
@@ -68,7 +71,6 @@ public class Id3 extends AbstractClassifier implements
    * @return a description suitable for the GUI.
    */
   public String globalInfo() {
-
     return "Class for constructing an unpruned decision tree based on the ID3 "
       + "algorithm. Can only deal with nominal attributes. No missing values "
       + "allowed. Empty leaves may result in unclassified instances. For more "
@@ -84,9 +86,7 @@ public class Id3 extends AbstractClassifier implements
    */
   @Override
   public TechnicalInformation getTechnicalInformation() {
-    TechnicalInformation result;
-
-    result = new TechnicalInformation(Type.ARTICLE);
+    TechnicalInformation result = new TechnicalInformation(Type.ARTICLE);
     result.setValue(Field.AUTHOR, "R. Quinlan");
     result.setValue(Field.YEAR, "1986");
     result.setValue(Field.TITLE, "Induction of decision trees");
@@ -94,7 +94,6 @@ public class Id3 extends AbstractClassifier implements
     result.setValue(Field.VOLUME, "1");
     result.setValue(Field.NUMBER, "1");
     result.setValue(Field.PAGES, "81-106");
-
     return result;
   }
 
@@ -563,7 +562,7 @@ training data, such as numeric attributes or missing attribute values,
 will cause the \textit{Capabilities} class to raise an exception,
 because the ID3 algorithm cannot handle these. It then makes a copy of
 the training set (to avoid changing the original data) and calls a
-method from weka.core.Instances to delete all instances with missing
+method from {\em weka.core.Instances} to delete all instances with missing
 class values, because these instances are useless in the training
 process. Finally, it calls \textit{makeTree()}, which actually builds
 the decision tree by recursively generating all subtrees attached to
@@ -578,7 +577,7 @@ and the estimated probability for each of the dataset's classes in
 \textit{m\_Distribution} is initialized to 0. If training instances are present,
 \textit{makeTree()} finds the attribute that yields the greatest information
 gain for them. It first creates a Java enumeration of the dataset's
-attributes. If the index of the class attribute is set—as it will be
+attributes. If the index of the class attribute is set---as it will be
 for this dataset---the class is automatically excluded from the
 enumeration.
 
@@ -604,7 +603,7 @@ leaf. In that case \textit{m\_Attribute} is set to null,
 and \textit{makeTree()} computes both the distribution of class
 probabilities and the class with greatest probability. (The
 \textit{normalize()} method from \textit{weka.core.Utils} normalizes 
-an array of doubles to sum to one.)
+an array of nonnegative doubles to sum to one.)
 
 When it makes a leaf with a class value assigned to
 it, \textit{makeTree()} stores the class attribute
@@ -630,7 +629,7 @@ passing it the corresponding dataset.
 
 Returning to \textit{computeInfoGain()}, the information gain
 associated with an attribute and a dataset is calculated using a
-straightforward implementation of the formula in Section 4.3. First,
+straightforward implementation of the formula from Chapter 4 in the book. First,
 the entropy of the dataset is computed. Then, \textit{splitData()} is
 used to divide it into subsets, and computeEntropy() is called on each
 one. Finally, the difference between the former entropy and the
@@ -717,8 +716,6 @@ check the data against the capabilities.
 %\centering
 \begin{mdframed}[innermargin=-1cm]
 \begin{Verbatim}[fontsize=\scriptsize]
-package weka.classifiers;
-
 class Id3Weather {
   private static void checkMissing(Object[] i, int index) {
     if (i[index] == null)
@@ -740,7 +737,7 @@ class Id3Weather {
     else if (((String) i[0]).equals("rainy"))
       return node5(i);
     else
-      throw new IllegalArgumentException("Value ' + i[0] + "' is not allowed!");
+      throw new IllegalArgumentException("Value '" + i[0] + "' is not allowed!");
   }
 
   protected static double node1(Object[] i) {
@@ -752,7 +749,7 @@ class Id3Weather {
     else if (((String) i[2]).equals("normal"))
       return node3(i);
     else
-      throw new IllegalArgumentException("Value ' + i[2] + "' is not allowed!");
+      throw new IllegalArgumentException("Value '" + i[2] + "' is not allowed!");
   }
 
   protected static double node2(Object[] i) {
@@ -776,7 +773,7 @@ class Id3Weather {
     else if (((String) i[3]).equals("FALSE"))
       return node7(i);
     else
-      throw new IllegalArgumentException("Value ' + i[3] + "' is not allowed!");
+      throw new IllegalArgumentException("Value '" + i[3] + "' is not allowed!");
   }
 
   protected static double node6(Object[] i) {
@@ -796,8 +793,6 @@ class Id3Weather {
 %\centering
 \begin{mdframed}[innermargin=-1cm]
 \begin{Verbatim}[fontsize=\scriptsize]
-package weka.classifiers;
-
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Capabilities.Capability;
@@ -895,7 +890,7 @@ public class WekaWrapper
    * @return a short description
    */
   public String toString() {
-    return "Auto-generated classifier wrapper, based on weka.classifiers.trees.Id3 
+    return "Auto-generated classifier wrapper, based on weka.classifiers.trees.Id3"
       + "(generated with WEKA 3.8.0).\n" + this.getClass().getName() + "/Id3Weather";
   }
 
@@ -908,24 +903,23 @@ public class WekaWrapper
     runClassifier(new WekaWrapper(), args);
   }
 }
-
 \end{Verbatim}
 \end{mdframed}
 \caption{\label{fig:weka_wrapper_2}Source code (\textit{WekaWrapper} class) produced by \textit{weka.classifiers.trees.Id3} for the weather data.}
 \end{figure}
 
 Figures~\ref{fig:weka_wrapper_1} and ~\ref{fig:weka_wrapper_2} show
-the source code produced by \textit{weka.classifiers.trees.Id3} when run on the
+the code produced by \textit{weka.classifiers.trees.Id3} when run on the
 nominal-attribute version of the weather data. The name \textit{Id3Weather} was
 provided with the \textit{--z} option, and a class of this name is shown in
 Figure~\ref{fig:weka_wrapper_1}. All its methods are static, meaning that they can be used
 without having to instantiate an \textit{Id3Weather} object. The first method
-is called classify and takes as argument an array of Objects that give
+is called classify and takes as argument an array of objects that give
 the attribute values for the instance to be classified. Each node in
 the ID3 tree that has been learned is represented in the source code
 by a static method. The \textit{classify()} method passes the instance to be
 classified to the method corresponding to the root of the
-\textit{tree—node0()}. The \textit{node0()} method corresponds to a test on the outlook
+\textit{tree-node0()}. The \textit{node0()} method corresponds to a test on the outlook
 attribute. Because it is not a leaf, it calls a node representing one
 of the subtrees---which one depends on the value of outlook in the
 instance being classified. Processing of a test instance continues in
@@ -934,22 +928,22 @@ which point a classification is returned.
 
 Figure~\ref{fig:weka_wrapper_2} shows the \textit{WekaWrapper} class
 that uses \textit{Id3Weather}. Its \textit{classifyInstance()} method
-constructs an array of \textit{Objects} to pass to
+constructs an array of objects to pass to
 the \textit{classify()} method in \textit{Id3Weather}. The attribute
 values of the test instance are copied into the array and mapped to
 either \textit{String} objects (for nominal values) or \textit{Double}
 objects (for numeric values). If an attribute value is missing in the
-test instance, its corresponding entry in the array of Objects is set
+test instance, its corresponding entry in the array of objects is set
 to \textit{null}.
 
 \subsection{main()}
 
 Apart from \textit{getRevision()}, which is optional and simply returns a
-version identifier, the only method in \textit{Id3} that hasn't been described
+version identifier, the only method in \textit{Id3} that has not been described yet
 is \textit{main()}, which is called whenever the class is executed from the
-command line. As you can see, it's simple: it calls the method
+command line. As you can see, it is simple: it calls the method
 \textit{runClassifier()} from its superclass (\textit{AbstractClassifier}) with a new instance
-of Id3 and the given command-line options. \textit{runClassifier()} tells
+of {\em Id3} and the given command-line options. \textit{runClassifier()} tells
 WEKA's \textit{Evaluation} class to evaluate the supplied classifier with the
 given command-line options and prints the resulting string. The
 one-line expression in \textit{runClassifier()} that does this calls the
@@ -973,7 +967,7 @@ training dataset.
 
 What happens if the scheme needs to interpret a specific option such
 as a pruning parameter? This is accomplished using
-the \textit{OptionHandler} interface in weka.core. A classifier that
+the \textit{OptionHandler} interface in {\em weka.core}. A classifier that
 implements this interface contains three
 methods, \textit{listOptions()}, \textit{setOptions()},
 and \textit{getOptions()}, which can be used to list all the
@@ -991,16 +985,24 @@ implement these methods, look at the source code for
 
 \textit{OptionHandler} makes it possible to set options from the command
 line. To set them from within the graphical user interfaces, WEKA uses
-the Java \textit{beans} framework. All that is required are \textit{set...}() and
-\textit{get...}() methods for every parameter used by the class. For example,
+the Java \textit{beans} framework. All that is required are \textit{set...()} and
+\textit{get...()} methods for every parameter used by the class. For example,
 the methods \textit{setPruningParameter()} and \textit{getPruningParameter()} would be
 needed for a pruning parameter. There should also be a
 \textit{pruningParameterTipText()} method that returns a description of the
 parameter for the graphical user interface. Again, see
 \textit{weka.classifiers.rules.OneR} for an example.
 
+In recent versions of WEKA, explicit implementation of
+\textit{listOptions()}, \textit{setOptions()}, and
+\textit{getOptions()} is no longer necessary. Instead, each
+\textit{set...()} and \textit{get...()} pair can be annotated with the
+information for the corresponding command-line option using the Java
+annotation mechanism. {\em AbstractClassifier}, etc., take care of
+implementing appropriate {\em OptionHandler} methods.
+
 Some classifiers can be incrementally updated as new training
-instances arrive; they don't have to process all the data in one
+instances arrive; they do not have to process all the data in one
 batch. In WEKA, incremental classifiers implement the
 \textit{UpdateableClassifier} interface in \textit{weka.classifiers}. This interface
 declares only one method, namely \textit{updateClassifier()}, which
@@ -1009,11 +1011,11 @@ how to use this interface, look at the source code
 for \textit{weka.classifiers.lazy.IBk}.
 
 If a classifier is able to make use of instance weights, it should
-implement the \textit{WeightedInstancesHandler()} interface from
+implement the \textit{WeightedInstancesHandler} interface from
 weka.core. Then other algorithms, such as those for boosting, can make
 use of this property.
 
-In weka.core are many other useful interfaces for classifiers---for
+In {\em weka.core} are many other useful interfaces for classifiers---for
 example, interfaces for classifiers that are \textit{randomizable},
 \textit{summarizable}, \textit{drawable}, and \textit{graphable}. 
 For more information on these
@@ -1043,7 +1045,7 @@ multiple calls of \textit{buildClassifier()}. Also,
 calling \textit{buildClassifier()} must never change the input data.
 
 Two other conventions have also been mentioned. One is that when a
-classifier can't make a prediction, its \textit{classifyInstance()}
+classifier cannot make a prediction, its \textit{classifyInstance()}
 method must return \textit{Utils.missingValue()} and
 its \textit{distributionForInstance()} method must return
 probabilities of zero for all classes. The ID3 implementation in
@@ -1053,8 +1055,8 @@ returns the numeric value that the classifier predicts. Some
 classifiers, however, are able to predict nominal classes and their
 class probabilities, as well as numeric class
 values---\textit{weka.classifiers.lazy.IBk} is an example. These implement the
-\textit{distributionForInstance()} method, and if the class is numeric it
-returns an array of size 1 whose only element contains the predicted
+\textit{distributionForInstance()} method, and if the class is numeric they
+return an array of size 1 whose only element contains the predicted
 numeric value.
 
 Another convention---not absolutely essential, but useful
@@ -1079,7 +1081,7 @@ task of implementing the learning functionality, without having to
 bother with capabilities. However, once satisfied that the scheme is
 working correctly, the programmer should specify capabilities that
 reflect the scheme's ability to handle various data characteristics by
-overriding the superclass's getCapabilities method. This method
+overriding the superclass's {\em getCapabilities()} method. This method
 returns a \textit{weka.core.Capabilities} object that encapsulates the
 characteristics that the scheme can handle.
 

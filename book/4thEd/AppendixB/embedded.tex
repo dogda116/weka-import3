@@ -1,13 +1,12 @@
-When invoking learning schemes from the graphical user interfaces or
-the command line, there is no need to know anything about programming
-in Java. In this section we show how to access these algorithms from
-your own code. In doing so, the advantages of using an object-oriented
-programming language will become clear. From now on, we assume that
-you have at least some rudimentary knowledge of Java. In most
-practical applications of data mining the learning component is an
-integrated part of a far larger software environment. If the
-environment is written in Java, you can use WEKA to solve the learning
-problem without writing any machine learning code yourself.
+ In most practical applications of data mining the learning component
+ is an integrated part of a far larger software environment. If the
+ environment is written in Java, you can use WEKA to solve the
+ learning problem without writing any machine learning code yourself.
+ When invoking learning schemes from the graphical user interfaces or
+ the command line, there is no need to know anything about programming
+ in Java. In this section we show how to access these algorithms from
+ your own Java code. From now on, we assume that you have at least
+ some rudimentary knowledge of Java.
 
 \section{A simple data mining application}
 
@@ -69,19 +68,19 @@ public class MessageClassifier implements Serializable {
    * Constructs empty training dataset.
    */
   public MessageClassifier() {
-    String nameOfDataset = ``MessageClassificationProblem'';
+    String nameOfDataset = "MessageClassificationProblem";
 
     // Create vector of attributes.
     ArrayList<Attribute> attributes = new ArrayList<Attribute>(2);
 
     // Add attribute for holding messages.
-    attributes.add(new Attribute(``Message'', (ArrayList<String>) null));
+    attributes.add(new Attribute("Message", (ArrayList<String>) null));
 
     // Add class attribute.
     ArrayList<String> classValues = new ArrayList<String>(2);
-    classValues.add(``miss'');
-    classValues.add(``hit'');
-    attributes.add(new Attribute(``Class'', classValues));
+    classValues.add("miss");
+    classValues.add("hit");
+    attributes.add(new Attribute("Class", classValues));
 
     // Create dataset with initial capacity of 100, and set index of class.
     m_Data = new Instances(nameOfDataset, attributes, 100);
@@ -89,7 +88,7 @@ public class MessageClassifier implements Serializable {
   }
 \end{Verbatim}
 \end{mdframed}
-\caption{\label{fig:message_classifier}The message classifier.}
+\caption{\label{fig:message_classifier}The message classifier}
 \end{figure}
 
 \begin{figure}[!thp]
@@ -125,7 +124,7 @@ public class MessageClassifier implements Serializable {
   public void classifyMessage(String message) throws Exception {
     // Check whether classifier has been built.
     if (m_Data.numInstances() == 0)
-      throw new Exception(``No classifier available.'');
+      throw new Exception("No classifier available.");
 
     // Check whether classifier and filter are up to date.
     if (!m_UpToDate) {
@@ -156,7 +155,7 @@ public class MessageClassifier implements Serializable {
     double predicted = m_Classifier.classifyInstance(filteredInstance);
 
     // Output class value.
-    System.err.println(``Message classified as : `` +
+    System.err.println("Message classified as : " +
            m_Data.classAttribute().value((int) predicted));
   }
 \end{Verbatim}
@@ -181,7 +180,7 @@ public class MessageClassifier implements Serializable {
     Instance instance = new DenseInstance(2);
 
     // Set value for message attribute
-    Attribute messageAtt = data.attribute(``Message'');
+    Attribute messageAtt = data.attribute("Message");
     instance.setValue(messageAtt, messageAtt.addStringValue(text));
 
     // Give instance access to attribute information from the dataset.
@@ -210,7 +209,7 @@ public class MessageClassifier implements Serializable {
       // Read message file into string.
       String messageName = Utils.getOption('m', args);
       if (messageName.length() == 0)
-        throw new Exception(``Must provide name of message file ('-m <file>').'');
+        throw new Exception("Must provide name of message file ('-m <file>').");
       FileReader m = new FileReader(messageName);
       StringBuffer message = new StringBuffer();
       int l;
@@ -224,7 +223,7 @@ public class MessageClassifier implements Serializable {
       // If model file exists, read it, otherwise create new one.
       String modelName = Utils.getOption('t', args);
       if (modelName.length() == 0)
-      throw new Exception(``Must provide name of model file ('-t <file>').'');
+      throw new Exception("Must provide name of model file ('-t <file>').");
       MessageClassifier messageCl;
       try {
         messageCl = (MessageClassifier) SerializationHelper.read(modelName);
@@ -324,7 +323,7 @@ be the index of the last attribute.
 
 Now you know how to create an empty dataset, consider how the
 \textit{MessageClassifier} object actually incorporates a new training
-message. The method \textit{updateData()} does this job. It first
+message. The method \textit{updateData()} does this. It first
 converts the given message into a training instance by calling
 \textit{makeInstance()}, which begins by creating an object of class
 Instance that corresponds to an instance with two attributes. The
@@ -383,7 +382,7 @@ class applies a filter to a dataset. In this case, because
 dictionary from the training dataset and then uses it to form a word
 vector. After returning from \textit{useFilter()}, all the filter's
 internal settings are fixed until it is initialized by another call of
-\textit{inputFormat()}. This makes it possible to filter a test
+\textit{setInputFormat()}. This makes it possible to filter a test
 instance without updating the filter's internal settings (in this
 case, the dictionary).
 
@@ -432,7 +431,7 @@ improved. The classifier and the \textit{StringToWordVector} filter
 could be combined using the \textit{FilteredClassifier} metalearner
 described in Section~\ref{subsection:supervised_filters}. This
 classifier would then be able to deal with string attributes directly,
-without explicitly calling the filter to transform the data. We didn't
-do this because we wanted to demonstrate how filters can be used
+without explicitly calling the filter to transform the data. We have not
+done this here because we wanted to demonstrate how filters can be used
 programmatically.
 

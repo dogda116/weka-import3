@@ -42,7 +42,7 @@ while, especially if you are using meta learning schemes that
 themselves require various base learners to be specified. Using the
 \textit{weka.Run} command line tool allows you to type in shortened versions of
 scheme names, and WEKA will attempt to find a match by scanning the
-names of all the schemes it knows about. Using weka.Run, the previous
+names of all the schemes it knows about. Using {\em weka.Run}, the previous
 J4.8 invocation becomes
 
 \begin{Verbatim}[fontsize=\footnotesize]
@@ -56,7 +56,7 @@ java weka.Run .Stacking -M .Logistic -B .J48 -B ".FilteredClassifier -F \".Remov
   -W .NaiveBayes" -B .OneR -t data/iris.arff
 \end{Verbatim}
 
-\noindent Without weka.Run's scheme matching this would look like
+\noindent Without {\em weka.Run}'s scheme matching this would look like
 
 \begin{Verbatim}[fontsize=\footnotesize]
 java weka.classifiers.meta.Stacking -M weka.classifiers.functions.Logistic 
@@ -67,7 +67,7 @@ java weka.classifiers.meta.Stacking -M weka.classifiers.functions.Logistic
 \end{Verbatim}
 
 \noindent If you are not using the Simple CLI, but instead are using
-your operating system's command-line interface, then weka.Run provides
+your operating system's command-line interface, then {\em weka.Run} provides
 another benefit---it automatically adds all the classes from plugin
 packages into the CLASSPATH. This saves having to modify the CLASSPATH
 every time you install a new plugin package.
@@ -82,7 +82,7 @@ the online documentation included in the distribution. This is more
 technical than the descriptions of the learning and filtering schemes
 given by the \textit{More} button in the Explorer and Knowledge Flow's
 object editors. It is generated directly from comments in the source
-code using Sun's Javadoc utility. To understand its structure, you
+code using the Javadoc utility. To understand its structure, you
 need to know how Java programs are organized.
 
 \subsection{Classes, instances, and packages}
@@ -98,7 +98,7 @@ class. Unfortunately, this conflicts with the terminology used in this
 book, where the terms \textit{class} and \textit{instance} appear in
 the quite different context of machine learning. From now on, you will
 have to infer the intended meaning of these terms from their
-context. This is not difficult---and sometimes we'll use the word object
+context. This is not difficult---and sometimes we will use the word object
 instead of Java's instance to make things clear.
 
 In WEKA, the implementation of a particular learning algorithm is
@@ -186,13 +186,13 @@ introduce a few of them in order of importance.
 The \textit{core} package is central to the WEKA system, and its
 classes are accessed from almost every other class. You can determine
 what they are by clicking on the \textit{weka.core} hyperlink, which
-brings up the Web page shown in Figure~\ref{fig:javadoc_b}.
+brings up the web page shown in Figure~\ref{fig:javadoc_b}.
 
-This Web page is divided into several parts, the main ones being the
+This web page is divided into several parts, the main ones being the
 \textit{interface summary} and the \textit{class summary}. The latter
 is a list of classes contained within the package, and the former
 lists the interfaces it provides. An interface is similar to a class,
-the only difference being that it doesn't actually do anything by
+the only difference being that it does not actually do anything by
 itself---it is merely a list of methods without actual
 implementations. Other classes can declare that they ``implement'' a
 particular interface and then provide code for its methods. For
@@ -259,29 +259,29 @@ documentation page, shown in Figure~\ref{fig:javadoc_decisionstump},
 shows the fully qualified name of this class,
 \textit{weka.classifiers.trees.DecisionStump}, near the top. You have to use
 this rather lengthy name whenever you build a decision stump from the
-command line. The class name is sited in a small tree structure
+command line, unless you use {\em weka.Run}. The class name is sited in a small tree structure
 showing the relevant part of the class hierarchy. As you can see,
 \textit{DecisionStump} is a subclass of \textit{weka.classifiers.AbstractClassifier},
 which is itself a subclass
 of \textit{java.lang.Object}. The \textit{Object} class is the most
 general one in Java: all classes are automatically subclasses of it.
 
-After some generic information about the class—brief documentation,
+After some generic information about the class---brief documentation,
 its version, and the author---Figure~\ref{fig:javadoc_decisionstump}
 gives an index of the constructors and methods of this class. A
 constructor is a special kind of method that is called whenever an
 object of that class is created, usually initializing the variables
 that collectively define its state. The index of methods lists the
 name of each one, the type of parameters it takes, and a short
-description of its functionality. Beneath those indexes, the Web page
+description of its functionality. Beneath those indexes, the web page
 gives more details about the constructors and methods. We return to
 these details later.
 
 As you can see, \textit{DecisionStump} overwrites
-the \textit{distributionForInstance()} method
+\textit{distributionForInstance()}
 from \textit{AbstractClassifier}: the default implementation
 of \textit{classifyInstance()} in \textit{AbstractClassifier} then
-uses this method to produce its classifications. In addition, it
+uses this method to produce its classifications. In addition, {\em DecisionStump}
 contains the \textit{getCapabilities()}, \textit{getRevision()}, \textit{globalInfo()},
 \textit{toSource()}, \textit{toString()}, and \textit{main()} methods. We discuss
 \textit{getCapabilities()} shortly. The \textit{getRevision()} method simply returns the
@@ -290,13 +290,14 @@ revision number of the classifier. There is a utility class in the
 maintainers when diagnosing and debugging problems reported by
 users. The \textit{globalInfo()} method returns a string describing the
 classifier, which, along with the scheme's options, is displayed by
-the \textit{More} button in the generic object editor. The
+the \textit{More} button in the generic object editor in WEKA's graphical user interfaces. The
 \textit{toString()} method returns a textual representation of the classifier,
 used whenever it is printed on the screen, while
 the \textit{toSource()} method is used to obtain a source code
-representation of the learned classifier. \textit{The main()} method is called
-when you ask for a decision stump from the command line, in other
-words, every time you enter a command beginning with
+representation of the learned classifier. (This is only implemented if
+the classifier implements the {\em Sourcable} interface.) \textit{The main()} method is called when
+you ask for a decision stump from the command line, in other words,
+every time you enter a command beginning with
 
 \begin{Verbatim}[fontsize=\footnotesize]
 java weka.classifiers.trees.DecisionStump
@@ -315,7 +316,7 @@ when the classifier's stated capabilities do not match the data's
 characteristics. The \textit{getCapabilities()} method is present in
 the \textit{AbstractClassifier} class and, by default, enables all
 capabilities (i.e., imposes no constraints). This makes it easier for
-new WEKA programmers to get started, because they need not learn about
+new WEKA programmers to get started because they need not learn about
 and specify capabilities initially. Capabilities are covered in more
 detail in Chapter~\ref{chapt:writing_learning_schemes}.
 
@@ -332,7 +333,7 @@ contains methods for unsupervised learning. Artificial data can be
 generated using the classes in \textit{weka.datagenerators}. The
 \textit{weka.estimators} package contains subclasses of a generic \textit{Estimator}
 class, which computes different types of probability
-distributions. These subclasses are used by the Naive Bayes algorithm
+distributions. These subclasses are used by the naive Bayes algorithm
 (among others).
 
 In the \textit{weka.filters package}, the \textit{Filter} class
@@ -381,7 +382,7 @@ In the preceding example, the \textit{--t} option was used on the
 command line to communicate the name of the training file to the
 learning algorithm. There are many other options that can be used with
 any learning scheme, and also scheme-specific ones that apply only to
-particular schemes. If you invoke a scheme with the \textit{--h}
+particular schemes. If you invoke a learning scheme with the \textit{--h}
 or \textit{--help} option, or without any command-line options at all,
 it displays the applicable options: first the general options, then
 the scheme-specific ones. In the command-line interface, type:
@@ -390,7 +391,7 @@ the scheme-specific ones. In the command-line interface, type:
 java weka.Run .J48 -h
 \end{Verbatim}
 
-\noindent You'll see a list of the options common to all learning schemes, 
+\noindent You will see a list of the options common to all learning schemes, 
 shown in Table~\ref{table:general_command_line_opts}, followed by
 those that apply only to \textit{J48}, shown in
 Table~\ref{table:j48_command_line_opts}. A notable one
@@ -442,8 +443,7 @@ Option & Function \\
 --force-batch-training & Always train classifier in batch mode, \\
 & never incrementally \\
 --toggle & Comma-separated list of metric names to toggle in \\
-&  the outputUses the specified class for \\ 
-& generating the classification output \\
+&  the output\\
 --classifications & Uses the specified class for generating the \\
 & classification output \\
 --do-not-output-per-class-statistics & Suppress the output of \\
@@ -451,32 +451,6 @@ Option & Function \\
 \hline
 \end{tabular} \footnotesize \par}
 \caption{\label{table:general_command_line_opts}Generic options for learning schemes in WEKA}
-\end{table}
-
-\begin{table}[thp]
-\footnotesize
-{\centering \begin{tabular}{ll}
-\hline
-Option & Function \\
-\hline
---U & Use unpruned tree \\
---O & Do not collapse tree \\
---C $<$pruning confidence$>$ & Specify confidence threshold for pruning \\
---M $<$number of instances$>$ & Specify minimum number of instances in \\
-& any leaf \\
---R & Use reduced-error pruning \\
---N $<$number of folds$>$ & Specify number of folds for reduced-error \\
-& pruning; one fold is used as pruning set \\
---B & Use binary splits only \\
---S & Don't perform subtree raising \\
---L & Retain instance information \\
---A & Smooth the probability estimates using Laplace smoothing \\
---J & Prevent the use of MDL correction for information gain \\
-& on numeric attributes \\
---Q & Seed for shuffling the data \\
-\hline
-\end{tabular} \footnotesize \par}
-\caption{\label{table:j48_command_line_opts}Scheme-specific options}
 \end{table}
 
 \subsection{Generic options}
@@ -548,10 +522,11 @@ with \textit{--p}. In this case, ``*'' is placed beside the
 probability in the distribution that corresponds to the predicted
 class value. The \textit{--p} options also outputs attribute values
 for each instance and must be followed by a specification of the range
-(e.g., 1--2)---use 0 if you don't want any attribute values. You can
+(e.g., 1--2)---use 0 if you do not want any attribute values. You can
 also output the cumulative margin distribution for the training data,
 which shows the distribution of the margin measure. Finally, you can
-output the classifier's source representation, and a graphical
+output the classifier's source representation (if the classifier
+implements the {\em Sourcable} interface), and a graphical
 representation if the classifier can produce one.
 
 Data relating to performance graphs such as ROC and recall-precision
@@ -579,14 +554,19 @@ Option & Function \\
 --B & Use binary splits only \\
 --S & Don't perform subtree raising \\
 --L & Retain instance information \\
---A & Smooth the probability estimates using Laplace smoothing \\
---J & Prevent the use of MDL correction for information gain \\
-& on numeric attributes \\
+--A & Smooth the probability estimates \\
+& using Laplace smoothing \\
+--J & Prevent the use of the MDL correction \\
+& for the information gain of numeric splits\\
 --Q & Seed for shuffling the data \\
+--doNotMakeSplitPointActualValue & Do not find a split point \\
+& that is an actual value in the training set\\
 \hline
 \end{tabular} \footnotesize \par}
 \caption{\label{table:j48_command_line_opts}Scheme-specific options}
 \end{table}
+
+\subsection{Scheme-specific options}
 
 Table~\ref{table:j48_command_line_opts} shows the options specific to
 J4.8. You can force the algorithm to use the unpruned tree instead of
@@ -599,6 +579,11 @@ set: the dataset is divided equally into that number of parts and the
 last is held out (default value 3). You can smooth the probability
 estimates using the Laplace technique, set the random number seed for
 shuffling the data when selecting a pruning set, and store the
-instance information for future visualization. Finally, to build a
-binary tree instead of one with multiway branches for nominal
-attributes, use \textit{--B}.
+instance information for future visualization. It is possible to turn
+off the MDL-based correction for the information gain on numeric
+attributes, which sometimes results in inappropriate pre-pruning. To
+reduce runtime on large datasets with numeric attributes, we can also
+turn off C4.5's mechanism that refines the initial split point on a
+numeric attribute to be a value that actually occurs in the training
+set. Finally, to build a binary tree instead of one with multiway
+branches for nominal attributes, use \textit{--B}.

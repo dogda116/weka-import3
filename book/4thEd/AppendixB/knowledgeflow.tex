@@ -100,8 +100,7 @@ selecting \textit{Show results} from its pop-up menu produces a list
 of trees, one for each cross-validation fold. By creating
 cross-validation folds and passing them to the classifier, the
 Knowledge Flow model provides a way to hook into the results for each
-fold. The Explorer cannot do this: it treats cross-validation as an
-evaluation method that is applied to the output of a classifier.
+fold.
 
 The flow that you've just laboriously created is actually available
 (minus the \textit{GraphViewer}) as a
@@ -160,8 +159,8 @@ before, you can zoom, pan, and visualize the instance data at a node
 \textit{StripChart} is a new visualization component designed for use with
 incremental learning. In conjunction with the
 \textit{IncrementalClassifierEvaluator} described in the next paragraph it
-displays a learning curve that plots accuracy—both the percentage
-accuracy and the root mean-squared probability error—against time. It
+displays a learning curve that plots accuracy---both the percentage
+accuracy and the root mean-squared probability error---against time. It
 shows a fixed-size time window that scrolls horizontally to reveal the
 latest results.
 
@@ -197,7 +196,7 @@ arriving in a stream from an incoming ``instance'' connection and
 produces a batch dataset when the last instance has arrived. This is
 particularly useful when placed after a reservoir sampling filter---it
 allows the instances output by reservoir sampling to be used to train
-batch learning schemes. The Join component performs an inner join on
+batch learning schemes. The {\em Join} component performs an inner join on
 two incoming dataset or instance streams. The user specifies the key
 fields to join on for both datasets, and both are expected to arrive
 in sorted order of their key fields.
@@ -208,7 +207,7 @@ one or more user-specified attributes. It can handle datasets larger
 than can be fit into main memory by using instance connections and
 specifying an in-memory buffer size. The component implements a merge
 sort by writing the sorted in-memory buffer to a file when full, and
-then interleaving instances from the disk-based file(s) when the the
+then interleaving instances from the disk-based file(s) when the
 incoming instance stream has finished. \textit{SubstringReplacer}
 replaces occurrences of substring or regular expression matches in
 incoming string attributes with user-specified
@@ -230,7 +229,7 @@ and filters are configured just as in the Explorer. Data sources are
 configured by opening a file (as we saw previously) or by setting a
 database connection, and evaluation components are configured by
 setting parameters such as the number of folds for
-cross-validation. The Connections operations are used to connect
+cross-validation. The {\em Connections} operations are used to connect
 components together by selecting the type of connection from the
 source component and then clicking on the target object. Not all
 targets are suitable; applicable ones are highlighted. Items on the
@@ -292,7 +291,7 @@ as \textit{Show results} and \textit{Clear results}.
 
 In most respects the Knowledge Flow interface is functionally similar
 to the Explorer: you can do similar things with both. It does provide
-some additional flexibility—for example, you can see the tree that J48
+some additional flexibility---for example, you can see the tree that J48
 makes for each cross-validation fold. But its real strength is the
 potential for incremental operation.
 
@@ -341,7 +340,7 @@ moves leftward to make room for new data at the right. When the
 vertical axis representing time 0 can move left no farther, it stops
 and the time origin starts to increase from 0 to keep pace with the
 data coming in at the right. Thus when the chart is full it shows a
-window of the most recent time units. The strip chart can be conﬁgured
+window of the most recent time units. The strip chart can be configured
 to alter the number of instances shown on the $x$ axis.
 
 This particular Knowledge Flow configuration can process input files
