@@ -7,23 +7,43 @@
 \usepackage{subfig}
 \usepackage{fancyvrb}
 \usepackage{mdframed}
+\usepackage[percent]{overpic}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{orange}{RGB}{246,200,30}
+
 
 \input{hyphenation}
 \input{extensions}
 
 \newsavebox{\verbbox}
 
-\title{{\Huge The WEKA Workbench}}
-\author{Eibe Frank, Mark A. Hall, and Ian H. Witten}
-\date{Online Appendix of\\ ``Data Mining: Practical Machine Learning Tools and Techniques''\\Morgan Kaufmann, 2016\\ ~\vspace{1cm}\\\epsfig{file=images/Book4thEd.jpg,width=6cm}}
-
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
+
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{2pt}
 
 \begin{document}
 
 \begin{titlepage}
-\maketitle
+
+\begin{overpic}[width=1.1\textwidth]{images/Book4thEd.jpg}
+ \put (4.5,70) {\fbox{\colorbox{orange}{
+ \begin{minipage}{11.5cm}
+ \begin{center}
+ \vspace{1cm}
+ {\Huge\bf The WEKA Workbench}\\
+ ~\\
+{\bf Eibe Frank, Mark A. Hall, and Ian H. Witten}\\
+~\\
+ Online Appendix of\\ 
+ ``Data Mining: Practical Machine Learning Tools and Techniques"\\
+ Morgan Kaufmann, 2016
+ \vspace{1cm}
+ \end{center}
+\end{minipage}
+}}}
+\end{overpic}
 
 \end{titlepage}
 
