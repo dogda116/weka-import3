@@ -10,7 +10,11 @@
 \usepackage[percent]{overpic}
 \usepackage[dvipsnames]{xcolor}
 \definecolor{orange}{RGB}{246,200,30}
+\usepackage{transparent}
+\usepackage{lmodern}
+\usepackage{morefloats}
 
+\usepackage{geometry}
 
 \input{hyphenation}
 \input{extensions}
@@ -25,27 +29,34 @@
 
 \begin{document}
 
+\newgeometry{left=0cm,right=1cm,top=2cm,bottom=0cm}
+
 \begin{titlepage}
 
-\begin{overpic}[width=1.1\textwidth]{images/Book4thEd.jpg}
- \put (4.5,70) {\fbox{\colorbox{orange}{
- \begin{minipage}{11.5cm}
- \begin{center}
+\begin{overpic}[width=1\textwidth]{images/Book4thEd.jpg}
+ \put (2,70) { \transparent{0.7} \fbox{\colorbox{orange}{
+{\fontfamily{ugq}\selectfont
+\transparent{1}\begin{minipage}{0.9\textwidth}
+\begin{center}
  \vspace{1cm}
- {\Huge\bf The WEKA Workbench}\\
- ~\\
-{\bf Eibe Frank, Mark A. Hall, and Ian H. Witten}\\
-~\\
- Online Appendix of\\ 
+ \fontsize{40}{48}\selectfont The\\
+ \fontsize{140}{120}\selectfont WEKA\\
+ \fontsize{40}{48}\selectfont Workbench\\
+\fontsize{20}{24}\selectfont ~\\
+{Eibe Frank, Mark A. Hall, and Ian H. Witten}\\
+\fontsize{15}{18}\selectfont~\\
+ Online Appendix for\\ 
  ``Data Mining: Practical Machine Learning Tools and Techniques"\\
- Morgan Kaufmann, 2016
+ Morgan Kaufmann, Fourth Edition, 2016
  \vspace{1cm}
  \end{center}
-\end{minipage}
+\end{minipage}}
 }}}
 \end{overpic}
 
 \end{titlepage}
+
+\restoregeometry
 
 \tableofcontents
 
