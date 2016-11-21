@@ -699,8 +699,15 @@ public class PartitionedMultiFilter
       }
 
       // class
-      if (instances.classIndex() > -1)
-	values[values.length - 1] = inst.value(instances.classIndex());
+      if (instances.classIndex() > -1) {
+	index = values.length - 1;
+	if (result.attribute(index).isString())
+	  values[index] = result.attribute(index).addStringValue(inst.stringValue(instances.classIndex()));
+	else if (result.attribute(index).isRelationValued())
+	  values[index] = result.attribute(index).addRelation(inst.relationalValue(instances.classIndex()));
+	else
+	  values[index] = inst.value(instances.classIndex());
+      }
 
       // generate and add instance
       if (inst instanceof SparseInstance)
