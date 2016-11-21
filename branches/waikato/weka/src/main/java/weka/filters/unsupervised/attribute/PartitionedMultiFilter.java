@@ -21,11 +21,6 @@
 
 package weka.filters.unsupervised.attribute;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Vector;
-
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -39,6 +34,11 @@ import weka.core.Utils;
 import weka.filters.AllFilter;
 import weka.filters.Filter;
 import weka.filters.SimpleBatchFilter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * <!-- globalinfo-start --> A filter that applies filters on subsets of
@@ -746,7 +746,13 @@ public class PartitionedMultiFilter extends SimpleBatchFilter {
 
       // class
       if (instances.classIndex() > -1) {
-        values[values.length - 1] = inst.value(instances.classIndex());
+	index = values.length - 1;
+	if (result.attribute(index).isString())
+	  values[index] = result.attribute(index).addStringValue(inst.stringValue(instances.classIndex()));
+	else if (result.attribute(index).isRelationValued())
+	  values[index] = result.attribute(index).addRelation(inst.relationalValue(instances.classIndex()));
+	else
+	  values[index] = inst.value(instances.classIndex());
       }
 
       // generate and add instance
