@@ -383,7 +383,7 @@ public class PackageManager extends JPanel {
         // of KB read from the message
         String kbs =
           progressMessage.replace("[DefaultPackageManager] downloaded ", "");
-        kbs = kbs.replace(" KB", "");
+        kbs = kbs.replace(" KB\r", "");
         m_progressCount = Integer.parseInt(kbs);
       } else {
         m_progressCount++;
@@ -1148,6 +1148,51 @@ public class PackageManager extends JPanel {
                 depsOk = false;
                 break;
               }
+            }
+          }
+
+          // now check for precludes
+          if (packageToInstall.getPackageMetaDataElement(WekaPackageManager.PRECLUDES_KEY) != null) {
+            try {
+              List<Package> installed = WekaPackageManager.getInstalledPackages();
+              Map<String, Package> packageMap = new HashMap<>();
+              for (Package p : installed) {
+                packageMap.put(p.getName(), p);
+              }
+              for (Package p : finalListToInstall) {
+                packageMap.put(p.getName(), p);
+              }
+              List<Package> precluded =
+                packageToInstall.getPrecludedPackages(new ArrayList<Package>(packageMap.values()));
+              if (precluded.size() > 0) {
+                List<Package> finalPrecluded = new ArrayList<>();
+                for (Package p : precluded) {
+                  if (!WekaPackageManager.m_doNotLoadList.contains(p.getName())) {
+                    finalPrecluded.add(p);
+                  }
+                }
+                if (finalPrecluded.size() > 0) {
+                  StringBuilder temp = new StringBuilder();
+                  for (Package fp : finalPrecluded) {
+                    temp.append("\n\t").append(fp.toString());
+                  }
+                  JOptionPane.showConfirmDialog(PackageManager.this,
+                    "Package " + packageToInstall.getName() + " cannot be "
+                      + "installed because it precludes the following packages"
+                      + ":\n\n"
+                      + temp.toString(), "Weka Package Manager",
+                    JOptionPane.OK_OPTION);
+                  m_unsuccessfulInstalls.add(packageToInstall);
+                  continue;
+                }
+              }
+            } catch (Exception ex) {
+              ex.printStackTrace();
+              displayErrorDialog("An error has occurred while checking "
+                + "precluded packages", ex);
+              // bail out here
+              depsOk = false;
+              break;
             }
           }
 
@@ -2214,7 +2259,8 @@ public class PackageManager extends JPanel {
         // handle non-repository packages
         @SuppressWarnings("unchecked")
         List<Object> repVersions = (List<Object>) catAndVers.get(1);
-        repositoryV = repVersions.get(0);
+        //repositoryV = repVersions.get(0);
+        repositoryV = p.getPackageMetaDataElement(WekaPackageManager.VERSION_KEY);
       }
       // String repString = getRepVersions(p.getName(), repositoryV);
       // repositoryV = repositoryV + " " + repString;
