@@ -383,7 +383,7 @@ public class PackageManager extends JPanel {
         // of KB read from the message
         String kbs =
           progressMessage.replace("[DefaultPackageManager] downloaded ", "");
-        kbs = kbs.replace(" KB", "");
+        kbs = kbs.replace(" KB\r", "");
         m_progressCount = Integer.parseInt(kbs);
       } else {
         m_progressCount++;
@@ -2259,7 +2259,8 @@ public class PackageManager extends JPanel {
         // handle non-repository packages
         @SuppressWarnings("unchecked")
         List<Object> repVersions = (List<Object>) catAndVers.get(1);
-        repositoryV = repVersions.get(0);
+        //repositoryV = repVersions.get(0);
+        repositoryV = p.getPackageMetaDataElement(WekaPackageManager.VERSION_KEY);
       }
       // String repString = getRepVersions(p.getName(), repositoryV);
       // repositoryV = repositoryV + " " + repString;
