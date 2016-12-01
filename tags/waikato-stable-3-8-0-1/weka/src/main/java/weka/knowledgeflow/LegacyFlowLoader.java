@@ -659,6 +659,17 @@ public class LegacyFlowLoader implements FlowLoader {
       }
     }
 
+    if (result == null) {
+      // one more last-ditch attempt
+      String lastDitch = "weka.knowledgeflow.steps." + clazzNameOnly;
+      try {
+	Class<?> sc = Class.forName(lastDitch);
+        result = (Step) sc.newInstance();
+      } catch (Exception e) {
+        //
+      }
+    }
+
     return result;
   }
 
