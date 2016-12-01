@@ -31,7 +31,6 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.OptionHandler;
 import weka.core.OptionMetadata;
-import weka.core.SerializationHelper;
 import weka.core.Utils;
 import weka.core.WekaException;
 import weka.gui.FilePropertyMetadata;
@@ -344,8 +343,7 @@ public class Classifier extends WekaAlgorithmWrapper implements
           && m_classifierTemplate instanceof InputMappedClassifier) {
           m_trainedClassifier =
             weka.classifiers.AbstractClassifier.makeCopy(m_classifierTemplate);
-          // force the InputMappedClassifier to load a model (if one has been
-          // configured)
+          // force the InputMappedClassifier to load a model (if one has been configured)
           ((InputMappedClassifier) m_trainedClassifier).getModelHeader(null);
         }
 
@@ -740,8 +738,8 @@ public class Classifier extends WekaAlgorithmWrapper implements
     ObjectInputStream is = null;
     try {
       is =
-        SerializationHelper.getObjectInputStream(new FileInputStream(new File(
-          filePath)));
+        new ObjectInputStream(new BufferedInputStream(new FileInputStream(
+          new File(filePath))));
 
       m_trainedClassifier = (weka.classifiers.Classifier) is.readObject();
 
