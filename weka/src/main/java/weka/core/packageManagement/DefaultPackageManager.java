@@ -867,11 +867,21 @@ public class DefaultPackageManager extends PackageManager {
   }
 
   private URLConnection getConnection(URL connURL) throws IOException {
-    URL origURL = connURL;
     URLConnection conn = openConnection(connURL);
 
     if (conn instanceof HttpURLConnection) {
-      int status = ((HttpURLConnection) conn).getResponseCode();
+      int status = 0;
+      try {
+        status = ((HttpURLConnection) conn).getResponseCode();
+      } catch (Exception ex) {
+        if (connURL.toString().startsWith("https://")) {
+          String newURL = connURL.toString().replace("https://", "http://");
+          conn = openConnection(new URL(newURL));
+          status = ((HttpURLConnection) conn).getResponseCode();
+        } else {
+          throw ex;
+        }
+      }
       int redirectCount = 0;
       while (status == HttpURLConnection.HTTP_MOVED_TEMP
         || status == HttpURLConnection.HTTP_MOVED_PERM
@@ -880,12 +890,25 @@ public class DefaultPackageManager extends PackageManager {
         if (redirectCount > 2) {
           throw new IOException(
             "Three redirects were generated when trying to " + "download "
-              + origURL);
+              + connURL);
         }
 
         String newURL = conn.getHeaderField("Location");
-        conn = openConnection(new URL(newURL));
-        status = ((HttpURLConnection) conn).getResponseCode();
+        try {
+          conn = openConnection(new URL(newURL));
+          status = ((HttpURLConnection) conn).getResponseCode();
+        } catch (Exception ex) {
+          if (newURL.startsWith("https://")) {
+            // try http instead
+            System.out.println("[DefaultPackageManager] trying http instead "
+              + "of https for " + newURL);
+            newURL = newURL.replace("https://", "http://");
+            conn = openConnection(new URL(newURL));
+            status = ((HttpURLConnection) conn).getResponseCode();
+          } else {
+            throw ex;
+          }
+        }
       }
     }
 
