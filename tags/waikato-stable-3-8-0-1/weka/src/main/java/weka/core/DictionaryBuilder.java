@@ -76,7 +76,7 @@ import weka.gui.ProgrammaticProperty;
  * is the number of documents that the term has occurred in.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision: 12931 $
+ * @version $Revision: 13715 $
  */
 public class DictionaryBuilder implements Aggregateable<DictionaryBuilder>,
   OptionHandler, Serializable {
@@ -1131,8 +1131,8 @@ public class DictionaryBuilder implements Aggregateable<DictionaryBuilder>,
     }
 
     m_numClasses =
-      !m_doNotOperateOnPerClassBasis && m_inputFormat.classIndex() >= 0 ? m_inputFormat
-        .numClasses() : 1;
+      !m_doNotOperateOnPerClassBasis && m_inputFormat.classIndex() >= 0 && m_inputFormat.classAttribute().isNominal() ?
+              m_inputFormat.numClasses() : 1;
     m_dictsPerClass =
       m_sortDictionary ? new TreeMap[m_numClasses]
         : new LinkedHashMap[m_numClasses];
@@ -1566,7 +1566,7 @@ public class DictionaryBuilder implements Aggregateable<DictionaryBuilder>,
     }
 
     int dIndex = 0;
-    if (!m_doNotOperateOnPerClassBasis && m_classIndex >= 0) {
+    if (!m_doNotOperateOnPerClassBasis && m_classIndex >= 0 && m_inputFormat.classAttribute().isNominal()) {
       if (!inst.classIsMissing()) {
         dIndex = (int) inst.classValue();
       } else {
