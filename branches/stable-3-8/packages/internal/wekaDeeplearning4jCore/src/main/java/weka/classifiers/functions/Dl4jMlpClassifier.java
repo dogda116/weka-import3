@@ -192,13 +192,19 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
 
     // restore the model
     if (m_replaceMissing != null) {
-      m_model = ModelSerializer.restoreMultiLayerNetwork(ois, false);
+      ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
+      try {
+        Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+        m_model = ModelSerializer.restoreMultiLayerNetwork(ois, false);
+      } finally {
+        Thread.currentThread().setContextClassLoader(origLoader);
+      }
     }
   }
 
   /**
    * Get the log file
-   * 
+   *
    * @return the log file
    */
   public File getLogFile() {
@@ -300,16 +306,15 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
 
   /**
    * The method used to train the classifier.
-   * 
+   *
    * @param data set of instances serving as training data
    * @throws Exception if something goes wrong in the training process
    */
   @Override
   public void buildClassifier(Instances data) throws Exception {
-      ClassLoader orig = Thread.currentThread().getContextClassLoader();
-      try {
-      	  Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
-	  System.err.println("Setting classloader to: " + this.getClass().getClassLoader());
+    ClassLoader orig = Thread.currentThread().getContextClassLoader();
+    try {
+	Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
     // Can classifier handle the data?
     getCapabilities().testWithFail(data);
 
@@ -457,9 +462,9 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
       }
       iter.reset();
     }
-      } finally {
-    	  Thread.currentThread().setContextClassLoader(orig);
-      }
+    } finally {
+	Thread.currentThread().setContextClassLoader(orig);
+    }
   }
 
   /**
