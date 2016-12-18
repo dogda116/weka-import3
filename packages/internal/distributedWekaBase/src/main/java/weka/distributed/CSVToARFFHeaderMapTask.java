@@ -191,6 +191,7 @@ public class CSVToARFFHeaderMapTask implements OptionHandler, Serializable {
    *          quantile estimation are to be suppressed
    * @param suppressCSVParsingOptions true if command line options relating to
    *          CSV parsing are to be suppressed
+   * @param suppressCSVParsingOptions
    */
   public CSVToARFFHeaderMapTask(boolean suppressQuantileOptions,
     boolean suppressCSVParsingOptions) {

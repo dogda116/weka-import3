@@ -44,7 +44,7 @@ Changes=Changes to support execution when loaded by a child classloader
 # Related=packageName1,packageName2,...
 
 # Dependencies (format: packageName (equality/inequality version_number)
-Depends=weka (>=3.9.1-SNAPSHOT)
+Depends=weka (>=3.8.1-SNAPSHOT|<3.9.0)
 
 # Message to display in installation. Can be used to provide
 # special instructions (e.g. manual stuff needed to complete
