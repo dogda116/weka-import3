@@ -6,10 +6,10 @@
 PackageName=wekaDeeplearning4jGPU
 
 # Version (required)
-Version=1.0.2
+Version=1.0.3
 
 #Date
-Date=2016-12-09
+Date=2016-12-19
 
 # Title (required)
 Title=Weka wrappers for Deeplearning4j
@@ -31,7 +31,7 @@ Description=Provides a wrapper classifier for feedforward networks, including co
 Changes=Splitting package into a core package, CPU-related libs package and GPU-related libs package
 
 # Package URL for obtaining the package archive (required)
-PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jGPULibs1.0.2.zip?download
+PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jGPULibs1.0.3.zip?download
 
 # URL for further information
 URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4j
@@ -41,6 +41,9 @@ URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4j
 
 # Related to other packages?
 #Related=
+
+# Message to display on installation.
+MessageToDisplayOnInstallation=This package requires CUDA 8 to be installed. See instructions at http://docs.nvidia.com/cuda/
 
 # Dependencies
 Depends=weka (>=3.8.1-SNAPSHOT|<3.9.0), wekaDeeplearning4jCore (>=1.0.2), wekaDeeplearning4jGPULibs (>=1.0.0)
