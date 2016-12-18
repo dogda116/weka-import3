@@ -19,7 +19,7 @@
  * Note:
  * replace <db.jar> with actual jar filename, e.g., mysql.jar
  *
- * Version: $Revision: 11021 $
+ * Version: $Revision: 13908 $
  */
 
 grant {
@@ -32,6 +32,10 @@ grant {
   // allow the remote engine access to environment variables
   permission java.lang.RuntimePermission
     "getenv.*";
+
+  // allow the remote engine access to the class loader
+  permission java.lang.RuntimePermission
+    "getClassLoader";
 
   // file permission for data sets
   permission java.io.FilePermission
