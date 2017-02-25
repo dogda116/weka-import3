@@ -28,14 +28,8 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import weka.classifiers.Classifier;
-import weka.core.BatchPredictor;
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.Option;
-import weka.core.OptionHandler;
-import weka.core.Range;
-import weka.core.Utils;
-import weka.core.WekaException;
+import weka.classifiers.misc.InputMappedClassifier;
+import weka.core.*;
 import weka.core.converters.ConverterUtils.DataSource;
 
 /**
@@ -636,14 +630,26 @@ public abstract class AbstractOutput implements Serializable, OptionHandler {
 
     if (classifier instanceof BatchPredictor
       && ((BatchPredictor) classifier).implementsMoreEfficientBatchPrediction()) {
-      test = testset.getDataSet(m_Header.classIndex());
+      test = testset.getDataSet();
+      String className = m_Header.classAttribute().name();
+      Attribute classMatch = test.attribute(className);
+      if (classMatch == null) {
+        throw new Exception("Can't find a match for the class attribute" + className + " in the test instances!");
+      }
+      test.setClass(classMatch);
       double[][] predictions =
         ((BatchPredictor) classifier).distributionsForInstances(test);
       for (i = 0; i < test.numInstances(); i++) {
         printClassification(predictions[i], test.instance(i), i);
       }
     } else {
-      test = testset.getStructure(m_Header.classIndex());
+      test = testset.getStructure();
+      String className = m_Header.classAttribute().name();
+      Attribute classMatch = test.attribute(className);
+      if (classMatch == null) {
+        throw new Exception("Can't find a match for the class attribute" + className + " in the test instances!");
+      }
+      test.setClass(classMatch);
       while (testset.hasMoreElements(test)) {
         inst = testset.nextElement(test);
         doPrintClassification(classifier, inst, i);
