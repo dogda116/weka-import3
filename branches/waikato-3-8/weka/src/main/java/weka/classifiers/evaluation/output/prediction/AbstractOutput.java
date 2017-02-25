@@ -540,36 +540,23 @@ public abstract class AbstractOutput implements Serializable, OptionHandler {
     int index) throws Exception;
 
   /**
-   * Preprocesses an input instance and its copy (that will get its class value
-   * set to missing for prediction purposes). Basically this only does something
+   * Preprocesses an input instance. Basically this only does something
    * special in the case when the classifier is an InputMappedClassifier.
    * 
    * @param inst the original instance to predict
-   * @param withMissing a copy of the instance to predict
    * @param classifier the classifier that will be used to make the prediction
    * @return the original instance unchanged or mapped (in the case of an
-   *         InputMappedClassifier) and the withMissing copy with the class
-   *         attribute set to missing value.
+   *         InputMappedClassifier) .
    * @throws Exception if a problem occurs.
    */
-  protected Instance preProcessInstance(Instance inst, Instance withMissing,
-    Classifier classifier) throws Exception {
+  protected Instance preProcessInstance(Instance inst, Classifier classifier) throws Exception {
 
-    if (classifier instanceof weka.classifiers.misc.InputMappedClassifier) {
-      inst = (Instance) inst.copy();
-      inst =
-        ((weka.classifiers.misc.InputMappedClassifier) classifier)
-          .constructMappedInstance(inst);
-      int mappedClass =
-        ((weka.classifiers.misc.InputMappedClassifier) classifier)
-          .getMappedClassIndex();
-      withMissing.setMissing(mappedClass);
+    if (classifier instanceof InputMappedClassifier) {
+      return ((InputMappedClassifier) classifier).constructMappedInstance(inst);
     } else {
-      withMissing.setMissing(withMissing.classIndex());
+      return inst;
     }
-
-    return inst;
-  }
+ }
 
   /**
    * Prints the classification to the buffer.
@@ -588,7 +575,7 @@ public abstract class AbstractOutput implements Serializable, OptionHandler {
       throw new WekaException(error);
     }
 
-    doPrintClassification(classifier, inst, index);
+    doPrintClassification(classifier, preProcessInstance(inst, classifier), index);
   }
 
   /**
@@ -640,7 +627,7 @@ public abstract class AbstractOutput implements Serializable, OptionHandler {
       double[][] predictions =
         ((BatchPredictor) classifier).distributionsForInstances(test);
       for (i = 0; i < test.numInstances(); i++) {
-        printClassification(predictions[i], test.instance(i), i);
+        printClassification(predictions[i], preProcessInstance(test.instance(i), classifier), i);
       }
     } else {
       test = testset.getStructure();
@@ -652,7 +639,7 @@ public abstract class AbstractOutput implements Serializable, OptionHandler {
       test.setClass(classMatch);
       while (testset.hasMoreElements(test)) {
         inst = testset.nextElement(test);
-        doPrintClassification(classifier, inst, i);
+        doPrintClassification(classifier, preProcessInstance(inst, classifier), i);
         i++;
       }
     }
@@ -675,11 +662,11 @@ public abstract class AbstractOutput implements Serializable, OptionHandler {
       double[][] predictions =
         ((BatchPredictor) classifier).distributionsForInstances(testset);
       for (i = 0; i < testset.numInstances(); i++) {
-        printClassification(predictions[i], testset.instance(i), i);
+        printClassification(predictions[i], preProcessInstance(testset.instance(i), classifier), i);
       }
     } else {
       for (i = 0; i < testset.numInstances(); i++) {
-        doPrintClassification(classifier, testset.instance(i), i);
+        doPrintClassification(classifier, preProcessInstance(testset.instance(i), classifier), i);
       }
     }
   }
