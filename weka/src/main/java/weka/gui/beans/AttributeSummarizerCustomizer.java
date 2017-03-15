@@ -15,7 +15,7 @@
 
 /*
  *    AttributeSummarizerCustomizer.java
- *    Copyright (C) 2011-2012 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2011 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -40,6 +40,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 import java.util.Vector;
+
 
 /**
  * GUI customizer for attribute summarizer. Allows the customization of

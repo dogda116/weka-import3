@@ -43,7 +43,6 @@ import weka.gui.explorer.Explorer;
 import weka.gui.graphvisualizer.GraphVisualizer;
 import weka.gui.knowledgeflow.KnowledgeFlowApp;
 import weka.gui.knowledgeflow.MainKFPerspective;
-import weka.gui.scripting.JythonPanel;
 import weka.gui.sql.SqlViewer;
 import weka.gui.treevisualizer.Node;
 import weka.gui.treevisualizer.NodePlace;
@@ -915,6 +914,7 @@ public class GUIChooserApp extends JFrame {
         KeyEvent.VK_J, KeyEvent.CTRL_MASK));
       jMenuItemJythonConsole.addActionListener(new ActionListener() {
         @Override
+        @SuppressWarnings("unchecked")
         public void actionPerformed(ActionEvent e) {
 
           // Do we have TigerJython?
@@ -930,25 +930,7 @@ public class GUIChooserApp extends JFrame {
             tigerJythonClass.getMethod("main", String[].class).invoke(null,
                     args);
           } catch (Exception ex) {
-
-            // Default to built-in console
-            final JythonPanel jythonPanel = new JythonPanel();
-            final JFrame frame = new JFrame(jythonPanel.getPlainTitle());
-            frame.setIconImage(m_Icon);
-            frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            frame.setJMenuBar(jythonPanel.getMenuBar());
-            frame.getContentPane().add(jythonPanel,
-                    BorderLayout.CENTER);
-            frame.addWindowListener(new WindowAdapter() {
-              @Override
-              public void windowClosed(WindowEvent w) {
-                m_Frames.remove(frame);
-                checkExit();
-              }
-            });
-            frame.setSize(800, 600);
-            frame.setVisible(true);
-            m_Frames.add(frame);
+            ex.printStackTrace();
           }
         }
       });
