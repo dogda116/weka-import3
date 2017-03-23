@@ -400,6 +400,7 @@
          <include name="**/*.default"/>
        </fileset>
     </copy>
+    <copy file="${lib}/mtjmarker.jar" todir="${build}/classes" />
     <copy file="${lib}/core.jar" todir="${build}/classes" />
     <copy file="${lib}/mtj.jar" todir="${build}/classes" />
     <copy file="${lib}/arpack_combined_all.jar" todir="${build}/classes" />
