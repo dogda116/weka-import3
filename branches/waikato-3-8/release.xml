@@ -82,22 +82,6 @@
   </target>
 
  <target name="checkout_trunk_resources" description="Checkout packages/internal and installer/nsis">
-   <mkdir dir="packages"/>
-   <property name="source-root" value="."/>
-   <property name="repository.URL" value="https://svn.cms.waikato.ac.nz/svn/weka/branches/stable-3-8"/>
-   <java classname="org.tmatesoft.svn.cli.SVN"
-         dir="${source-root}/packages" fork="true">
-     <arg value="co"/>
-     <arg value="--username"/>
-     <arg value="${svn_username}"/>
-     <arg value="--password"/>
-     <arg value="${svn_password}"/>
-     <arg value="${repository.URL}/packages/internal"/>
-     <classpath>
-       <pathelement path="${java.class.path}"/>
-     </classpath>
-   </java>
-
    <java classname="org.tmatesoft.svn.cli.SVN"
          dir="${source-root}" fork="true">
      <arg value="co"/>
@@ -110,20 +94,6 @@
        <pathelement path="${java.class.path}"/>
      </classpath>
    </java>
-
-   <!-- Remove packages/classes with non-copyright/patented code (or depend on such code), and those with no test classes -->
-   <delete dir="packages/internal/SVMAttributeEval"/>
-   <delete dir="packages/internal/userClassifier"/>
-   <delete dir="packages/internal/WekaExcel"/>
-   <delete dir="packages/internal/WekaODF"/>
-   <delete dir="packages/internal/gridSearch"/>
-   <delete dir="packages/internal/massiveOnlineAnalysis"/>
-   <delete file="packages/internal/multiInstanceLearning/src/main/java/weka/classifiers/mi/MISMO.java"/>
-   <delete file="packages/internal/multiInstanceLearning/src/main/java/weka/classifiers/mi/MISVM.java"/>
-   <delete dir="packages/internal/multiInstanceLearning/src/main/java/weka/classifiers/mi/supportVector"/>
-   <delete file="packages/internal/multiInstanceLearning/src/test/java/weka/classifiers/mi/MISMOTest.java"/>
-   <delete file="packages/internal/multiInstanceLearning/src/test/java/weka/classifiers/mi/MISVMTest.java"/>
-   <delete dir="packages/internal/multiInstanceLearning/src/test/java/weka/classifiers/mi/supportVector"/>
  </target>
 
   <target name="run_tests_all" depends="clean, checkout_trunk_resources">
@@ -256,6 +226,7 @@
         <runtime dir="${env.JAVA_HOME}" />
         <classpath file="${temp}/weka-${release}/weka.jar"/>
         <option value="-Xmx1024M"/>
+        <option value="-Xss20M"/>
     </bundleapp>
 
     <antcall target="dmg_${os}">
@@ -279,7 +250,7 @@
                 icon="weka/src/main/java/weka/gui/weka_icon_new.icns"
                 version="${release}"
                 verbose="true"
-                VMOptions="-Xmx1Gb"
+                VMOptions="-Xmx1Gb -Xss20M"
                 shortname="Weka-${release}"
                 arguments=""
                 workingdirectory="/Users"
