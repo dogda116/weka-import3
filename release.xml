@@ -52,7 +52,7 @@
     <echo message="This build file should be run from a clean checkout (and not from a working copy). Furthermore, there should be no packages installed."/>
     <echo message="In order to make a complete set of release artifacts for Weka, this build script requires the following"/>
     <echo message="1) Additional jars to be installed in Apache Ant's lib directory:"/>
-    <echo message="nsvnkit.jar"/>
+    <echo message="svnkit.jar"/>
     <echo message="svnkit-cli.jar"/>
     <echo message="ant_latex.jar (http://www.dokutransdata.de/ant_latex/)"/>
     <echo message="jarbundler.jar (Mac app for Apple Java 1.6)"/>
