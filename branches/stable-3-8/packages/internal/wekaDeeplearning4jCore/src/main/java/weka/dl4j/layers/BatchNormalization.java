@@ -28,13 +28,14 @@ import org.deeplearning4j.nn.conf.GradientNormalization;
 import org.deeplearning4j.nn.conf.Updater;
 import org.deeplearning4j.nn.conf.distribution.Distribution;
 import org.deeplearning4j.nn.weights.WeightInit;
-import org.nd4j.linalg.convolution.Convolution;
+import org.nd4j.linalg.activations.IActivation;
 
 import weka.core.Option;
 import weka.core.OptionHandler;
 import weka.core.OptionMetadata;
 import weka.dl4j.distribution.NormalDistribution;
 import weka.gui.ProgrammaticProperty;
+import weka.dl4j.activations.ActivationIdentity;
 
 /**
  * A version of DeepLearning4j's BatchNormalization layer that implements WEKA option handling.
@@ -63,7 +64,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 	 */
 	public BatchNormalization() {
 		setLayerName("Batch normalization layer");
-		setActivationFunction("identity");
+		setActivationFunction(new ActivationIdentity());
 		setWeightInit(WeightInit.XAVIER);
 		setDist(new NormalDistribution());
 		setUpdater(Updater.NESTEROVS);
@@ -85,7 +86,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "layer name",
 					description = "The name of the layer (default = Batch normalization Layer).",
 					commandLineParamName = "name", commandLineParamSynopsis = "-name <string>",
-					displayOrder = 1)
+					displayOrder = 0)
 	public String getLayerName() {
 		return this.layerName;
 	}
@@ -94,22 +95,102 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 	}
 
 	@OptionMetadata(
-					displayName = "name of activation function",
-					description = "The name of the activation function (default = identity; options are softmax,logsoftmax,maxout,identity,abs,cos,elu,exp,log,pow,sin,acos,asin,atan,ceil,relu,sign,sqrt,step,tanh,floor,round,hardtanh,timesoneminus,negative,softplus,softsign,leakyrelu,stabilize,sigmoid).",
-					commandLineParamName = "activation", commandLineParamSynopsis = "-activation <string>",
-					displayOrder = 2)
-	public String getActivationFunction() {
-		return this.activationFunction;
+			displayName = "decay parameter",
+			description = "The decay parameter (default = 0.9).",
+			commandLineParamName = "decay", commandLineParamSynopsis = "-decay <double>",
+			displayOrder = 1)
+	public double getDecay() {
+		return this.decay;
 	}
-	public void setActivationFunction(String activationFunction) {
-		this.activationFunction = activationFunction;
+	public void setDecay(double decay) {
+		this.decay = decay;
+	}
+
+	@OptionMetadata(
+			displayName = "eps parameter",
+			description = "The eps parameter (default = 1e-5).",
+			commandLineParamName = "eps", commandLineParamSynopsis = "-eps <double>",
+			displayOrder = 2)
+	public double getEps() {
+		return this.eps;
+	}
+	public void setEps(double eps) {
+		this.eps = eps;
+	}
+
+	@OptionMetadata(
+			displayName = "gamma parameter",
+			description = "The gamma parameter (default = 1).",
+			commandLineParamName = "gamma", commandLineParamSynopsis = "-gamma <double>",
+			displayOrder = 3)
+	public double getGamma() {
+		return this.gamma;
+	}
+	public void setGamma(double gamma) {
+		this.gamma = gamma;
+	}
+
+	@OptionMetadata(
+			displayName = "beta parameter",
+			description = "The beta parameter (default = 0).",
+			commandLineParamName = "beta", commandLineParamSynopsis = "-beta <double>",
+			displayOrder = 4)
+	public double getBeta() {
+		return this.beta;
+	}
+	public void setBeta(double beta) {
+		this.beta = beta;
+	}
+
+	@OptionMetadata(
+			displayName = "lock gamma and beta",
+			description = "Whether to lock gamma and beta.",
+			commandLineParamName = "beta", commandLineParamSynopsis = "-lockGammaBeta",
+			displayOrder = 5)
+	public boolean getLockGammaAndBeta() {
+		return super.isLockGammaBeta();
+	}
+	public void setLockGammaAndBeta(boolean lgb) { super.setLockGammaBeta(lgb); }
+
+	@ProgrammaticProperty
+	public boolean isLockGammaBeta() { return super.isLockGammaBeta(); }
+	public void setLockGammaBeta(boolean lgb) { super.setLockGammaBeta(lgb); }
+
+	@OptionMetadata(
+			displayName = "noMinibatch",
+			description = "Whether minibatches are not not used.",
+			commandLineParamName = "noMinibatch", commandLineParamSynopsis = "-noMinibatch",
+			displayOrder = 6)
+	public boolean getNoMinibatch() {
+		return !super.isMinibatch();
+	}
+	public void setNoMinibatch(boolean b) { super.setMinibatch(!b); }
+
+	@ProgrammaticProperty
+	public boolean isMinibatch() { return super.isMinibatch(); }
+	public void setMinibatch(boolean b) { super.setMinibatch(b); }
+
+	@OptionMetadata(
+					displayName = "activation function",
+					description = "The activation function to use (default = Identity).",
+					commandLineParamName = "activation", commandLineParamSynopsis = "-activation <specification>",
+					displayOrder = 7)
+	public IActivation getActivationFunction() { return this.activationFn; }
+	public void setActivationFunction(IActivation activationFn) {
+		this.activationFn = activationFn;
+	}
+
+	@ProgrammaticProperty
+	public IActivation getActivationFn() { return super.getActivationFn(); }
+	public void setActivationFn(IActivation fn) {
+		super.setActivationFn(fn);
 	}
 
 	@OptionMetadata(
 					displayName = "weight initialization method",
 					description = "The method for weight initialization (default = XAVIER).",
 					commandLineParamName = "weightInit", commandLineParamSynopsis = "-weightInit <specification>",
-					displayOrder = 3)
+					displayOrder = 8)
 	public WeightInit getWeightInit() {
 		return this.weightInit;
 	}
@@ -121,7 +202,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "bias initialization",
 					description = "The bias initialization (default = 1.0).",
 					commandLineParamName = "biasInit", commandLineParamSynopsis = "-biasInit <double>",
-					displayOrder = 4)
+					displayOrder = 9)
 	public double getBiasInit() {
 		return this.biasInit;
 	}
@@ -133,7 +214,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "distribution",
 					description = "The distribution (default = NormalDistribution(1e-3, 1)).",
 					commandLineParamName = "dist", commandLineParamSynopsis = "-dist <specification>",
-					displayOrder = 5)
+					displayOrder = 10)
 	public Distribution getDist() {
 		return this.dist;
 	}
@@ -145,7 +226,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "learning rate",
 					description = "The learning rate (default = 0.01).",
 					commandLineParamName = "lr", commandLineParamSynopsis = "-lr <double>",
-					displayOrder = 6)
+					displayOrder = 11)
 	public double getLearningRate() {
 		return this.learningRate;
 	}
@@ -157,7 +238,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "bias learning rate",
 					description = "The bias learning rate (default = 0.01).",
 					commandLineParamName = "blr", commandLineParamSynopsis = "-blr <double>",
-					displayOrder = 7)
+					displayOrder = 12)
 	public double getBiasLearningRate() {
 		return this.biasLearningRate;
 	}
@@ -169,7 +250,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "learning rate schedule",
 					description = "The learning rate schedule.",
 					commandLineParamName = "lrSchedule", commandLineParamSynopsis = "-lrSchedule <specification>",
-					displayOrder = 8)
+					displayOrder = 13)
 	public Map<Integer, Double> getLearningRateSchedule() {
 		return this.learningRateSchedule;
 	}
@@ -181,7 +262,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "momentum",
 					description = "The momentum (default = 0.9).",
 					commandLineParamName = "momentum", commandLineParamSynopsis = "-momentum <double>",
-					displayOrder = 9)
+					displayOrder = 14)
 	public double getMomentum() {
 		return this.momentum;
 	}
@@ -193,7 +274,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "momentum schedule",
 					description = "The momentum schedule.",
 					commandLineParamName = "momentumSchedule", commandLineParamSynopsis = "-momentumSchedule <specification>",
-					displayOrder = 10)
+					displayOrder = 15)
 	public Map<Integer, Double> getMomentumSchedule() {
 		return this.momentumSchedule;
 	}
@@ -205,7 +286,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "L1",
 					description = "The L1 parameter (default = 0).",
 					commandLineParamName = "L1", commandLineParamSynopsis = "-L1 <double>",
-					displayOrder = 11)
+					displayOrder = 16)
 	public double getL1() {
 		return this.l1;
 	}
@@ -217,7 +298,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "L2",
 					description = "The L2 parameter (default = 0).",
 					commandLineParamName = "L2", commandLineParamSynopsis = "-L2 <double>",
-					displayOrder = 12)
+					displayOrder = 17)
 	public double getL2() {
 		return this.l2;
 	}
@@ -226,34 +307,34 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 	}
 
 	@OptionMetadata(
-					displayName = "bias L1",
-					description = "The bias L1 parameter (default = 0).",
-					commandLineParamName = "biasL1", commandLineParamSynopsis = "-biasL1 <double>",
-					displayOrder = 13)
+					displayName = "L1 bias",
+					description = "The L1 bias parameter (default = 0).",
+					commandLineParamName = "l1Bias", commandLineParamSynopsis = "-l1Bias <double>",
+					displayOrder = 18)
 	public double getBiasL1() {
-		return this.biasL1;
+		return this.l1Bias;
 	}
 	public void setBiasL1(double biasL1) {
-		this.biasL1 = biasL1;
+		this.l1Bias = biasL1;
 	}
 
 	@OptionMetadata(
-					displayName = "bias L2",
-					description = "The bias L2 parameter (default = 0).",
-					commandLineParamName = "biasL2", commandLineParamSynopsis = "-biasL2 <double>",
-					displayOrder = 14)
+					displayName = "L2 bias",
+					description = "The L2 bias parameter (default = 0).",
+					commandLineParamName = "l2Bias", commandLineParamSynopsis = "-l2Bias <double>",
+					displayOrder = 19)
 	public double getBiasL2() {
-		return this.biasL2;
+		return this.l2Bias;
 	}
 	public void setBiasL2(double biasL2) {
-		this.biasL2 = biasL2;
+		this.l2Bias = biasL2;
 	}
 
 	@OptionMetadata(
 					displayName = "dropout parameter",
 					description = "The dropout parameter (default = 0).",
 					commandLineParamName = "dropout", commandLineParamSynopsis = "-dropout <double>",
-					displayOrder = 15)
+					displayOrder = 20)
 	public double getDropOut() {
 		return this.dropOut;
 	}
@@ -265,7 +346,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "updater for stochastic gradient descent",
 					description = "The updater for stochastic gradient descent (default NESTEROVS).",
 					commandLineParamName = "updater", commandLineParamSynopsis = "-updater <speficiation>",
-					displayOrder = 16)
+					displayOrder = 21)
 	public Updater getUpdater() {
 		return this.updater;
 	}
@@ -277,7 +358,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "ADADELTA's rho parameter",
 					description = "ADADELTA's rho parameter (default = 0).",
 					commandLineParamName = "rho", commandLineParamSynopsis = "-rho <double>",
-					displayOrder = 17)
+					displayOrder = 22)
 	public double getRho() {
 		return this.rho;
 	}
@@ -289,7 +370,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "ADADELTA's epsilon parameter",
 					description = "ADADELTA's epsilon parameter (default = 1e-6).",
 					commandLineParamName = "epsilon", commandLineParamSynopsis = "-epsilon <double>",
-					displayOrder = 18)
+					displayOrder = 23)
 	public double getEpsilon() {
 		return this.epsilon;
 	}
@@ -301,7 +382,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "RMSPROP's RMS decay parameter",
 					description = "RMSPROP's RMS decay parameter (default = 0.95).",
 					commandLineParamName = "rmsDecay", commandLineParamSynopsis = "-rmsDecay <double>",
-					displayOrder = 19)
+					displayOrder = 24)
 	public double getRmsDecay() {
 		return this.rmsDecay;
 	}
@@ -313,7 +394,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "ADAM's mean decay parameter",
 					description = "ADAM's mean decay parameter (default 0.9).",
 					commandLineParamName = "adamMeanDecay", commandLineParamSynopsis = "-adamMeanDecay <double>",
-					displayOrder = 20)
+					displayOrder = 25)
 	public double getAdamMeanDecay() { return this.adamMeanDecay; }
 	public void setAdamMeanDecay(double adamMeanDecay) {
 		this.adamMeanDecay = adamMeanDecay;
@@ -323,7 +404,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "ADAMS's var decay parameter",
 					description = "ADAM's var decay parameter (default 0.999).",
 					commandLineParamName = "adamVarDecay", commandLineParamSynopsis = "-adamVarDecay <double>",
-					displayOrder = 21)
+					displayOrder = 26)
 	public double getAdamVarDecay() {
 		return this.adamVarDecay;
 	}
@@ -335,7 +416,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "gradient normalization method",
 					description = "The gradient normalization method (default = None).",
 					commandLineParamName = "gradientNormalization", commandLineParamSynopsis = "-gradientNormalization <specification>",
-					displayOrder = 22)
+					displayOrder = 27)
 	public GradientNormalization getGradientNormalization() {
 		return this.gradientNormalization;
 	}
@@ -347,7 +428,7 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 					displayName = "gradient normalization threshold",
 					description = "The gradient normalization threshold (default = 1).",
 					commandLineParamName = "gradNormThreshold", commandLineParamSynopsis = "-gradNormThreshold <double>",
-					displayOrder = 23)
+					displayOrder = 28)
 	public double getGradientNormalizationThreshold() {
 		return this.gradientNormalizationThreshold;
 	}
@@ -367,53 +448,13 @@ public class BatchNormalization extends org.deeplearning4j.nn.conf.layers.BatchN
 		this.nOut = nOut;
 	}
 
-	@OptionMetadata(
-					displayName = "decay parameter",
-					description = "The decay parameter (default = 0.9).",
-					commandLineParamName = "decay", commandLineParamSynopsis = "-decay <double>",
-					displayOrder = 24)
-	public double getDecay() {
-		return this.decay;
-	}
-	public void setDecay(double decay) {
-		this.decay = decay;
-	}
+	@ProgrammaticProperty
+	public double getL1Bias() { return super.getL1Bias(); }
+	public void setL1Bias(int l1bias) { super.setL1Bias(l1bias); }
 
-	@OptionMetadata(
-					displayName = "eps parameter",
-					description = "The eps parameter (default = 1e-5).",
-					commandLineParamName = "eps", commandLineParamSynopsis = "-eps <double>",
-					displayOrder = 25)
-	public double getEps() {
-		return this.eps;
-	}
-	public void setEps(double eps) {
-		this.eps = eps;
-	}
-
-	@OptionMetadata(
-					displayName = "gamma parameter",
-					description = "The gamma parameter (default = 1).",
-					commandLineParamName = "gamma", commandLineParamSynopsis = "-gamma <double>",
-					displayOrder = 26)
-	public double getGamma() {
-		return this.gamma;
-	}
-	public void setGamma(double gamma) {
-		this.gamma = gamma;
-	}
-
-	@OptionMetadata(
-					displayName = "beta parameter",
-					description = "The beta parameter (default = 0).",
-					commandLineParamName = "beta", commandLineParamSynopsis = "-beta <double>",
-					displayOrder = 27)
-	public double getBeta() {
-		return this.beta;
-	}
-	public void setBeta(double beta) {
-		this.beta = beta;
-	}
+	@ProgrammaticProperty
+	public double getL2Bias() { return super.getL2Bias(); }
+	public void setL2Bias(int l2bias) { super.setL2Bias(l2bias); }
 
 	/**
 	 * Returns an enumeration describing the available options.
