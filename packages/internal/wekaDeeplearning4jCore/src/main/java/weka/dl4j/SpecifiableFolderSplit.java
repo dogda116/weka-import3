@@ -21,6 +21,7 @@
 package weka.dl4j;
 
 import java.net.URI;
+import java.util.List;
 
 import org.datavec.api.split.FileSplit;
 

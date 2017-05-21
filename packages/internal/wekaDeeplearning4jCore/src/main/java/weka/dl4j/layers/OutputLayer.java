@@ -23,16 +23,18 @@ package weka.dl4j.layers;
 import org.deeplearning4j.nn.conf.GradientNormalization;
 import org.deeplearning4j.nn.conf.Updater;
 import org.deeplearning4j.nn.conf.distribution.Distribution;
+import org.nd4j.linalg.activations.IActivation;
 import weka.dl4j.distribution.NormalDistribution;
 import org.deeplearning4j.nn.weights.WeightInit;
 
 import org.nd4j.linalg.lossfunctions.ILossFunction;
-import org.nd4j.linalg.lossfunctions.impl.LossMCXENT;
 
 import weka.core.Option;
 import weka.core.OptionHandler;
 import weka.core.OptionMetadata;
 import weka.gui.ProgrammaticProperty;
+import weka.dl4j.activations.ActivationSoftmax;
+import weka.dl4j.lossfunctions.LossMCXENT;
 
 import java.io.Serializable;
 import java.util.Enumeration;
@@ -64,7 +66,7 @@ public class OutputLayer extends org.deeplearning4j.nn.conf.layers.OutputLayer i
 	 */
 	public OutputLayer() {
 		setLayerName("Output layer");
-		setActivationFunction("softmax");
+		setActivationFunction(new ActivationSoftmax());
 		setWeightInit(WeightInit.XAVIER);
 		setDist(new NormalDistribution());
 		setUpdater(Updater.NESTEROVS);
@@ -83,7 +85,7 @@ public class OutputLayer extends org.deeplearning4j.nn.conf.layers.OutputLayer i
 					displayName = "layer name",
 					description = "The name of the layer (default = Output Layer).",
 					commandLineParamName = "name", commandLineParamSynopsis = "-name <string>",
-					displayOrder = 1)
+					displayOrder = 0)
 	public String getLayerName() {
 		return this.layerName;
 	}
@@ -92,15 +94,31 @@ public class OutputLayer extends org.deeplearning4j.nn.conf.layers.OutputLayer i
 	}
 
 	@OptionMetadata(
-					displayName = "name of activation function",
-					description = "The name of the activation function (default = softmax; options are softmax,logsoftmax,maxout,identity,abs,cos,elu,exp,log,pow,sin,acos,asin,atan,ceil,relu,sign,sqrt,step,tanh,floor,round,hardtanh,timesoneminus,negative,softplus,softsign,leakyrelu,stabilize,sigmoid).",
-					commandLineParamName = "activation", commandLineParamSynopsis = "-activation <string>",
-					displayOrder = 2)
-	public String getActivationFunction() {
-		return this.activationFunction;
+			displayName = "loss function",
+			description = "The loss function to use (default = LossMCXENT).",
+			commandLineParamName = "lossFn", commandLineParamSynopsis = "-lossFn <specification>",
+			displayOrder = 1)
+	public ILossFunction getLossFn() {
+		return this.lossFn;
 	}
-	public void setActivationFunction(String activationFunction) {
-		this.activationFunction = activationFunction;
+	public void setLossFn(ILossFunction lossFn) {
+		this.lossFn = lossFn;
+	}
+
+	@OptionMetadata(
+					displayName = "activation function",
+					description = "The activation function to use (default = ActivationSoftmax).",
+					commandLineParamName = "activation", commandLineParamSynopsis = "-activation <specification>",
+					displayOrder = 2)
+	public IActivation getActivationFunction() { return this.activationFn; }
+	public void setActivationFunction(IActivation activationFn) {
+		this.activationFn = activationFn;
+	}
+
+	@ProgrammaticProperty
+	public IActivation getActivationFn() { return super.getActivationFn(); }
+	public void setActivationFn(IActivation fn) {
+		super.setActivationFn(fn);
 	}
 
 	@OptionMetadata(
@@ -224,27 +242,27 @@ public class OutputLayer extends org.deeplearning4j.nn.conf.layers.OutputLayer i
 	}
 
 	@OptionMetadata(
-					displayName = "bias L1",
-					description = "The bias L1 parameter (default = 0).",
-					commandLineParamName = "biasL1", commandLineParamSynopsis = "-biasL1 <double>",
+					displayName = "L1 bias",
+					description = "The L1 bias parameter (default = 0).",
+					commandLineParamName = "l1Bias", commandLineParamSynopsis = "-l1Bias <double>",
 					displayOrder = 13)
 	public double getBiasL1() {
-		return this.biasL1;
+		return this.l1Bias;
 	}
 	public void setBiasL1(double biasL1) {
-		this.biasL1 = biasL1;
+		this.l1Bias = biasL1;
 	}
 
 	@OptionMetadata(
-					displayName = "bias L2",
-					description = "The bias L2 parameter (default = 0).",
-					commandLineParamName = "biasL2", commandLineParamSynopsis = "-biasL2 <double>",
+					displayName = "L2 bias",
+					description = "The L2 bias parameter (default = 0).",
+					commandLineParamName = "l2Bias", commandLineParamSynopsis = "-l2Bias <double>",
 					displayOrder = 14)
 	public double getBiasL2() {
-		return this.biasL2;
+		return this.l2Bias;
 	}
 	public void setBiasL2(double biasL2) {
-		this.biasL2 = biasL2;
+		this.l2Bias = biasL2;
 	}
 
 	@OptionMetadata(
@@ -365,17 +383,13 @@ public class OutputLayer extends org.deeplearning4j.nn.conf.layers.OutputLayer i
 		this.nOut = nOut;
 	}
 
-	@OptionMetadata(
-					displayName = "loss function",
-					description = "The loss function to use (default = MCXENT).",
-					commandLineParamName = "lossFn", commandLineParamSynopsis = "-lossFn <specification>",
-					displayOrder = 24)
-	public ILossFunction getLossFn() {
-		return this.lossFn;
-	}
-	public void setLossFn(ILossFunction lossFn) {
-		this.lossFn = lossFn;
-	}
+	@ProgrammaticProperty
+	public double getL1Bias() { return super.getL1Bias(); }
+	public void setL1Bias(int l1bias) { super.setL1Bias(l1bias); }
+
+	@ProgrammaticProperty
+	public double getL2Bias() { return super.getL2Bias(); }
+	public void setL2Bias(int l2bias) { super.setL2Bias(l2bias); }
 
 	/**
 	 * Returns an enumeration describing the available options.
