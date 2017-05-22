@@ -6,10 +6,10 @@
 PackageName=wekaDeeplearning4jCPU
 
 # Version (required)
-Version=1.0.2
+Version=1.0.3
 
 #Date
-Date=2016-12-09
+Date=2017-05-21
 
 # Title (required)
 Title=Weka wrappers for Deeplearning4j
@@ -26,12 +26,12 @@ Maintainer=Weka team <wekalist@list.scms.waikato.ac.nz>
 License=GPL 3.0
 
 # Description (required)
-Description=Provides a wrapper classifier for feedforward networks, including convolutional networks, trained using the Deeplearning4j library.
+Description=Provides a wrapper classifier for feedforward networks, including convolutional networks, trained using the Deeplearning4j library. This package supersedes wekaDeepLearning4j for users of Weka 3.9.1 or higher. Installing this package will cause wekaDeepLearning4jCore and wekaDeepLearning4jCPULibs to be installed. Note that wekaDeepLearning4jGPU cannot be installed at the same time as this (the CPU) version.
 
 Changes=Splitting package into a core package, CPU-related libs package and GPU-related libs package
 
 # Package URL for obtaining the package archive (required)
-PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jCPU1.0.2.zip?download
+PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jCPU1.0.3.zip?download
 
 # URL for further information
 URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4j
