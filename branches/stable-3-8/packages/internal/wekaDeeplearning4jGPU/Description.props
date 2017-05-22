@@ -6,10 +6,10 @@
 PackageName=wekaDeeplearning4jGPU
 
 # Version (required)
-Version=1.0.3
+Version=1.0.4
 
 #Date
-Date=2016-12-19
+Date=2017-05-21
 
 # Title (required)
 Title=Weka wrappers for Deeplearning4j
@@ -26,12 +26,12 @@ Maintainer=Weka team <wekalist@list.scms.waikato.ac.nz>
 License=GPL 3.0
 
 # Description (required)
-Description=Provides a wrapper classifier for feedforward networks, including convolutional networks, trained using the Deeplearning4j library.
+Description=Provides a wrapper classifier for feedforward networks, including convolutional networks, trained using the Deeplearning4j library. Note that this package is for GPU-based (Cuda) execution and pulls in wekaDeepLearning4jCore and wekaDeepLearning4jGPULibs. wekaDeepLearning4jCPU cannot be installed at the same time as this package.
 
-Changes=Now includes a message to display on installation.
+Changes=Upgraded to deepLearning4j version 0.8.0. Several bug fixes to do with option handling.
 
 # Package URL for obtaining the package archive (required)
-PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jGPU1.0.3.zip?download
+PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jGPU1.0.4.zip?download
 
 # URL for further information
 URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4j
