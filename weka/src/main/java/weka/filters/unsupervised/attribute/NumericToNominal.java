@@ -21,11 +21,6 @@
 
 package weka.filters.unsupervised.attribute;
 
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Vector;
-
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Capabilities.Capability;
@@ -38,6 +33,11 @@ import weka.core.RevisionUtils;
 import weka.core.SparseInstance;
 import weka.core.Utils;
 import weka.filters.SimpleBatchFilter;
+
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Vector;
 
 /**
  * <!-- globalinfo-start --> A filter for turning numeric attributes into
@@ -364,8 +364,9 @@ public class NumericToNominal
           values.addElement(
             o.toString());
         } else {
-          values.addElement(
-            Utils.doubleToString(((Double) o).doubleValue(), MAX_DECIMALS));
+          String label = Utils.doubleToString(((Double) o).doubleValue(), MAX_DECIMALS);
+          if (!values.contains(label))
+            values.addElement(label);
         }
       }
       Attribute newAtt = new Attribute(data.attribute(i).name(), values);
