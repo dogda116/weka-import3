@@ -34,7 +34,7 @@ Changes=Upgraded to deepLearning4j version 0.8.0. Several bug fixes to do with o
 PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jCore1.0.6.zip?download
 
 # URL for further information
-URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4j
+URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4jCore
 
 # Enhances various other packages ?
 # Enhances=packageName1,packageName2,...
