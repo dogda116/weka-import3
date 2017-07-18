@@ -20,18 +20,15 @@
  */
 package weka.classifiers.functions;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
+import org.apache.commons.io.output.CountingOutputStream;
+import org.apache.commons.io.output.NullOutputStream;
 import org.deeplearning4j.nn.conf.inputs.InputType;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
-import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration.ListBuilder;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
@@ -42,6 +39,7 @@ import org.nd4j.linalg.dataset.DataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import weka.classifiers.IterativeClassifier;
 import weka.classifiers.RandomizableClassifier;
 import weka.classifiers.rules.ZeroR;
 import weka.core.*;
@@ -53,6 +51,7 @@ import weka.dl4j.iterators.ImageDataSetIterator;
 import weka.dl4j.layers.DenseLayer;
 import org.deeplearning4j.nn.conf.layers.Layer;
 import weka.dl4j.layers.OutputLayer;
+import weka.dl4j.NeuralNetConfiguration;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.NominalToBinary;
 import weka.filters.unsupervised.attribute.Normalize;
@@ -69,20 +68,19 @@ import weka.filters.unsupervised.attribute.Standardize;
  * @version $Revision: 11711 $
  */
 public class Dl4jMlpClassifier extends RandomizableClassifier implements
-  BatchPredictor, CapabilitiesHandler {
+  BatchPredictor, CapabilitiesHandler, IterativeClassifier {
 
   /** The ID used for serializing this class. */
   protected static final long serialVersionUID = -6363254116597574265L;
 
   /** The logger used in this class. */
-  protected final Logger m_log = LoggerFactory
-    .getLogger(Dl4jMlpClassifier.class);
+  protected final Logger m_log = LoggerFactory.getLogger(Dl4jMlpClassifier.class);
 
   /** Filter used to replace missing values. */
   protected ReplaceMissingValues m_replaceMissing;
 
   /** Filter used to normalize or standardize the data. */
-  protected Filter m_normalize;
+  protected Filter m_Filter;
 
   /** Filter used to convert nominal attributes to binary numeric attributes. */
   protected NominalToBinary m_nominalToBinary;
@@ -96,23 +94,48 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
   /** The actual neural network model. **/
   protected transient MultiLayerNetwork m_model;
 
+  /** The size of the serialized network model in bytes. **/
+  protected long m_modelSize;
+
   /** The file that log information will be written to. */
   protected File m_logFile = new File(System.getProperty("user.dir"));
 
   /** The layers of the network. */
   protected Layer[] m_layers = new Layer[] {new OutputLayer()};
 
-  /** The configuration parameters of the network. */
-  protected OptimizationAlgorithm m_algo = OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT;;
+  /** The configuration of the network. */
+  protected NeuralNetConfiguration m_configuration = new NeuralNetConfiguration();
 
   /** The number of epochs to perform. */
   protected int m_numEpochs = 10;
 
+  /** The number of epochs that have been performed. */
+  protected int m_NumEpochsPerformed;
+
+  /** The actual dataset iterator. */
+  protected transient DataSetIterator m_Iterator;
+
+  /** The training instances (set to null when done() is called). */
+  protected Instances m_Data;
+
   /** The dataset iterator to use. */
   protected AbstractDataSetIterator m_iterator = new DefaultInstancesIterator();
 
-  /** Whether to standardize or normalize the data. */
-  protected boolean m_standardizeInsteadOfNormalize = true;
+  /** filter: Normalize training data */
+  public static final int FILTER_NORMALIZE = 0;
+  /** filter: Standardize training data */
+  public static final int FILTER_STANDARDIZE = 1;
+  /** filter: No normalization/standardization */
+  public static final int FILTER_NONE = 2;
+  /** The filter to apply to the training data */
+  public static final Tag [] TAGS_FILTER = {
+          new Tag(FILTER_NORMALIZE, "Normalize training data"),
+          new Tag(FILTER_STANDARDIZE, "Standardize training data"),
+          new Tag(FILTER_NONE, "No normalization/standardization"),
+  };
+
+  /** Whether to normalize/standardize/neither */
+  protected int m_filterType = FILTER_STANDARDIZE;
 
   /** Coefficients used for normalizing the class */
   protected double m_x1 = 1.0;
@@ -168,10 +191,17 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
    */
   private void writeObject(ObjectOutputStream oos) throws IOException {
 
+    // figure out size of the written network
+    CountingOutputStream cos = new CountingOutputStream(new NullOutputStream());
+    if (m_replaceMissing != null) {
+      ModelSerializer.writeModel(m_model, cos, false);
+    }
+    m_modelSize = cos.getByteCount();
+
     // default serialization
     oos.defaultWriteObject();
 
-    // write the network
+    // actually write the network
     if (m_replaceMissing != null) {
       ModelSerializer.writeModel(m_model, oos, false);
     }
@@ -185,19 +215,36 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
    * @throws IOException
    */
   private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+    ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
+    try {
+      Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+      // default deserialization
+      ois.defaultReadObject();
 
-    // default deserialization
-    ois.defaultReadObject();
-
-    // restore the model
-    if (m_replaceMissing != null) {
-      ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
-      try {
-        Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
-        m_model = ModelSerializer.restoreMultiLayerNetwork(ois, false);
-      } finally {
-        Thread.currentThread().setContextClassLoader(origLoader);
+      // restore the network model
+      if (m_replaceMissing != null) {
+        File tmpFile = File.createTempFile("restore", "multiLayer");
+        tmpFile.deleteOnExit();
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(tmpFile));
+        long remaining = m_modelSize;
+        while (remaining > 0) {
+          int bsize = 10024;
+          if (remaining < 10024) {
+            bsize = (int)remaining;
+          }
+          byte[] buffer = new byte[bsize];
+          int len = ois.read(buffer);
+          if (len == -1) {
+            throw new IOException("Reached end of network model prematurely during deserialization.");
+          }
+          bos.write(buffer, 0, len);
+          remaining -= len;
+        }
+        bos.flush();
+        m_model = ModelSerializer.restoreMultiLayerNetwork(tmpFile, false);
       }
+    } finally {
+      Thread.currentThread().setContextClassLoader(origLoader);
     }
   }
 
@@ -227,7 +274,7 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
     return m_layers;
   }
 
-  @OptionMetadata(displayName = "layer specification",
+  @OptionMetadata(displayName = "layer specification.",
     description = "The specification of a layer. This option can be used multiple times.",
     commandLineParamName = "layer",
     commandLineParamSynopsis = "-layer <string>", displayOrder = 2)
@@ -239,36 +286,46 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
     return m_numEpochs;
   }
 
-  @OptionMetadata(description = "The number of epochs to perform",
+  @OptionMetadata(description = "The number of epochs to perform.",
     displayName = "number of epochs", commandLineParamName = "numEpochs",
     commandLineParamSynopsis = "-numEpochs <int>", displayOrder = 4)
   public void setNumEpochs(int numEpochs) {
     m_numEpochs = numEpochs;
   }
 
-  @OptionMetadata(
-    description = "Optimization algorithm (LINE_GRADIENT_DESCENT,"
-      + " CONJUGATE_GRADIENT, HESSIAN_FREE, "
-      + "LBFGS, STOCHASTIC_GRADIENT_DESCENT)",
-    displayName = "optimization algorithm", commandLineParamName = "algorithm",
-    commandLineParamSynopsis = "-algorithm <string>", displayOrder = 5)
-  public OptimizationAlgorithm getOptimizationAlgorithm() {
-    return m_algo;
-  }
-
-  public void setOptimizationAlgorithm(OptimizationAlgorithm optimAlgorithm) {
-    m_algo = optimAlgorithm;
-  }
-
-  @OptionMetadata(description = "The dataset iterator to use",
-    displayName = "dataset iterator", commandLineParamName = "iterator",
-    commandLineParamSynopsis = "-iterator <string>", displayOrder = 6)
+  @OptionMetadata(description = "The dataset iterator to use.",
+          displayName = "dataset iterator", commandLineParamName = "iterator",
+          commandLineParamSynopsis = "-iterator <string>", displayOrder = 6)
   public AbstractDataSetIterator getDataSetIterator() {
     return m_iterator;
   }
 
   public void setDataSetIterator(AbstractDataSetIterator iterator) {
     m_iterator = iterator;
+  }
+
+  @OptionMetadata(description = "The neural network configuration to use.",
+          displayName = "network configuration", commandLineParamName = "config",
+          commandLineParamSynopsis = "-config <string>", displayOrder = 7)
+  public NeuralNetConfiguration getNeuralNetConfiguration() {
+    return m_configuration;
+  }
+
+  public void setNeuralNetConfiguration(NeuralNetConfiguration config) {
+    m_configuration = config;
+  }
+
+  @OptionMetadata(description = "The type of normalization to perform.",
+          displayName = "attribute normalization", commandLineParamName = "normalization",
+          commandLineParamSynopsis = "-normalization <int>", displayOrder = 8)
+  public SelectedTag getFilterType() {
+    return new SelectedTag(m_filterType, TAGS_FILTER);
+  }
+
+  public void setFilterType(SelectedTag newType) {
+    if (newType.getTags() == TAGS_FILTER) {
+      m_filterType = newType.getSelectedTag().getID();
+    }
   }
 
   /**
@@ -311,9 +368,26 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
    */
   @Override
   public void buildClassifier(Instances data) throws Exception {
-    ClassLoader orig = Thread.currentThread().getContextClassLoader();
-    try {
-	Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+
+    // Initialize classifier
+    initializeClassifier(data);
+
+    // For the given number of iterations
+    while (next()) {}
+
+    // Clean up
+    done();
+  }
+
+  /**
+   * The method used to initialize the classifier.
+   *
+   * @param data set of instances serving as training data
+   * @throws Exception if something goes wrong in the training process
+   */
+  @Override
+  public void initializeClassifier(Instances data) throws Exception {
+
     // Can classifier handle the data?
     getCapabilities().testWithFail(data);
 
@@ -346,14 +420,14 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
     double y0 = data.instance(0).classValue();
     int index = 1;
     while (index < data.numInstances()
-      && data.instance(index).classValue() == y0) {
+            && data.instance(index).classValue() == y0) {
       index++;
     }
     if (index == data.numInstances()) {
       // degenerate case, all class values are equal
       // we don't want to deal with this, too much hassle
       throw new Exception(
-        "All class values are the same. At least two class values should be different");
+              "All class values are the same. At least two class values should be different");
     }
     double y1 = data.instance(index).classValue();
 
@@ -363,111 +437,148 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
     data = Filter.useFilter(data, m_nominalToBinary);
 
     // Standardize or normalize (as requested), including the class
-    if (m_standardizeInsteadOfNormalize) {
-      m_normalize = new Standardize();
-      m_normalize.setOptions(new String[] { "-unset-class-temporarily" });
+
+    if (m_filterType == FILTER_STANDARDIZE) {
+      m_Filter = new Standardize();
+      m_Filter.setOptions(new String[]{"-unset-class-temporarily"});
+      m_Filter.setInputFormat(data);
+      data = Filter.useFilter(data, m_Filter);
+    } else if (m_filterType == FILTER_NORMALIZE) {
+      m_Filter = new Normalize();
+      m_Filter.setOptions(new String[]{"-unset-class-temporarily"});
+      m_Filter.setInputFormat(data);
+      data = Filter.useFilter(data, m_Filter);
     } else {
-      m_normalize = new Normalize();
+      m_Filter = null;
     }
-    m_normalize.setInputFormat(data);
-    data = Filter.useFilter(data, m_normalize);
 
     double z0 = data.instance(0).classValue();
     double z1 = data.instance(index).classValue();
     m_x1 = (y0 - y1) / (z0 - z1); // no division by zero, since y0 != y1
-                                  // guaranteed => z0 != z1 ???
+    // guaranteed => z0 != z1 ???
     m_x0 = (y0 - m_x1 * z0); // = y1 - m_x1 * z1
 
     // Randomize the data, just in case
     Random rand = new Random(getSeed());
     data.randomize(rand);
 
-    // Initialize random number generator for construction of network
-    NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
-    if (getOptimizationAlgorithm() == null) {
-      builder.setOptimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
-    } else {
-      builder.setOptimizationAlgo(getOptimizationAlgorithm());
-    }
-    builder.setSeed(rand.nextInt());
+    ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
+    try {
+      Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
 
-    // Construct the mlp configuration
-    ListBuilder ip = builder.list(getLayers());
-    int numInputAttributes = getDataSetIterator().getNumAttributes(data);
+      // Initialize random number generator for construction of network
+      NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder(m_configuration);
+      builder.setSeed(rand.nextInt());
 
-    // Connect up the layers appropriately
-    for (int x = 0; x < m_layers.length; x++) {
+      // Construct the mlp configuration
+      ListBuilder ip = builder.list(getLayers());
+      int numInputAttributes = getDataSetIterator().getNumAttributes(data);
 
-      // Is this the first hidden layer?
-      if (x == 0) {
-        setNumIncoming(m_layers[x], numInputAttributes);
-      } else {
-        setNumIncoming(m_layers[x], getNumUnits(m_layers[x - 1]));
+      // Connect up the layers appropriately
+      for (int x = 0; x < m_layers.length; x++) {
+
+        // Is this the first hidden layer?
+        if (x == 0) {
+          setNumIncoming(m_layers[x], numInputAttributes);
+        } else {
+          setNumIncoming(m_layers[x], getNumUnits(m_layers[x - 1]));
+        }
+
+        // Is this the output layer?
+        if (x == m_layers.length - 1) {
+          ((OutputLayer) m_layers[x]).setNOut(data.numClasses());
+        }
+        ip = ip.layer(x, m_layers[x]);
       }
 
-      // Is this the output layer?
-      if (x == m_layers.length - 1) {
-        ((OutputLayer) m_layers[x]).setNOut(data.numClasses());
+      // If we have a convolutional network
+      if (getDataSetIterator() instanceof ImageDataSetIterator) {
+        ImageDataSetIterator idsi = (ImageDataSetIterator) getDataSetIterator();
+        ip.setInputType(InputType.convolutionalFlat(idsi.getWidth(),
+                idsi.getHeight(), idsi.getNumChannels()));
+      } else if (getDataSetIterator() instanceof ConvolutionalInstancesIterator) {
+        ConvolutionalInstancesIterator cii = (ConvolutionalInstancesIterator) getDataSetIterator();
+        ip.setInputType(InputType.convolutionalFlat(cii.getWidth(),
+                cii.getHeight(), cii.getNumChannels()));
       }
-      ip = ip.layer(x, m_layers[x]);
-    }
 
-    // If we have a convolutional network
-    if (getDataSetIterator() instanceof ImageDataSetIterator) {
-      ImageDataSetIterator idsi = (ImageDataSetIterator) getDataSetIterator();
-      ip.setInputType(InputType.convolutionalFlat(idsi.getWidth(),
-        idsi.getHeight(), idsi.getNumChannels()));
-    } else if (getDataSetIterator() instanceof ConvolutionalInstancesIterator) {
-      ConvolutionalInstancesIterator cii = (ConvolutionalInstancesIterator) getDataSetIterator();
-      ip.setInputType(InputType.convolutionalFlat(cii.getWidth(),
-              cii.getHeight(), cii.getNumChannels()));
-    }
+      ip = ip.backprop(true);
 
-    ip = ip.pretrain(false).backprop(true);
+      MultiLayerConfiguration conf = ip.build();
 
-    MultiLayerConfiguration conf = ip.build();
-
-    if (getDebug()) {
-      System.err.println(conf.toJson());
-    }
-
-    // build the network
-    m_model = new MultiLayerNetwork(conf);
-    m_model.init();
-
-    if (getDebug()) {
-      System.err.println(m_model.conf().toYaml());
-    }
-
-    ArrayList<IterationListener> listeners = new ArrayList<IterationListener>();
-    listeners.add(new ScoreIterationListener(data.numInstances()
-      / getDataSetIterator().getTrainBatchSize()));
-
-    // if the log file doesn't point to a directory, set up the listener
-    if (getLogFile() != null && !getLogFile().isDirectory()) {
-      int numMiniBatches =
-        (int) Math.ceil(((double) data.numInstances())
-          / ((double) getDataSetIterator().getTrainBatchSize()));
-      listeners.add(new FileIterationListener(getLogFile().getAbsolutePath(),
-        numMiniBatches));
-    }
-
-    m_model.setListeners(listeners);
-
-    // Abusing the MultipleEpochsIterator because it splits the data into
-    // batches
-    DataSetIterator iter = getDataSetIterator().getIterator(data, getSeed());
-    for (int i = 0; i < getNumEpochs(); i++) {
-      m_model.fit(iter); // Note that this calls the reset() method of the
-                         // iterator
       if (getDebug()) {
-        m_log.info("*** Completed epoch {} ***", i + 1);
+        System.err.println(conf.toJson());
       }
-      iter.reset();
-    }
+
+      // build the network
+      m_model = new MultiLayerNetwork(conf);
+      m_model.init();
+
+      if (getDebug()) {
+        System.err.println(m_model.conf().toYaml());
+      }
+
+      ArrayList<IterationListener> listeners = new ArrayList<IterationListener>();
+      listeners.add(new ScoreIterationListener(data.numInstances()
+              / getDataSetIterator().getTrainBatchSize()));
+
+      // if the log file doesn't point to a directory, set up the listener
+      if (getLogFile() != null && !getLogFile().isDirectory()) {
+        int numMiniBatches =
+                (int) Math.ceil(((double) data.numInstances())
+                        / ((double) getDataSetIterator().getTrainBatchSize()));
+        listeners.add(new FileIterationListener(getLogFile().getAbsolutePath(),
+                numMiniBatches));
+      }
+
+      m_model.setListeners(listeners);
+
+      m_Data = data;
+
+      // Abusing the MultipleEpochsIterator because it splits the data into batches
+      m_Iterator = getDataSetIterator().getIterator(m_Data, getSeed());
+      m_NumEpochsPerformed = 0;
     } finally {
-	Thread.currentThread().setContextClassLoader(orig);
+      Thread.currentThread().setContextClassLoader(origLoader);
     }
+  }
+
+  /**
+   * Perform another epoch.
+   */
+  public boolean next() throws Exception {
+
+    if (m_NumEpochsPerformed >= getNumEpochs() || m_zeroR != null || m_Data == null) {
+      return false;
+    }
+
+    if (m_Iterator == null) {
+      m_Iterator = getDataSetIterator().getIterator(m_Data, getSeed());
+    }
+
+    ClassLoader origLoader = Thread.currentThread().getContextClassLoader();
+    try {
+      Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+
+      m_model.fit(m_Iterator); // Note that this calls the reset() method of the iterator
+      if (getDebug()) {
+        m_log.info("*** Completed epoch {} ***", m_NumEpochsPerformed + 1);
+      }
+      m_Iterator.reset();
+      m_NumEpochsPerformed++;
+    } finally {
+      Thread.currentThread().setContextClassLoader(origLoader);
+    }
+
+    return true;
+  }
+
+  /**
+   * Clean up after learning.
+   */
+  public void done() {
+
+    m_Data = null;
   }
 
   /**
@@ -491,8 +602,10 @@ public class Dl4jMlpClassifier extends RandomizableClassifier implements
     inst = m_replaceMissing.output();
     m_nominalToBinary.input(inst);
     inst = m_nominalToBinary.output();
-    m_normalize.input(inst);
-    inst = m_normalize.output();
+    if (m_Filter != null) {
+      m_Filter.input(inst);
+      inst = m_Filter.output();
+    }
 
     Instances insts = new Instances(inst.dataset(), 0);
     insts.add(inst);
