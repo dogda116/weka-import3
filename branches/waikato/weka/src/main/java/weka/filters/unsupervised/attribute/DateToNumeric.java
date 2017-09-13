@@ -89,7 +89,7 @@ public class DateToNumeric extends SimpleBatchFilter {
     Vector<Option> result = new Vector<Option>(2);
 
     result.addElement(new Option(
-      "\tSpecifies list of columns to discretize. First"
+      "\tSpecifies list of columns to convert. First"
         + " and last are valid indexes.\n" + "\t(default: first-last)", "R", 1,
       "-R <col1,col2-col4,...>"));
 
@@ -235,7 +235,7 @@ public class DateToNumeric extends SimpleBatchFilter {
   }
 
   /**
-   * Sets which attributes are to be transformed to numeric attributes (only numeric
+   * Sets which attributes are to be transformed to numeric attributes (only date
    * attributes among the selection will be transformed).
    *
    * @param value an array containing indexes of attributes to turn into numeric ones. Since
