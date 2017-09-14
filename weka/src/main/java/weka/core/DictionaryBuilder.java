@@ -76,7 +76,7 @@ import weka.gui.ProgrammaticProperty;
  * is the number of documents that the term has occurred in.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision: 13715 $
+ * @version $Revision: 14442 $
  */
 public class DictionaryBuilder implements Aggregateable<DictionaryBuilder>,
   OptionHandler, Serializable {
@@ -1186,9 +1186,16 @@ public class DictionaryBuilder implements Aggregateable<DictionaryBuilder>,
     // Prevent the user from converting non-string fields
     StringBuffer fields = new StringBuffer();
     for (int j = 0; j < inputFormat.numAttributes(); j++) {
-      if (m_selectedRange.isInRange(j)
-        && inputFormat.attribute(j).type() == Attribute.STRING) {
-        fields.append((j + 1) + ",");
+      if (m_selectedRange.getInvert()) {
+        if (!m_selectedRange.isInRange(j) ||
+                inputFormat.attribute(j).type() != Attribute.STRING) {
+          fields.append((j + 1) + ",");
+        }
+      } else {
+        if (m_selectedRange.isInRange(j)
+                && inputFormat.attribute(j).type() == Attribute.STRING) {
+          fields.append((j + 1) + ",");
+        }
       }
     }
     m_selectedRange.setRanges(fields.toString());
