@@ -91,7 +91,7 @@ import weka.filters.UnsupervisedFilter;
  * 
  * @author Eibe Frank (eibe@cs.waikato.ac.nz)
  * @author Prados Julien (julien.prados@cui.unige.ch)
- * @version $Revision: 14266 $
+ * @version $Revision: 14442 $
  */
 public class MathExpression extends PotentialClassIgnorer implements
   UnsupervisedFilter {
@@ -189,7 +189,7 @@ public class MathExpression extends PotentialClassIgnorer implements
     for (int i = 0; i < instanceInfo.numAttributes(); i++) {
       if (m_SelectCols.isInRange(i)
           && instanceInfo.attribute(i).isNumeric()
-          && instanceInfo.classIndex() != i) {
+          && (instanceInfo.classIndex() != i) || getIgnoreClass()) {
         
         m_attStats[i] = new Stats();
       }
@@ -598,7 +598,7 @@ public class MathExpression extends PotentialClassIgnorer implements
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision: 14266 $");
+    return RevisionUtils.extract("$Revision: 14442 $");
   }
 
   /**
