@@ -246,6 +246,15 @@ public class ExplorerDefaults implements Serializable {
   }
 
   /**
+   * returns whether the models built for the training set are output
+   *
+   * @return true if the models built for the training set are output
+   */
+  public static boolean getClassifierOutputModelsForTrainingSplits() {
+    return Boolean.parseBoolean(get("ClassifierOutputModelsForTrainingSplits", "false"));
+  }
+
+  /**
    * returns whether additional per-class stats of the classifier are output.
    * 
    * @return true if stats are output
@@ -471,10 +480,10 @@ public class ExplorerDefaults implements Serializable {
   public static Object getAssociator() {
     Object result;
 
-    result = getObject("Associator", weka.associations.FPGrowth.class.getName(),
+    result = getObject("Associator", weka.associations.Apriori.class.getName(),
       weka.associations.Associator.class);
     if (result == null) {
-      result = new weka.associations.FPGrowth();
+      result = new weka.associations.Apriori();
     }
 
     return result;
