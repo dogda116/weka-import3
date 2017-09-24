@@ -100,7 +100,7 @@
       optimize="${optimization}"
       debug="${debug}"
       deprecation="${deprecation}"
-      source="1.7" target="1.7">
+      source="1.8" target="1.8">
 
       <classpath refid="project.class.path" /> 
     </javac>
@@ -213,7 +213,7 @@
             optimize="${optimization}"
             debug="${debug}"
             deprecation="${deprecation}"
-            source="1.7" target="1.7">
+            source="1.8" target="1.8">
        <classpath refid="project.class.path" /> 
      </javac>
      <copy todir="${build}/testcases" >
@@ -410,7 +410,7 @@
   </target>
 
   <!-- Make a Max OSX application (NOTE: assumes that release/release_no_junit or something that calls
-       release has been run first!!!). Also requires Ant version 1.7.0 or higher -->
+       release has been run first!!!). Also requires Ant version 1.8.0 or higher -->
   <target name="osx_application" description="Make an OS X application. Run with -Drelease=&lt;number of release (eg. 3-4-1)&gt;. Assumes a release target has been run first!">
     <mkdir dir="${macdistrib}"/>
     <mkdir dir="${macdistrib}/weka-${release}"/>
@@ -429,7 +429,7 @@
                 shortname="Weka"
                 arguments=""
                 workingdirectory="/Users"
-                jvmversion="1.7+">
+                jvmversion="1.8+">
       <javaproperty name="java.library.path" value="$APP_PACKAGE/Contents/Resources"/>
       <jarfileset dir="weka-${release}/weka-${release}">
         <include name="weka.jar"/>
