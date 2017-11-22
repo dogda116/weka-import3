@@ -15,7 +15,7 @@
 
 /*
  *    NormalizedPolyKernel.java
- *    Copyright (C) 1999 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2012 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -38,13 +38,10 @@ import weka.core.RevisionUtils;
  * <pre> -D
  *  Enables debugging output (if available) to be printed.
  *  (default: off)</pre>
- * 
- * <pre> -no-checks
- *  Turns off all checks - use with caution!
- *  (default: checks on)</pre>
- * 
+ *
  * <pre> -C &lt;num&gt;
- *  The size of the cache (a prime number).
+ *  The size of the cache (a prime number), 0 for full cache and 
+ *  -1 to turn it off.
  *  (default: 250007)</pre>
  * 
  * <pre> -E &lt;num&gt;
@@ -166,3 +163,4 @@ public class NormalizedPolyKernel
     return RevisionUtils.extract("$Revision$");
   }
 }
+
