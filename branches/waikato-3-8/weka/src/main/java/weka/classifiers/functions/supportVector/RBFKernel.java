@@ -44,17 +44,13 @@ import weka.core.Capabilities.Capability;
  * <pre> -output-debug-info
  *  Enables debugging output (if available) to be printed.
  *  (default: off)</pre>
- * 
- * <pre> -no-checks
- *  Turns off all checks - use with caution!
- *  (default: checks on)</pre>
- * 
+ *
  * <!-- options-end -->
  * 
  * @author Eibe Frank (eibe@cs.waikato.ac.nz)
  * @author Shane Legg (shane@intelligenesis.net) (sparse vector code)
  * @author Stuart Inglis (stuart@reeltwo.com) (sparse vector code)
- * @version $Revision: 14253 $
+ * @version $Revision: 14512 $
  */
 public class RBFKernel extends CachedKernel {
 
@@ -214,7 +210,7 @@ public class RBFKernel extends CachedKernel {
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision: 14253 $");
+    return RevisionUtils.extract("$Revision: 14512 $");
   }
 }
 

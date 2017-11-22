@@ -274,6 +274,8 @@ public class J48 extends AbstractClassifier implements OptionHandler, Drawable,
   @Override
   public void buildClassifier(Instances instances) throws Exception {
 
+    getCapabilities().testWithFail(instances);
+
     ModelSelection modSelection;
 
     if (m_binarySplits) {
@@ -444,7 +446,7 @@ public class J48 extends AbstractClassifier implements OptionHandler, Drawable,
       + "\tpruning. One fold is used as pruning set.\n" + "\t(default 3)", "N",
       1, "-N <number of folds>"));
     newVector.addElement(new Option("\tUse binary splits only.", "B", 0, "-B"));
-    newVector.addElement(new Option("\tDon't perform subtree raising.", "S", 0,
+    newVector.addElement(new Option("\tDo not perform subtree raising.", "S", 0,
       "-S"));
     newVector.addElement(new Option(
       "\tDo not clean up after the tree has been built.", "L", 0, "-L"));
