@@ -190,7 +190,8 @@ public class ConverterResources {
     } finally {
       // loaders
       if (m_FileLoaders.size() == 0) {
-        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileLoader.class.getName());
+        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileLoader.class
+          .getName());
         if (classnames.size() > 0) {
           m_FileLoaders = getFileConverters(classnames,
             new String[] { FileSourcedConverter.class.getName() });

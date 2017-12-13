@@ -190,7 +190,8 @@ public class ConverterResources {
     } finally {
       // loaders
       if (m_FileLoaders.size() == 0) {
-        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileLoader.class.getName());
+        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileLoader.class
+          .getName());
         if (classnames.size() > 0) {
           m_FileLoaders = getFileConverters(classnames,
             new String[] { FileSourcedConverter.class.getName() });
@@ -202,7 +203,8 @@ public class ConverterResources {
 
       // URL loaders
       if (m_URLFileLoaders.size() == 0) {
-        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileLoader.class.getName());
+        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileLoader.class
+          .getName());
         if (classnames.size() > 0) {
           m_URLFileLoaders = getFileConverters(classnames,
             new String[] { FileSourcedConverter.class.getName(),
@@ -216,7 +218,8 @@ public class ConverterResources {
 
       // savers
       if (m_FileSavers.size() == 0) {
-        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileSaver.class.getName());
+        classnames = PluginManager.getPluginNamesOfTypeList(AbstractFileSaver.class
+          .getName());
         if (classnames.size() > 0) {
           m_FileSavers = getFileConverters(classnames,
             new String[] { FileSourcedConverter.class.getName() });
