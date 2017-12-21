@@ -20,7 +20,7 @@
   <property name="wekadocs" value="wekadocs"/>
   <property name="wekaexamples" value="wekaexamples"/>
   <property name="dist"  value="dist"/>
-  <property name="branch" value="weka-development-3-9-distribution"/>
+  <property name="branch" value="weka-development-3-8-distribution"/>
 
   <!-- load the last release date -->
   <property file="last-release.props"/>

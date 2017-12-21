@@ -602,7 +602,7 @@
   <target name="compile" depends="init_compile" 
    description="Compile weka and deposit class files in build/classes">
     <javac srcdir="${src}" 
-      fork="yes" memoryMaximumSize="${javac_max_memory}"
+      fork="yes" memoryMaximumSize="${javac_max_memory}" 
       destdir="${build}/classes"
       optimize="${optimization}"
       debug="${debug}"

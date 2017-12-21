@@ -6,7 +6,7 @@
 PackageName=wekaDeeplearning4jCore
 
 # Version (required)
-Version=1.1.7
+Version=1.0.7
 
 #Date
 Date=2017-07-13
@@ -31,7 +31,7 @@ Description=Provides a wrapper classifier for feedforward networks, including co
 Changes=Code refactoring and clean-up. More options. Bug fixes: last mini batch was skipped in instance-based dataset iterators; serialization now also works in FilteredClassifier, etc.
 
 # Package URL for obtaining the package archive (required)
-PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jCore1.1.7.zip?download
+PackageURL=http://prdownloads.sourceforge.net/weka/wekaDeeplearning4jCore1.0.7.zip?download
 
 # URL for further information
 URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4jCore
@@ -43,7 +43,7 @@ URL=http://weka.sourceforge.net/doc.packages/wekaDeeplearning4jCore
 #Related=
 
 # Dependencies
-Depends=weka (>=3.9.1-SNAPSHOT)
+Depends=weka (>=3.8.1-SNAPSHOT|<3.9.0)
 
 # Package(s) that can't be installed alongside this one (old wekaDeepLearning4j)
 Precludes=wekaDeeplearning4j

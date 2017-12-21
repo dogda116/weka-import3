@@ -6,7 +6,7 @@
 PackageName=predictiveApriori
 
 # Version (required)
-Version=1.1.5
+Version=1.0.5
 
 #Date
 Date=2014-12-09
@@ -31,7 +31,7 @@ Description=Class implementing the predictive apriori algorithm for mining assoc
 Changes=Changes to support running when loaded by a child classloader
 
 # Package URL for obtaining the package archive (required)
-PackageURL=http://prdownloads.sourceforge.net/weka/predictiveApriori1.1.5.zip?download
+PackageURL=http://prdownloads.sourceforge.net/weka/predictiveApriori1.0.5.zip?download
 
 # URL for further information
 URL=http://weka.sourceforge.net/doc.packages/predictiveApriori
@@ -43,4 +43,4 @@ URL=http://weka.sourceforge.net/doc.packages/predictiveApriori
 # Related=packageName1,packageName2,...
 
 # Dependencies
-Depends=weka (>=3.9.1-SNAPSHOT)
+Depends=weka (>=3.8.1-SNAPSHOT|<3.9.0)
