@@ -30,9 +30,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -320,7 +317,7 @@ public class MainKFPerspectiveToolBar extends JPanel {
     newB.setToolTipText("New layout (Ctrl+N)");
     newB.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 0));
     newB.setEnabled(m_mainPerspective.getAllowMultipleTabs());
-    final JButton helpB =
+    JButton helpB =
       new JButton(new ImageIcon(loadIcon(ICON_PATH + "help.png").getImage()));
     helpB.setBorder(BorderFactory.createEmptyBorder(0, 8, 0, 0));
     helpB.setToolTipText("Display help (Ctrl+H)");
@@ -704,7 +701,8 @@ public class MainKFPerspectiveToolBar extends JPanel {
     final Action helpAction = new AbstractAction("Help") {
       @Override
       public void actionPerformed(ActionEvent e) {
-        popupHelp(helpB);
+        // TODO
+        // popupHelp();
       }
     };
     KeyStroke helpKey =
@@ -965,47 +963,6 @@ public class MainKFPerspectiveToolBar extends JPanel {
   public void disableWidgets(String... widgetNames) {
     for (String s : widgetNames) {
       enableWidget(s, false);
-    }
-  }
-
-  private void popupHelp(final JButton helpB) {
-    try {
-      helpB.setEnabled(false);
-
-      InputStream inR =
-        this.getClass().getClassLoader()
-          .getResourceAsStream("weka/gui/knowledgeflow/README_KnowledgeFlow");
-
-      StringBuilder helpHolder = new StringBuilder();
-      LineNumberReader lnr = new LineNumberReader(new InputStreamReader(inR));
-
-      String line;
-
-      while ((line = lnr.readLine()) != null) {
-        helpHolder.append(line + "\n");
-      }
-
-      lnr.close();
-      final javax.swing.JFrame jf = new javax.swing.JFrame();
-      jf.getContentPane().setLayout(new java.awt.BorderLayout());
-      final JTextArea ta = new JTextArea(helpHolder.toString());
-      ta.setFont(new Font("Monospaced", Font.PLAIN, 12));
-      ta.setEditable(false);
-      final JScrollPane sp = new JScrollPane(ta);
-      jf.getContentPane().add(sp, java.awt.BorderLayout.CENTER);
-      jf.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosing(java.awt.event.WindowEvent e) {
-          helpB.setEnabled(true);
-          jf.dispose();
-        }
-      });
-      jf.setSize(600, 600);
-      jf.setVisible(true);
-
-    } catch (Exception ex) {
-      ex.printStackTrace();
-      helpB.setEnabled(true);
     }
   }
 

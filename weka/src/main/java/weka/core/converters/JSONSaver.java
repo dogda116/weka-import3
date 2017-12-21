@@ -77,7 +77,7 @@ import weka.core.json.JSONNode;
  * <!-- options-end -->
  * 
  * @author FracPete (fracpete at waikato dot ac dot nz)
- * @version $Revision$
+ * @version $Revision: 10203 $
  * @see Saver
  */
 public class JSONSaver extends AbstractFileSaver implements BatchConverter {
@@ -423,7 +423,7 @@ public class JSONSaver extends AbstractFileSaver implements BatchConverter {
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision$");
+    return RevisionUtils.extract("$Revision: 10203 $");
   }
 
   /**
