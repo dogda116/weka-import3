@@ -1,4 +1,5 @@
-<project name="weka" default="compile" basedir=".">
+<project name="weka" default="compile" basedir="."
+ xmlns:if="ant:if" xmlns:unless="ant:unless">
 <!-- 
   ===========================================================================
    Ant build file for weka. Tested with ant 1.6.5 and Junit 3.8.2. Requires
@@ -58,6 +59,12 @@
   <path id="package.class.path">
     <pathelement path="${proj.cp}"/>
   </path>
+
+  <!-- check whether RemoteEngine present (for rmic call) -->
+  <condition property="remoteengine_present" else="false">
+    <available file="${src}/weka/experiment/RemoteEngine.java" type="file"/>
+  </condition>
+  <echo message="RemoteEngine present: ${remoteengine_present}"/>
 
 <!-- 
  ============================================================================
@@ -130,7 +137,7 @@
     <copy file="${lib}/mtj.jar" todir="${build}/classes" />
     <copy file="${lib}/arpack_combined_all.jar" todir="${build}/classes" />
     <rmic base="${build}/classes"
-       classname="weka.experiment.RemoteEngine"/>
+       classname="weka.experiment.RemoteEngine" if:true="remoteengine_present"/>
     <unzip src="${lib}/java-cup.jar" dest="${build}/classes">
       <patternset>
         <include name="java_cup/runtime/**/*"/>
