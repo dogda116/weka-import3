@@ -15,19 +15,20 @@
 
 /*
  *    SerializedInstancesSaver.java
- *    Copyright (C) 2004 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2004-2012 University of Waikato, Hamilton, New Zealand
  *
  */
 
 package weka.core.converters;
 
-import weka.core.Capabilities;
-import weka.core.RevisionUtils;
-import weka.core.Capabilities.Capability;
-
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+
+import weka.core.Capabilities;
+import weka.core.Capabilities.Capability;
+import weka.core.RevisionUtils;
+import weka.core.WeightedInstancesHandler;
 
 /**
  <!-- globalinfo-start -->
@@ -52,7 +53,7 @@ import java.io.OutputStream;
  */
 public class SerializedInstancesSaver 
   extends AbstractFileSaver 
-  implements BatchConverter {
+  implements BatchConverter, WeightedInstancesHandler {
 
   /** for serialization. */
   static final long serialVersionUID = -7717010648500658872L;
