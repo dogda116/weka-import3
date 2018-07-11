@@ -655,6 +655,8 @@ public class WekaPackageClassLoaderManager {
       result = true;
     } catch (ClassNotFoundException e) {
       // ignore - means class is not visible/available here
+    } catch (NoClassDefFoundError e2) {
+      // ignore - means class is not visible/available here
     }
 
     return result;
