@@ -40,31 +40,31 @@ public class BinC45Split extends ClassifierSplitModel {
   private static final long serialVersionUID = -1278776919563022474L;
 
   /** Attribute to split on. */
-  private final int m_attIndex;
+  protected final int m_attIndex;
 
   /** Minimum number of objects in a split. */
-  private final int m_minNoObj;
+  protected final int m_minNoObj;
 
   /** Use MDL correction? */
-  private final boolean m_useMDLcorrection;
+  protected final boolean m_useMDLcorrection;
 
   /** Value of split point. */
-  private double m_splitPoint;
+  protected double m_splitPoint;
 
   /** InfoGain of split. */
-  private double m_infoGain;
+  protected double m_infoGain;
 
   /** GainRatio of split. */
-  private double m_gainRatio;
+  protected double m_gainRatio;
 
   /** The sum of the weights of the instances. */
-  private final double m_sumOfWeights;
+  protected final double m_sumOfWeights;
 
   /** Static reference to splitting criterion. */
-  private static InfoGainSplitCrit m_infoGainCrit = new InfoGainSplitCrit();
+  protected static InfoGainSplitCrit m_infoGainCrit = new InfoGainSplitCrit();
 
   /** Static reference to splitting criterion. */
-  private static GainRatioSplitCrit m_gainRatioCrit = new GainRatioSplitCrit();
+  protected static GainRatioSplitCrit m_gainRatioCrit = new GainRatioSplitCrit();
 
   /**
    * Initializes the split model.
@@ -421,17 +421,13 @@ public class BinC45Split extends ClassifierSplitModel {
   public final void setSplitPoint(Instances allInstances) {
 
     double newSplitPoint = -Double.MAX_VALUE;
-    double tempValue;
-    Instance instance;
 
-    if ((!allInstances.attribute(m_attIndex).isNominal()) && (m_numSubsets > 1)) {
-      Enumeration<Instance> enu = allInstances.enumerateInstances();
-      while (enu.hasMoreElements()) {
-        instance = enu.nextElement();
-        if (!instance.isMissing(m_attIndex)) {
-          tempValue = instance.value(m_attIndex);
-          if (Utils.gr(tempValue, newSplitPoint)
-            && Utils.smOrEq(tempValue, m_splitPoint)) {
+    if ((allInstances.attribute(m_attIndex).isNumeric()) && (m_numSubsets > 1)) {
+      for (int i = 0; i < allInstances.numInstances(); i++) {
+        Instance instance = allInstances.instance(i);
+        double tempValue = instance.value(m_attIndex);
+        if (!Utils.isMissingValue(tempValue)) {
+          if ((tempValue > newSplitPoint) && (tempValue <= m_splitPoint)) {
             newSplitPoint = tempValue;
           }
         }
@@ -497,7 +493,7 @@ public class BinC45Split extends ClassifierSplitModel {
         } else {
           return 1;
         }
-      } else if (Utils.smOrEq(instance.value(m_attIndex), m_splitPoint)) {
+      } else if (instance.value(m_attIndex) <= m_splitPoint) {
         return 0;
       } else {
         return 1;

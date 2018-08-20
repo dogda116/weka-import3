@@ -40,37 +40,37 @@ public class C45Split extends ClassifierSplitModel {
   private static final long serialVersionUID = 3064079330067903161L;
 
   /** Desired number of branches. */
-  private int m_complexityIndex;
+  protected int m_complexityIndex;
 
   /** Attribute to split on. */
-  private final int m_attIndex;
+  protected final int m_attIndex;
 
   /** Minimum number of objects in a split. */
-  private final int m_minNoObj;
+  protected final int m_minNoObj;
 
   /** Use MDL correction? */
-  private final boolean m_useMDLcorrection;
+  protected final boolean m_useMDLcorrection;
 
   /** Value of split point. */
-  private double m_splitPoint;
+  protected double m_splitPoint;
 
   /** InfoGain of split. */
-  private double m_infoGain;
+  protected double m_infoGain;
 
   /** GainRatio of split. */
-  private double m_gainRatio;
+  protected double m_gainRatio;
 
   /** The sum of the weights of the instances. */
-  private final double m_sumOfWeights;
+  protected final double m_sumOfWeights;
 
   /** Number of split points. */
-  private int m_index;
+  protected int m_index;
 
   /** Static reference to splitting criterion. */
-  private static InfoGainSplitCrit infoGainCrit = new InfoGainSplitCrit();
+  protected static InfoGainSplitCrit infoGainCrit = new InfoGainSplitCrit();
 
   /** Static reference to splitting criterion. */
-  private static GainRatioSplitCrit gainRatioCrit = new GainRatioSplitCrit();
+  protected static GainRatioSplitCrit gainRatioCrit = new GainRatioSplitCrit();
 
   /**
    * Initializes the split model.
@@ -407,17 +407,13 @@ public class C45Split extends ClassifierSplitModel {
   public final void setSplitPoint(Instances allInstances) {
 
     double newSplitPoint = -Double.MAX_VALUE;
-    double tempValue;
-    Instance instance;
 
     if ((allInstances.attribute(m_attIndex).isNumeric()) && (m_numSubsets > 1)) {
-      Enumeration<Instance> enu = allInstances.enumerateInstances();
-      while (enu.hasMoreElements()) {
-        instance = enu.nextElement();
-        if (!instance.isMissing(m_attIndex)) {
-          tempValue = instance.value(m_attIndex);
-          if (Utils.gr(tempValue, newSplitPoint)
-            && Utils.smOrEq(tempValue, m_splitPoint)) {
+      for (int i = 0; i < allInstances.numInstances(); i++) {
+        Instance instance = allInstances.instance(i);
+        double tempValue = instance.value(m_attIndex);
+        if (!Utils.isMissingValue(tempValue)) {
+          if ((tempValue > newSplitPoint) && (tempValue <= m_splitPoint)) {
             newSplitPoint = tempValue;
           }
         }
@@ -501,7 +497,7 @@ public class C45Split extends ClassifierSplitModel {
     } else {
       if (instance.attribute(m_attIndex).isNominal()) {
         return (int) instance.value(m_attIndex);
-      } else if (Utils.smOrEq(instance.value(m_attIndex), m_splitPoint)) {
+      } else if (instance.value(m_attIndex) <= m_splitPoint) {
         return 0;
       } else {
         return 1;
