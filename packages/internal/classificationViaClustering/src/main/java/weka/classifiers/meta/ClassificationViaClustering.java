@@ -372,24 +372,17 @@ public class ClassificationViaClustering extends AbstractClassifier {
 
       if (m_ActualClusterer != null) {
         // build new instance
-        Instances tempData = m_ClusteringHeader.stringFreeStructure();
-        double[] values = new double[tempData.numAttributes()];
+        double[] values = new double[m_ClusteringHeader.numAttributes()];
         int n = 0;
         for (int i = 0; i < instance.numAttributes(); i++) {
           if (i == instance.classIndex()) {
             continue;
           }
-          if (instance.attribute(i).isString()) {
-            values[n] = tempData.attribute(n).addStringValue(instance.stringValue(i));
-          } else if (instance.attribute(i).isRelationValued()) {
-            values[n] = tempData.attribute(n).addRelation(instance.relationalValue(i));
-          } else {
-            values[n] = instance.value(i);
-          }
+          values[n] = instance.value(i);
           n++;
         }
         Instance newInst = new DenseInstance(instance.weight(), values);
-        newInst.setDataset(tempData);
+        newInst.setDataset(m_ClusteringHeader);
 
         if (!getLabelAllClusters()) {
 
@@ -454,13 +447,13 @@ public class ClassificationViaClustering extends AbstractClassifier {
     getCapabilities().testWithFail(data);
 
     // save original header (needed for clusters to classes output)
-    m_OriginalHeader = data.stringFreeStructure();
+    m_OriginalHeader = new Instances(data, 0);
 
     // remove class attribute for clusterer
     Instances clusterData = new Instances(data);
     clusterData.setClassIndex(-1);
-    clusterData.deleteAttributeAt(data.classIndex());
-    m_ClusteringHeader = clusterData.stringFreeStructure();
+    clusterData.deleteAttributeAt(m_OriginalHeader.classIndex());
+    m_ClusteringHeader = new Instances(clusterData, 0);
 
     if (m_ClusteringHeader.numAttributes() == 0) {
       System.err

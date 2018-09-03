@@ -5,7 +5,7 @@
 PackageName=distributedWekaBase
 
 # Version (required)
-Version=1.1.17
+Version=1.0.17
 
 #Date (year-month-day)
 Date=2017-02-02
@@ -32,7 +32,7 @@ Description=Provides generic configuration classes and distributed map/reduce ty
 Changes=Fixed a bug that would cause an exception to be generated in the ARFF job if an unparsable number was encountered in what was thought to be a numeric field. Added an option to have unparsable numbers treated as missing (rather than have the type change to string).
 
 # Package URL for obtaining the package archive (required)
-PackageURL=http://downloads.sourceforge.net/project/weka/weka-packages/distributedWekaBase1.1.17.zip
+PackageURL=http://downloads.sourceforge.net/project/weka/weka-packages/distributedWekaBase1.0.17.zip
 
 # URL for further information
 URL=http://markahall.blogspot.co.nz/2013/10/weka-and-hadoop-part-1.html
@@ -44,7 +44,7 @@ URL=http://markahall.blogspot.co.nz/2013/10/weka-and-hadoop-part-1.html
 # Related=packageName1,packageName2,...
 
 # Dependencies (format: packageName (equality/inequality version_number)
-Depends=weka (>=3.9.1-SNAPSHOT)
+Depends=weka (>=3.8.1-SNAPSHOT|<3.9.0)
 
 # Message to display in installation. Can be used to provide
 # special instructions (e.g. manual stuff needed to complete

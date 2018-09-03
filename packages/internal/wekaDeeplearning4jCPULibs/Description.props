@@ -26,7 +26,8 @@ Maintainer=Weka team <wekalist@list.scms.waikato.ac.nz>
 License=GPL 3.0
 
 # Description (required)
-Description=Provides the CPU native libraries for the wekaDeeplearning4jCPU package
+Description=Provides the CPU native libraries for the wekaDeeplearning4jCPU package. Users should not just install wekaDeepLearning4jCPU, as it will pull in this package and the
+wekaDeepLearning4jCore package as well.
 
 Changes=Upgraded to deepLearning4j version 0.8.0. Several bug fixes to do with option handling.
 
