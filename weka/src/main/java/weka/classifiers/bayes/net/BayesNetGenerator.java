@@ -374,7 +374,8 @@ public class BayesNetGenerator extends EditableBayesNet {
     int[] order = getOrder();
     for (int iInstance = 0; iInstance < m_nNrOfInstances; iInstance++) {
       int nNrOfAtts = m_Instances.numAttributes();
-      double[] instance = new double[nNrOfAtts];
+      Instance instance = new DenseInstance(nNrOfAtts);
+      instance.setDataset(m_Instances);
       for (int iAtt2 = 0; iAtt2 < nNrOfAtts; iAtt2++) {
         int iAtt = order[iAtt2];
 
@@ -383,7 +384,7 @@ public class BayesNetGenerator extends EditableBayesNet {
         for (int iParent = 0; iParent < m_ParentSets[iAtt].getNrOfParents(); iParent++) {
           int nParent = m_ParentSets[iAtt].getParent(iParent);
           iCPT = iCPT * m_Instances.attribute(nParent).numValues()
-            + instance[nParent];
+            + instance.value(nParent);
         }
 
         double fRandom = random.nextInt(1000) / 1000.0f;
@@ -394,9 +395,9 @@ public class BayesNetGenerator extends EditableBayesNet {
             - m_Distributions[iAtt][(int) iCPT].getProbability(iValue);
           iValue++;
         }
-        instance[iAtt] = iValue;
+        instance.setValue(iAtt, iValue);
       }
-      m_Instances.add(new DenseInstance(1.0, instance));
+      m_Instances.add(instance);
     }
   } // GenerateInstances
 

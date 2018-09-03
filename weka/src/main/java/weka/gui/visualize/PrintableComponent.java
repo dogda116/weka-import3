@@ -373,8 +373,7 @@ public class PrintableComponent implements PrintableHandler {
     accessory.add(m_AspectRatioCheckBox);
 
     // determine all available writers and add them to the filechooser
-    writerNames = PluginManager.getPluginNamesOfTypeList(JComponentWriter.class
-      .getName());
+    writerNames = PluginManager.getPluginNamesOfTypeList(JComponentWriter.class.getName());
     Collections.sort(writerNames);
     for (i = 0; i < writerNames.size(); i++) {
       try {
