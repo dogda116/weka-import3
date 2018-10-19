@@ -15,17 +15,17 @@
 
 /*
  *    SimpleCLI.java
- *    Copyright (C) 1999 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2012 University of Waikato, Hamilton, New Zealand
  *
  */
 
 package weka.gui;
 
-import weka.gui.scripting.ScriptingPanel;
-
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+
+import weka.gui.scripting.ScriptingPanel;
 
 /**
  * Creates a very simple command line for invoking the main method of
@@ -70,6 +70,15 @@ public class SimpleCLI
    * @param args 	Not used.
    */
   public static void main(String[] args) {
+
+    weka.core.logging.Logger.log(weka.core.logging.Logger.Level.INFO,
+            "Logging started");
+
+    LookAndFeel.setLookAndFeel();
+    // make sure that packages are loaded and the GenericPropertiesCreator
+    // executes to populate the lists correctly
+    weka.gui.GenericObjectEditor.determineClasses();
+
     ScriptingPanel.showPanel(new SimpleCLIPanel(), args, 600, 500);
   }
 }
