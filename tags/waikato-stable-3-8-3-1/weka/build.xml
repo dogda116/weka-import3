@@ -1,5 +1,4 @@
-<project name="weka" default="compile" basedir="."
- xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project name="weka" default="compile" basedir=".">
 <!-- 
   ===========================================================================
    Ant build file for weka. Tested with ant 1.6.5 and Junit 3.8.2. Requires
@@ -28,6 +27,7 @@
   <property name="headless" value="false"/>
   <property name="macdistrib" value="osx-distrib"/>
   <property name="debug" value="on" />
+  <property name="packages_internal" value="../packages/internal"/>
 
   <!-- properties used when compiling/making packages -->
   <property name="wekaexejar" value="../../../weka/dist/weka.jar"/>
@@ -37,6 +37,15 @@
   <property name="wekatestclasses" value="../../../weka/build/testcases"/>
   <!-- valid values for the following: make, compile, compile_tests, clean -->
   <property name="packageCommand" value="make"/>
+
+  <!-- check whether packages present -->
+  <condition property="packages_present" else="false">
+    <and>
+      <available file="${packages_internal}" type="dir"/>
+      <available file="${packages_external}" type="dir"/>
+    </and>
+  </condition>
+  <echo message="Packages present: ${packages_present}"/>
 
   <target name="init_all">
     <!-- Create the time stamp -->
@@ -58,6 +67,14 @@
   <property name="proj.cp" refid="project.class.path"/>
   <path id="package.class.path">
     <pathelement path="${proj.cp}"/>
+    <dirset dir="${packages_internal}">
+        <include name="**/${build}/classes"/>
+        <include name="**/${build}/testcases"/>
+   </dirset>
+   <fileset dir="${packages_internal}">
+     <include name="**/lib/*.jar"/>
+     <include name="**/lib/*.zip"/>
+   </fileset>
   </path>
 
   <!-- check whether RemoteEngine present (for rmic call) -->
@@ -66,11 +83,277 @@
   </condition>
   <echo message="RemoteEngine present: ${remoteengine_present}"/>
 
+
 <!-- 
  ============================================================================
  Compilation and documentation making stuff
  ============================================================================
 -->
+
+  <target name="compile_tests_internal" depends="compile_tests" description="Compile tests for a named internal package (run with -DpackageName=package name)">
+    <echo message="Compiling ${packageName}"/>
+    <echo message="CLASSPATH ${wekaclasses}:${wekatestclasses}:${junitjar}:${cp}"/>  
+    <ant antfile="build_package.xml" dir="${packages_internal}/${packageName}" target="compile_tests" inheritall="false">
+      <property name="package" value="${packageName}" />
+      <property name="java.class.path" value="${wekaclasses}:${junitjar}:${wekatestclasses}:${cp}"/>
+    </ant>
+  </target>
+      
+  <target name="compile_internal" depends="compile" description="Compile a named internal package (run with -DpackageName=package name)">
+    <echo message="Compiling ${packageName}"/>
+    <echo message="CLASSPATH ${wekaclasses}:${wekalib}:${cp}"/>
+    <ant antfile="build_package.xml" dir="${packages_internal}/${packageName}" target="compile" inheritall="false">
+      <property name="package" value="${packageName}" />
+      <property name="java.class.path" value="${wekaclasses}:${cp}:${wekalib}"/>
+    </ant>
+  </target>
+
+  <target name="clean_internal" description="Clean a named internal package (run with -DpackageName=package name)">
+    <echo message="Clean ${packageName}"/>
+    <echo message="CLASSPATH ${wekaclasses}:${cp}"/>
+    <ant antfile="build_package.xml" dir="${packages_internal}/${packageName}" target="clean" inheritall="false">
+      <property name="package" value="${packageName}" />
+      <property name="java.class.path" value="${wekaclasses}:${cp}"/>
+    </ant>
+  </target>
+
+  <target name="make_internal" description="Make a named internal package - compiles, generates javadoc and creates the zip file (run with -DpackageName=package name)">
+    <echo message="Making ${packageName}"/>
+    <echo message="CLASSPATH ${wekaclasses}:${wekalib}:${cp}"/>
+    <ant antfile="build_package.xml" dir="${packages_internal}/${packageName}" target="make_package" inheritall="false">
+      <property name="package" value="${packageName}" />
+      <property name="java.class.path" value="${wekaclasses}:${cp}:${wekalib}"/>
+    </ant>
+  </target>
+
+  <target name="apply_all_internal" depends="compile" description="Apply command to all internal packages. Use -DpackageCommand=[make|compile|compile_tests|clean]">
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="isolationForest"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="hotSpot"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="predictiveApriori"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="chiSquaredAttributeEval"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="consistencySubsetEval"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="classifierBasedAttributeSelection"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="costSensitiveAttributeSelection"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="raceSearch"/>
+      <param name="cp" value="../classifierBasedAttributeSelection/build/classes"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="filteredAttributeSelection"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="attributeSelectionSearchMethods"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="isotonicRegression"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="leastMedSquared"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="partialLeastSquares"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="paceRegression"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="RBFNetwork"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="SPegasos"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="multiInstanceFilters"/>
+    </antcall>
+
+<!--    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="multiInstanceLearning"/>
+      <param name="cp" value="../multiInstanceFilters/build/classes"/>
+    </antcall> -->
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="classificationViaClustering"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="dagging"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="ensemblesOfNestedDichotomies"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="grading"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="metaCost"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="oneClassClassifier"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="ordinalClassClassifier"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="racedIncrementalLogitBoost"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="realAdaBoost"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="thresholdSelector"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="hyperPipes"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="votingFeatureIntervals"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="conjunctiveRule"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="DTNB"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="ridor"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="scriptingClassifiers"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="alternatingDecisionTrees"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="bestFirstTree"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="naiveBayesTree"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="simpleCART"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="XMeans"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="sequentialInformationalBottleneckClusterer"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="denormalize"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="wavelet"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="JDBCDriversDummyPackage"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="complementNaiveBayes"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="simpleEducationalLearningSchemes"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="localOutlierFactor"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="multiLayerPerceptrons"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="supervisedAttributeScaling"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="kernelLogisticRegression"/>
+    </antcall>
+
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="discriminantAnalysis"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="extraTrees"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="alternatingModelTrees"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="timeSeriesFilters"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="wekaPython"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="percentageErrorMetrics"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="niftiLoader"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="iterativeAbsoluteErrorRegression"/>
+    </antcall>
+    <antcall target="${packageCommand}_internal">
+      <param name="packageName" value="wekaDeepLearning4j"/>
+    </antcall>
+  </target>
 
   <target name="init_compile" depends="init_all">
     <!-- Create the build directory structure used by compile -->
@@ -133,11 +416,12 @@
          <include name="**/*.default"/>
        </fileset>
     </copy>
+    <copy file="${lib}/mtjmarker.jar" todir="${build}/classes" />
     <copy file="${lib}/core.jar" todir="${build}/classes" />
     <copy file="${lib}/mtj.jar" todir="${build}/classes" />
     <copy file="${lib}/arpack_combined.jar" todir="${build}/classes" />
     <rmic base="${build}/classes"
-       classname="weka.experiment.RemoteEngine" if:true="remoteengine_present"/>
+      classname="weka.experiment.RemoteEngine" />
     <unzip src="${lib}/java-cup.jar" dest="${build}/classes">
       <patternset>
         <include name="java_cup/runtime/**/*"/>
@@ -180,7 +464,7 @@
              destdir="${doc}" 
              packagenames="weka.*"
              Author="yes" 
-             Public="yes"
+             Public="yes" 
 	     additionalparam="-Xdoclint:none"
              maxmemory="500m"/>
     
@@ -258,7 +542,16 @@
   </target>
 
   <target name="run_tests_all" depends="compile_tests"
-   description="Execute unit tests (fast) for core">
+   description="Execute unit tests (fast) for core and internal packages">
+    <antcall target="apply_all_internal">
+      <param name="packageCommand" value="clean"/>
+    </antcall>
+    <antcall target="apply_all_internal">
+      <param name="packageCommand" value="compile"/>
+    </antcall>
+    <antcall target="apply_all_internal">
+      <param name="packageCommand" value="compile_tests"/>
+    </antcall>
 <!--    <echo message="pacakge classpath ${pack.cp}"/> -->
     <java fork="yes" dir="."
           classname="junit.textui.TestRunner"
@@ -297,13 +590,22 @@
 
   <!-- Put everything in ${build}/classes into the weka.jar file -->
   <target name="exejar-monolithic" depends="compile, init_dist"
-   description="Create an executable jar file containing core classes in ./dist">
+   description="Create an executable jar file containing core classes and all classes from internal packages in ./dist">
+    <antcall target="apply_all_internal">
+      <param name="packageCommand" value="make"/>
+    </antcall>
     <mkdir dir="${build}/classes-monolithic"/>
     <copy todir="${build}/classes-monolithic" >
        <fileset dir="${build}/classes">
          <include name="**/*"/>
        </fileset>
     </copy>
+
+    <unzip dest="${build}/classes-monolithic">
+    <fileset dir="${packages_internal}">
+        <include name="**/dist/**/*.jar"/>
+    </fileset>
+    </unzip>
 
     <jar jarfile="${dist}/weka-monolithic.jar" 
       basedir="${build}/classes-monolithic">
