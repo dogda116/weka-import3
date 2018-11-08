@@ -487,7 +487,7 @@ public class WekaPackageManager {
 
     try {
       String mirrorListURL =
-        "http://www.cs.waikato.ac.nz/ml/weka/packageMetaDataMirror.txt";
+        "https://www.cs.waikato.ac.nz/ml/weka/packageMetaDataMirror.txt";
 
       URLConnection conn = null;
       URL connURL = new URL(mirrorListURL);
