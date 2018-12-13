@@ -286,6 +286,8 @@
       <arg value="weka-${release}"/>
       <arg value="-ov"/>
       <arg value="${dist}/weka-${release}-${jvm_target}.dmg"/>
+      <arg value="-fs"/>
+      <arg value="HFS+"/>
     </exec>
 
     <delete dir="${temp}/weka-${release}-${jvm_target}.app"/>
