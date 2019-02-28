@@ -21,19 +21,14 @@
 
 package weka.gui;
 
-import weka.gui.Logger;
-
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import java.awt.Component;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.Writer;
-import java.io.BufferedWriter;
 import java.io.PrintWriter;
-
-import java.awt.Component;
-import javax.swing.JFileChooser;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JDialog;
 
 /**
  * This class handles the saving of StringBuffers to files. It will pop
@@ -72,12 +67,12 @@ public class SaveBuffer {
    */
   public boolean save(StringBuffer buf) {
     if (buf != null) {
-      JFileChooser fileChooser;
+      WekaFileChooser fileChooser;
       if (m_lastvisitedDirectory == null) {
-	fileChooser = new JFileChooser(
+	fileChooser = new WekaFileChooser(
 		      new File(System.getProperty("user.dir")));
       } else {
-	fileChooser = new JFileChooser(m_lastvisitedDirectory);
+	fileChooser = new WekaFileChooser(m_lastvisitedDirectory);
       }
 
       fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
