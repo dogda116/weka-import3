@@ -40,16 +40,16 @@ public class C45ModelSelection extends ModelSelection {
   private static final long serialVersionUID = 3372204862440821989L;
 
   /** Minimum number of objects in interval. */
-  private final int m_minNoObj;
+  protected final int m_minNoObj;
 
   /** Use MDL correction? */
-  private final boolean m_useMDLcorrection;
+  protected final boolean m_useMDLcorrection;
 
   /** All the training data */
-  private Instances m_allData; //
+  protected Instances m_allData; //
 
   /** Do not relocate split point to actual data value */
-  private final boolean m_doNotMakeSplitPointActualValue;
+  protected final boolean m_doNotMakeSplitPointActualValue;
 
   /**
    * Initializes the split selection method with the given parameters.
@@ -83,7 +83,7 @@ public class C45ModelSelection extends ModelSelection {
    * Selects C4.5-type split for the given dataset.
    */
   @Override
-  public final ClassifierSplitModel selectModel(Instances data) {
+  public ClassifierSplitModel selectModel(Instances data) {
 
     double minResult;
     C45Split[] currentModel;
