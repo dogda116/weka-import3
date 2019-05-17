@@ -38,7 +38,7 @@
     <mkdir dir="${temp}/weka"/>
     <mkdir dir="${temp}/weka/lib"/>
     <mkdir dir="${temp}/changelogs"/>
-    <mkdir dir="${temp}/data"/>
+    <!--mkdir dir="${temp}/data"/-->
     <mkdir dir="${temp}/doc"/>
     <mkdir dir="${dist}"/>
 
