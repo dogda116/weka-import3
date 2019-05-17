@@ -133,24 +133,24 @@
       <fileset dir="${weka}/doc"/>
     </copy>
 
-    <copy todir="${temp}/data">
+    <!--copy todir="${temp}/data">
       <fileset dir="${wekadocs}/data"/>
-    </copy>
+    </copy-->
 
     <copy todir="${temp}">
       <fileset dir="${wekadocs}">
         <include name="documentation.*"/>
-        <include name="README" />
-        <include name="COPYING" />
+        <!--include name="README" /-->
+        <!--include name="COPYING" /-->
         <include name="weka.*" />
       </fileset>
     </copy>
 
-    <copy todir="${temp}">
+    <!--copy todir="${temp}">
       <fileset dir="${wekadocs}/manual">
         <include name="WekaManual.pdf"/>
         </fileset>
-      </copy>
+      </copy-->
   </target>
 
   <target name="clean" description="Removes the dist directory">
