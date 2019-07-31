@@ -25,6 +25,7 @@ import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.classifiers.CostMatrix;
 import weka.classifiers.Evaluation;
+import weka.classifiers.IterativeClassifier;
 import weka.classifiers.Sourcable;
 import weka.classifiers.evaluation.CostCurve;
 import weka.classifiers.evaluation.MarginCurve;
@@ -73,6 +74,7 @@ import weka.gui.SaveBuffer;
 import weka.gui.SetInstancesPanel;
 import weka.gui.SysErrLog;
 import weka.gui.TaskLogger;
+import weka.gui.WekaFileChooser;
 import weka.gui.beans.CostBenefitAnalysis;
 import weka.gui.explorer.Explorer.CapabilitiesFilterChangeEvent;
 import weka.gui.explorer.Explorer.CapabilitiesFilterChangeListener;
@@ -90,7 +92,28 @@ import weka.gui.visualize.plugins.GraphVisualizePlugin;
 import weka.gui.visualize.plugins.TreeVisualizePlugin;
 import weka.gui.visualize.plugins.VisualizePlugin;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JViewport;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
@@ -207,7 +230,8 @@ public class ClassifierPanel extends AbstractPerspective implements
   protected JCheckBox m_OutputModelBut = new JCheckBox("Output model");
 
   /** Check to output the models built from the training splits. */
-  protected JCheckBox m_OutputModelsForTrainingSplitsBut = new JCheckBox("Output models for training splits");
+  protected JCheckBox m_OutputModelsForTrainingSplitsBut = new JCheckBox(
+    "Output models for training splits");
 
   /** Check to output true/false positives, precision/recall for each class. */
   protected JCheckBox m_OutputPerClassBut = new JCheckBox(
@@ -330,7 +354,7 @@ public class ClassifierPanel extends AbstractPerspective implements
     PMML_FILE_EXTENSION, "PMML model files");
 
   /** The file chooser for selecting model files. */
-  protected JFileChooser m_FileChooser = new JFileChooser(new File(
+  protected WekaFileChooser m_FileChooser = new WekaFileChooser(new File(
     System.getProperty("user.dir")));
 
   /** The user's list of selected evaluation metrics */
@@ -414,7 +438,7 @@ public class ClassifierPanel extends AbstractPerspective implements
     m_OutputModelBut
       .setToolTipText("Output the model obtained from the full training set");
     m_OutputModelsForTrainingSplitsBut
-            .setToolTipText("Output the models obtained from the training splits");
+      .setToolTipText("Output the models obtained from the training splits");
     m_OutputPerClassBut.setToolTipText("Output precision/recall & true/false"
       + " positives for each class");
     m_OutputConfusionBut
@@ -442,7 +466,8 @@ public class ClassifierPanel extends AbstractPerspective implements
     m_StorePredictionsBut.setSelected(ExplorerDefaults
       .getClassifierStorePredictionsForVis());
     m_OutputModelBut.setSelected(ExplorerDefaults.getClassifierOutputModel());
-    m_OutputModelsForTrainingSplitsBut.setSelected(ExplorerDefaults.getClassifierOutputModelsForTrainingSplits());
+    m_OutputModelsForTrainingSplitsBut.setSelected(ExplorerDefaults
+      .getClassifierOutputModelsForTrainingSplits());
     m_OutputPerClassBut.setSelected(ExplorerDefaults
       .getClassifierOutputPerClassStats());
     m_OutputConfusionBut.setSelected(ExplorerDefaults
@@ -511,10 +536,12 @@ public class ClassifierPanel extends AbstractPerspective implements
         if (m_SetCostsFrame == null) {
           if (PropertyDialog.getParentDialog(m_SetCostsBut) != null) {
             m_SetCostsFrame =
-              new PropertyDialog(PropertyDialog.getParentDialog(m_SetCostsBut), m_CostMatrixEditor, -1, -1);
+              new PropertyDialog(PropertyDialog.getParentDialog(m_SetCostsBut),
+                m_CostMatrixEditor, -1, -1);
           } else {
             m_SetCostsFrame =
-              new PropertyDialog(PropertyDialog.getParentFrame(m_SetCostsBut), m_CostMatrixEditor, -1, -1);
+              new PropertyDialog(PropertyDialog.getParentFrame(m_SetCostsBut),
+                m_CostMatrixEditor, -1, -1);
           }
           m_SetCostsFrame.setTitle("Cost Matrix Editor");
           // pd.setSize(250,150);
@@ -539,9 +566,11 @@ public class ClassifierPanel extends AbstractPerspective implements
         }
 
         if (PropertyDialog.getParentDialog(m_SetCostsBut) != null) {
-          m_SetCostsFrame.setLocationRelativeTo(PropertyDialog.getParentDialog(m_SetCostsBut));
+          m_SetCostsFrame.setLocationRelativeTo(PropertyDialog
+            .getParentDialog(m_SetCostsBut));
         } else {
-          m_SetCostsFrame.setLocationRelativeTo(PropertyDialog.getParentFrame(m_SetCostsBut));
+          m_SetCostsFrame.setLocationRelativeTo(PropertyDialog
+            .getParentFrame(m_SetCostsBut));
         }
         m_SetCostsFrame.setVisible(true);
       }
@@ -808,7 +837,9 @@ public class ClassifierPanel extends AbstractPerspective implements
 
     // Any launcher plugins?
     List<String> pluginsVector =
-      PluginManager.getPluginNamesOfTypeList(ClassifierPanelLaunchHandlerPlugin.class.getName());
+      PluginManager
+        .getPluginNamesOfTypeList(ClassifierPanelLaunchHandlerPlugin.class
+          .getName());
     JButton pluginBut = null;
     if (pluginsVector.size() == 1) {
       try {
@@ -1074,9 +1105,10 @@ public class ClassifierPanel extends AbstractPerspective implements
       m_SetTestFrame.getContentPane().setLayout(new BorderLayout());
       m_SetTestFrame.getContentPane().add(sp, BorderLayout.CENTER);
       m_SetTestFrame.pack();
-      m_SetTestFrame.setSize(400,200);
+      m_SetTestFrame.setSize(400, 200);
     }
-    m_SetTestFrame.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this));
+    m_SetTestFrame
+      .setLocationRelativeTo(SwingUtilities.getWindowAncestor(this));
     m_SetTestFrame.setVisible(true);
   }
 
@@ -1223,14 +1255,16 @@ public class ClassifierPanel extends AbstractPerspective implements
 
           try {
             if (m_TestLoader != null && m_TestLoader.getStructure() != null) {
-              /* if (m_ClassifierEditor.getValue() instanceof BatchPredictor
-                && ((BatchPredictor) m_ClassifierEditor.getValue())
-                  .implementsMoreEfficientBatchPrediction()
-                && m_TestLoader instanceof ArffLoader) {
-                // we're not really streaming test instances in this case...
-                ((ArffLoader) m_TestLoader).setRetainStringVals(true);
-              } */
-              if (m_TestLoader instanceof ArffLoader && m_StorePredictionsBut.isSelected()) {
+              /*
+               * if (m_ClassifierEditor.getValue() instanceof BatchPredictor &&
+               * ((BatchPredictor) m_ClassifierEditor.getValue())
+               * .implementsMoreEfficientBatchPrediction() && m_TestLoader
+               * instanceof ArffLoader) { // we're not really streaming test
+               * instances in this case... ((ArffLoader)
+               * m_TestLoader).setRetainStringVals(true); }
+               */
+              if (m_TestLoader instanceof ArffLoader
+                && m_StorePredictionsBut.isSelected()) {
                 ((ArffLoader) m_TestLoader).setRetainStringVals(true);
               }
               m_TestLoader.reset();
@@ -1246,7 +1280,8 @@ public class ClassifierPanel extends AbstractPerspective implements
               new CostMatrix((CostMatrix) m_CostMatrixEditor.getValue());
           }
           boolean outputModel = m_OutputModelBut.isSelected();
-          boolean outputModelsForTrainingSplits = m_OutputModelsForTrainingSplitsBut.isSelected();
+          boolean outputModelsForTrainingSplits =
+            m_OutputModelsForTrainingSplitsBut.isSelected();
           boolean outputConfusion = m_OutputConfusionBut.isSelected();
           boolean outputPerClass = m_OutputPerClassBut.isSelected();
           boolean outputSummary = true;
@@ -1263,6 +1298,9 @@ public class ClassifierPanel extends AbstractPerspective implements
           int classIndex = m_ClassCombo.getSelectedIndex();
           inst.setClassIndex(classIndex);
           Classifier classifier = (Classifier) m_ClassifierEditor.getValue();
+          if (classifier instanceof weka.core.LogHandler) {
+            ((weka.core.LogHandler) classifier).setLog(m_Log);
+          }
           Classifier template = null;
           try {
             template = AbstractClassifier.makeCopy(classifier);
@@ -1386,7 +1424,8 @@ public class ClassifierPanel extends AbstractPerspective implements
             // set up the structure of the plottable instances for
             // visualization
             plotInstances = ExplorerDefaults.getClassifierErrorsPlotInstances();
-            plotInstances.setInstances(testMode == 4 ? userTestStructure : inst);
+            plotInstances
+              .setInstances(testMode == 4 ? userTestStructure : inst);
             plotInstances.setClassifier(classifier);
             plotInstances.setClassIndex(inst.classIndex());
             plotInstances.setSaveForVisualization(saveVis);
@@ -1597,7 +1636,8 @@ public class ClassifierPanel extends AbstractPerspective implements
                 }
                 current.buildClassifier(train);
                 if (outputModelsForTrainingSplits) {
-                  outBuff.append("\n=== Classifier model for fold " + (fold + 1) + " ===\n\n");
+                  outBuff.append("\n=== Classifier model for fold "
+                    + (fold + 1) + " ===\n\n");
                   outBuff.append(current.toString() + "\n");
                 }
                 Instances test = inst.testCV(numFolds, fold);
@@ -1671,7 +1711,8 @@ public class ClassifierPanel extends AbstractPerspective implements
               }
               current.buildClassifier(train);
               if (outputModelsForTrainingSplits) {
-                outBuff.append("\n=== Classifier model for training split (" + trainSize + " instances) ===\n\n");
+                outBuff.append("\n=== Classifier model for training split ("
+                  + trainSize + " instances) ===\n\n");
                 outBuff.append(current.toString() + "\n");
               }
               eval = new Evaluation(train, costMatrix);
@@ -2115,6 +2156,38 @@ public class ClassifierPanel extends AbstractPerspective implements
     }
     resultListMenu.add(reEvaluate);
 
+    if (classifier instanceof IterativeClassifier
+      && ((IterativeClassifier) classifier).getResume()) {
+
+      if (selectedNames != null && selectedNames.size() == 1) {
+        JMenuItem continueIterating =
+          new JMenuItem("Continue iterating using the training data");
+        continueIterating.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            continueIterating(selectedNames.get(0), classifier);
+          }
+        });
+        resultListMenu.add(continueIterating);
+        JMenuItem finalizeIterative = new JMenuItem("Clean up model");
+        finalizeIterative.setToolTipText("Reduces storage size of model. "
+          + "However, models cannot be trained further, even if resume "
+          + "is set to true.");
+        finalizeIterative.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+            try {
+              ((IterativeClassifier) classifier).setResume(false);
+              ((IterativeClassifier) classifier).done();
+            } catch (Exception e1) {
+              e1.printStackTrace();
+            }
+          }
+        });
+        resultListMenu.add(finalizeIterative);
+      }
+    }
+
     JMenuItem reApplyConfig =
       new JMenuItem("Re-apply this model's configuration");
     if (classifier != null && selectedNames != null
@@ -2408,7 +2481,8 @@ public class ClassifierPanel extends AbstractPerspective implements
 
     // errros
     pluginsVector =
-      PluginManager.getPluginNamesOfTypeList(ErrorVisualizePlugin.class.getName());
+      PluginManager.getPluginNamesOfTypeList(ErrorVisualizePlugin.class
+        .getName());
     for (int i = 0; i < pluginsVector.size(); i++) {
       String className = (pluginsVector.get(i));
       try {
@@ -2443,7 +2517,8 @@ public class ClassifierPanel extends AbstractPerspective implements
       // trees
       if (((Drawable) temp_classifier).graphType() == Drawable.TREE) {
         pluginsVector =
-          PluginManager.getPluginNamesOfTypeList(TreeVisualizePlugin.class.getName());
+          PluginManager.getPluginNamesOfTypeList(TreeVisualizePlugin.class
+            .getName());
         for (int i = 0; i < pluginsVector.size(); i++) {
           String className = (pluginsVector.get(i));
           try {
@@ -2477,7 +2552,8 @@ public class ClassifierPanel extends AbstractPerspective implements
       // graphs
       else {
         pluginsVector =
-          PluginManager.getPluginNamesOfTypeList(GraphVisualizePlugin.class.getName());
+          PluginManager.getPluginNamesOfTypeList(GraphVisualizePlugin.class
+            .getName());
         for (int i = 0; i < pluginsVector.size(); i++) {
           String className = (pluginsVector.get(i));
           try {
@@ -2526,7 +2602,7 @@ public class ClassifierPanel extends AbstractPerspective implements
    */
   protected void visualizeTree(String dottyString, String treeName) {
     final javax.swing.JFrame jf =
-            Utils.getWekaJFrame("Weka Classifier Tree Visualizer: " + treeName, this);
+      Utils.getWekaJFrame("Weka Classifier Tree Visualizer: " + treeName, this);
     jf.setSize(500, 400);
     jf.getContentPane().setLayout(new BorderLayout());
     TreeVisualizer tv = new TreeVisualizer(null, dottyString, new PlaceNode2());
@@ -2553,7 +2629,8 @@ public class ClassifierPanel extends AbstractPerspective implements
    */
   protected void visualizeBayesNet(String XMLBIF, String graphName) {
     final javax.swing.JFrame jf =
-      Utils.getWekaJFrame("Weka Classifier Graph Visualizer: " + graphName, this);
+      Utils.getWekaJFrame("Weka Classifier Graph Visualizer: " + graphName,
+        this);
     jf.setSize(500, 400);
     jf.getContentPane().setLayout(new BorderLayout());
     GraphVisualizer gv = new GraphVisualizer();
@@ -2826,7 +2903,98 @@ public class ClassifierPanel extends AbstractPerspective implements
         }
 
         m_History.addObject(name, vv);
+        // set config in GOE
+        try {
+          Classifier copied = classifier.getClass().newInstance();
+
+          if (classifier instanceof OptionHandler) {
+            String[] options = ((OptionHandler) classifier).getOptions();
+            ((OptionHandler) copied).setOptions(options);
+          }
+          m_ClassifierEditor.setValue(copied);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
       }
+    }
+  }
+
+  protected void continueIterating(final String name,
+    final Classifier classifier) {
+    IterativeClassifier iClassifier = (IterativeClassifier) classifier;
+    Classifier fromGOE = (Classifier) m_ClassifierEditor.getValue();
+    String classifierName = iClassifier.getClass().getCanonicalName();
+
+    boolean matchesGOE = iClassifier.getClass().getCanonicalName()
+      .equals(fromGOE.getClass().getCanonicalName());
+
+    // apply options from GOE
+    if (fromGOE instanceof OptionHandler && matchesGOE) {
+      String[] opts = ((OptionHandler)fromGOE).getOptions();
+      try {
+        m_Log.logMessage("Setting options for iterative classifier " +
+          classifierName + " to " + Utils.joinOptions(opts));
+        ((OptionHandler)iClassifier).setOptions(opts);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    if (m_RunThread == null) {
+      synchronized (this) {
+        m_StartBut.setEnabled(false);
+        m_StopBut.setEnabled(true);
+      }
+
+      m_RunThread = new Thread() {
+        @Override
+        public void run() {
+          m_Log.statusMessage("Setting up...");
+          StringBuffer outBuff = m_History.getNamedBuffer(name);
+          Instances inst = new Instances(m_Instances);
+          inst.setClassIndex(m_ClassCombo.getSelectedIndex());
+
+          // for timing
+          long trainTimeStart = 0, trainTimeElapsed = 0;
+          boolean outputModel = m_OutputModelBut.isSelected();
+
+          try {
+            iClassifier.initializeClassifier(inst);
+
+            m_Log.logMessage("Iterating...");
+            if (m_Log instanceof TaskLogger) {
+              ((TaskLogger) m_Log).taskStarted();
+            }
+
+            while (iClassifier.next()) {
+            }
+            iClassifier.done();
+            outBuff.append("=== Model after iterating ===\n");
+            outBuff.append(iClassifier);
+            m_History.updateResult(name);
+            m_Log.logMessage("Finished "+ classifierName);
+            m_Log.statusMessage("OK");
+          } catch (Exception e) {
+            e.printStackTrace();
+          } finally {
+            if (isInterrupted()) {
+              m_Log.logMessage("Interrupted " + classifierName);
+              m_Log.statusMessage("Interrupted");
+            }
+
+            synchronized (this) {
+              m_StartBut.setEnabled(true);
+              m_StopBut.setEnabled(true);
+              m_RunThread = null;
+            }
+            if (m_Log instanceof TaskLogger) {
+              ((TaskLogger) m_Log).taskFinished();
+            }
+          }
+        }
+      };
+      m_RunThread.setPriority(Thread.MIN_PRIORITY);
+      m_RunThread.start();
     }
   }
 
@@ -2969,6 +3137,9 @@ public class ClassifierPanel extends AbstractPerspective implements
                 userTestStructure.setClassIndex(userTestStructure
                   .numAttributes() - 1);
               }
+            }
+            if (classifierToUse instanceof weka.core.LogHandler) {
+              ((weka.core.LogHandler) classifierToUse).setLog(m_Log);
             }
             if (m_Log instanceof TaskLogger) {
               ((TaskLogger) m_Log).taskStarted();
@@ -3414,9 +3585,10 @@ public class ClassifierPanel extends AbstractPerspective implements
             ClassifierPanelDefaults.OUTPUT_MODEL_KEY,
             ClassifierPanelDefaults.OUTPUT_MODEL, Environment.getSystemWide()));
         m_OutputModelsForTrainingSplitsBut.setSelected(getMainApplication()
-                .getApplicationSettings().getSetting(getPerspectiveID(),
-                        ClassifierPanelDefaults.OUTPUT_MODELS_FOR_TRAINING_SPLITS_KEY,
-                        ClassifierPanelDefaults.OUTPUT_MODELS_FOR_TRAINING_SPLITS, Environment.getSystemWide()));
+          .getApplicationSettings().getSetting(getPerspectiveID(),
+            ClassifierPanelDefaults.OUTPUT_MODELS_FOR_TRAINING_SPLITS_KEY,
+            ClassifierPanelDefaults.OUTPUT_MODELS_FOR_TRAINING_SPLITS,
+            Environment.getSystemWide()));
         m_OutputPerClassBut.setSelected(getMainApplication()
           .getApplicationSettings().getSetting(getPerspectiveID(),
             ClassifierPanelDefaults.OUTPUT_PER_CLASS_STATS_KEY,
@@ -3529,7 +3701,8 @@ public class ClassifierPanel extends AbstractPerspective implements
   }
 
   /**
-   * Gets whether the user has opted to output the models for the training splits
+   * Gets whether the user has opted to output the models for the training
+   * splits
    *
    * @return true if the models for the training splits are to be output
    */
@@ -3753,8 +3926,8 @@ public class ClassifierPanel extends AbstractPerspective implements
     protected static final boolean OUTPUT_MODEL = true;
 
     protected static final Settings.SettingKey OUTPUT_MODELS_FOR_TRAINING_SPLITS_KEY =
-            new Settings.SettingKey(ID + ".outputModelsForTrainingSplits", "Output models obtained from"
-                    + " the training splits", "");
+      new Settings.SettingKey(ID + ".outputModelsForTrainingSplits",
+        "Output models obtained from" + " the training splits", "");
     protected static final boolean OUTPUT_MODELS_FOR_TRAINING_SPLITS = false;
 
     protected static final Settings.SettingKey OUTPUT_PER_CLASS_STATS_KEY =
@@ -3849,7 +4022,8 @@ public class ClassifierPanel extends AbstractPerspective implements
       m_defaults.put(CROSS_VALIDATION_FOLDS_KEY, CROSS_VALIDATION_FOLDS);
       m_defaults.put(PERCENTAGE_SPLIT_KEY, PERCENTAGE_SPLIT);
       m_defaults.put(OUTPUT_MODEL_KEY, OUTPUT_MODEL);
-      m_defaults.put(OUTPUT_MODELS_FOR_TRAINING_SPLITS_KEY, OUTPUT_MODELS_FOR_TRAINING_SPLITS);
+      m_defaults.put(OUTPUT_MODELS_FOR_TRAINING_SPLITS_KEY,
+        OUTPUT_MODELS_FOR_TRAINING_SPLITS);
       m_defaults.put(OUTPUT_PER_CLASS_STATS_KEY, OUTPUT_PER_CLASS_STATS);
       m_defaults.put(OUTPUT_ENTROPY_EVAL_METRICS_KEY,
         OUTPUT_ENTROPY_EVAL_METRICS);
