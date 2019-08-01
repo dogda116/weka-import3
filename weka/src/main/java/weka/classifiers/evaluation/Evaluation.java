@@ -26,6 +26,7 @@ import weka.classifiers.Classifier;
 import weka.classifiers.ConditionalDensityEstimator;
 import weka.classifiers.CostMatrix;
 import weka.classifiers.IntervalEstimator;
+import weka.classifiers.IterativeClassifier;
 import weka.classifiers.Sourcable;
 import weka.classifiers.UpdateableBatchProcessor;
 import weka.classifiers.UpdateableClassifier;
@@ -1135,7 +1136,8 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
   protected static void saveClassifier(Classifier classifier, Instances template, String objectOutputFileName)
       throws Exception {
 
-    OutputStream os = new FileOutputStream(objectOutputFileName);
+    File f = new File(objectOutputFileName).getAbsoluteFile();
+    OutputStream os = new FileOutputStream(f);
     if (!(objectOutputFileName.endsWith(".xml") || (objectOutputFileName.endsWith(".koml") && KOML.isPresent()))) {
       if (objectOutputFileName.endsWith(".gz")) {
         os = new GZIPOutputStream(os);
@@ -1335,6 +1337,8 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
     boolean preserveOrder = Utils.getFlag("preserve-order", options);
     boolean discardPredictions = Utils.getFlag("no-predictions", options);
     String metricsToToggle = Utils.getOption("toggle", options);
+    boolean continueIteratingIterative = Utils.getFlag("continue-iterating", options);
+    boolean cleanUpIterative = Utils.getFlag("clean-up", options);
 
     // Some other variables that we might set later.
     CostMatrix costMatrix = null;
@@ -1374,7 +1378,7 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
           throw new IllegalArgumentException("No training file and no test file given.");
         }
       } else if ((objectInputFileName.length() != 0)
-              && ((!(classifier instanceof UpdateableClassifier) || forceBatchTraining) || (testFileName.length() == 0))) {
+              && ((!(classifier instanceof UpdateableClassifier) && !(classifier instanceof IterativeClassifier) || forceBatchTraining) || (testFileName.length() == 0))) {
         throw new IllegalArgumentException("Classifier not incremental or batch training forced, or no test file provided: can't use model file.");
       }
       if ((objectInputFileName.length() != 0) && ((splitPercentageString.length() != 0) || (foldsString.length() != 0))) {
@@ -1420,8 +1424,8 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
         throw new IllegalArgumentException("Can only print source if training file or model file is provided!");
       }
       if (objectInputFileName.length() > 0 && (trainFileName.length() > 0) &&
-              (!(classifier instanceof UpdateableClassifier) || forceBatchTraining)) {
-        throw new IllegalArgumentException("Can't use batch training when updating an existing classifier!");
+              (!(classifier instanceof UpdateableClassifier) && !(classifier instanceof IterativeClassifier) || forceBatchTraining)) {
+        throw new IllegalArgumentException("Can't use batch training when updating/continue iterating with an existing classifier!");
       }
       if (noCrossValidation && testFileName.length() != 0) {
         throw new IllegalArgumentException("Attempt to turn off cross-validation when explicit test file is provided!");
@@ -1522,6 +1526,19 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
           throw new IllegalArgumentException("Loaded classifier is " + classifier.getClass().getCanonicalName() +
                   ", not " + backedUpClassifier.getClass().getCanonicalName() + "!");
         }
+
+        // set options if IterativeClassifier && continue iterating
+        if (continueIteratingIterative && classifier instanceof IterativeClassifier &&
+          classifier instanceof OptionHandler) {
+
+          if (train == null) {
+            throw new IllegalArgumentException("IterativeClassifiers require training "
+              + "data to continue iterating");
+          }
+
+          ((OptionHandler) classifier).setOptions(options);
+          ((IterativeClassifier) classifier).setResume(!cleanUpIterative);
+        }
       }
 
       // Check for cost matrix
@@ -1561,6 +1578,7 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
       }
 
       // If a model file is given, we shouldn't process scheme-specific options
+      // (with the exception of IterativeClassifiers)
       if (objectInputFileName.length() == 0) {
         if (classifier instanceof OptionHandler) {
           for (String option : options) {
@@ -1605,6 +1623,13 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
             ((UpdateableBatchProcessor) classifier).batchFinished();
           }
           trainTimeElapsed = System.currentTimeMillis() - trainTimeStart;
+        } else if (classifier instanceof IterativeClassifier && continueIteratingIterative) {
+          IterativeClassifier iClassifier = (IterativeClassifier)classifier;
+          Instances tempTrain = new DataSource(trainFileName).getDataSet(actualClassIndex);
+          iClassifier.initializeClassifier(tempTrain);
+          while (iClassifier.next()){
+          }
+          iClassifier.done();
         } else { // Build classifier in one go
           Instances tempTrain = new DataSource(trainFileName).getDataSet(actualClassIndex);
           if (classifier instanceof weka.classifiers.misc.InputMappedClassifier) {
@@ -1783,6 +1808,13 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
         // Evaluate on test data
         if (train == null) {
           testingEvaluation.useNoPriors();
+        } else if (!trainStatistics || printMargins) { // We may still need to set the priors based on the training data!
+          testingEvaluation.setPriors(train);
+          DataSource trainSource = new DataSource(trainFileName);
+          trainSource.getStructure(); // We already know the structure but need to advance to the data section
+          while (trainSource.hasMoreElements(train)) {
+            testingEvaluation.updatePriors(trainSource.nextElement(train));
+          }
         }
         if (classifier instanceof BatchPredictor && ((BatchPredictor) classifier).implementsMoreEfficientBatchPrediction()) {
           testTimeStart = System.currentTimeMillis();
@@ -4345,6 +4377,13 @@ public class Evaluation implements Summarizable, RevisionHandler, Serializable {
     optionsText.append("\t(default: 1).\n");
     optionsText.append("-m <name of file with cost matrix>\n");
     optionsText.append("\tSets file with cost matrix.\n");
+    optionsText.append("-continue-iterating\n");
+    optionsText.append("\tContinue training an IterativeClassifier model that has\n\t"
+      + "been loaded via -l.\n");
+    optionsText.append("-clean-up\n");
+    optionsText.append("\tReduce storage size of an loaded IterativeClassifier\n" +
+    "\tafter iterating. This effectively 'freezes' the model, and no further\n"
+      + "\titeration is then possible.\n");
     optionsText
       .append("-toggle <comma-separated list of evaluation metric names>\n");
     optionsText
