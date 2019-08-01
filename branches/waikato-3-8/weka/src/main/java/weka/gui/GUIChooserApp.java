@@ -53,7 +53,23 @@ import weka.gui.visualize.PlotData2D;
 import weka.gui.visualize.ThresholdVisualizePanel;
 import weka.gui.visualize.VisualizePanel;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -78,7 +94,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.security.Permission;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -1008,7 +1023,7 @@ public class GUIChooserApp extends JFrame {
     jMenuItemHelpHomepage.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        BrowserHelper.openURL("http://www.cs.waikato.ac.nz/~ml/weka/");
+        BrowserHelper.openURL("https://www.cs.waikato.ac.nz/~ml/weka/");
       }
     });
 
@@ -1025,7 +1040,7 @@ public class GUIChooserApp extends JFrame {
     jMenuItemHelpWekaWiki.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        BrowserHelper.openURL("http://weka.wikispaces.com/");
+        BrowserHelper.openURL("https://waikato.github.io/weka-wiki/");
       }
     });
 
@@ -1040,7 +1055,7 @@ public class GUIChooserApp extends JFrame {
     jMenuItemHelpSourceforge.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        BrowserHelper.openURL("http://sourceforge.net/projects/weka/");
+        BrowserHelper.openURL("https://sourceforge.net/projects/weka/");
       }
     });
 
