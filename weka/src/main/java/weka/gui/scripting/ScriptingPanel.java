@@ -305,8 +305,6 @@ public abstract class ScriptingPanel
       frame.setTitle(panel.getTitle());
       frame.setIconImage(panel.getIcon().getImage());
       frame.setLocationRelativeTo(null);
-      if ((args.length > 0) && (panel instanceof FileScriptingPanel))
-	((FileScriptingPanel) panel).open(new File(args[0]));
       frame.setVisible(true);
     }
     catch (Exception e) {
