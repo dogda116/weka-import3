@@ -15,7 +15,7 @@
 
 /*
  *    GraphNode.java
- *    Copyright (C) 2003 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2003-2012 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -30,18 +30,18 @@ package weka.gui.graphvisualizer;
 
 public class GraphNode extends Object implements GraphConstants {
   /** ID and label for the node */
-  String ID, lbl;
+  public String ID, lbl;
   /** The outcomes for the given node */
-  String [] outcomes;
+  public String [] outcomes;
   /** probability table for each outcome given outcomes of parents, if any */
-  double [][] probs;   //probabilities
+  public double [][] probs;   //probabilities
   /** The x and y position of the node */
   public int x=0, y=0;
   /** The indices of parent nodes */
-  int [] prnts;       //parent nodes
+  public int [] prnts;       //parent nodes
   /** The indices of nodes to which there are edges from this
    * node, plus the type of edge */
-  int [][] edges;
+  public int [][] edges;
   /**  Type of node. Default is Normal node type */
   public int nodeType=NORMAL;
   
