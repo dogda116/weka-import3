@@ -212,6 +212,7 @@ public class GUIChooserApp extends JFrame {
 
     frame.removeWindowListener(adapter);
     frame.setContentPane(new JPanel());
+    frame.setJMenuBar(new JMenuBar());
     frame.dispose();
     m_Frames.remove(frame);
     System.gc();
@@ -967,7 +968,7 @@ public class GUIChooserApp extends JFrame {
             tigerJythonClass.getMethod("main", String[].class).invoke(null,
                     args);
           } catch (Exception ex) {
-	      ex.printStackTrace();
+	    ex.printStackTrace();
           }
         }
       });
