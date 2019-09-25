@@ -128,7 +128,7 @@
     <ant antfile="build.xml" dir="${weka}" target="changelog" inheritall="false">
       <property name="date_range" value="{${lastReleaseDate}}:{${TODAY}}"/>
       <property name="release" value="${release}"/>
-      <property name="weka_branch" value="waikato"/>
+      <property name="weka_branch" value="branches/waikato-3-8"/>
     </ant>
   </target>
 
