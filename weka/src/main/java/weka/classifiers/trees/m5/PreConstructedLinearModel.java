@@ -15,20 +15,19 @@
 
 /*
  *    RuleNode.java
- *    Copyright (C) 2000 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2000-2012 University of Waikato, Hamilton, New Zealand
  *
  */
 
 package weka.classifiers.trees.m5;
 
-import weka.classifiers.Classifier;
+import java.io.Serializable;
+
 import weka.classifiers.AbstractClassifier;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.RevisionUtils;
 import weka.core.Utils;
-
-import java.io.Serializable;
 
 /**
  * This class encapsulates a linear regression function. It is a classifier
@@ -150,20 +149,20 @@ public class PreConstructedLinearModel
       if (m_coefficients[i] != 0.0) {
 	double c = m_coefficients[i];
 	if (first) {
-	  b.append("\n\t" + Utils.doubleToString(c, 12, 4).trim() + " * " 
+	  b.append("\n\t" + Utils.doubleToString(c, 12, getNumDecimalPlaces()).trim() + " * "
 		   + m_instancesHeader.attribute(i).name() + " ");
 	  first = false;
 	} else {
 	  b.append("\n\t" + ((m_coefficients[i] < 0) ? 
-			   "- " + Utils.doubleToString(Math.abs(c), 12, 4).trim() : "+ "
-		   + Utils.doubleToString(Math.abs(c), 12, 4).trim()) + " * "
+			   "- " + Utils.doubleToString(Math.abs(c), 12, getNumDecimalPlaces()).trim() : "+ "
+		   + Utils.doubleToString(Math.abs(c), 12, getNumDecimalPlaces()).trim()) + " * "
 		   + m_instancesHeader.attribute(i).name() + " ");
 	}
       }
     }
     
     b.append("\n\t" + ((m_intercept < 0) ? "- " : "+ ")
-	     + Utils.doubleToString(Math.abs(m_intercept), 12, 4).trim());
+	     + Utils.doubleToString(Math.abs(m_intercept), 12, getNumDecimalPlaces()).trim());
     return b.toString();
   }
   
