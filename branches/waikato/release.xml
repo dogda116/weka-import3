@@ -210,8 +210,8 @@
     <copy file="${wekadocs}/changelogs/CHANGELOG-${release}" toFile="${dist}/README-${release}.txt"/>
     <copy file="${wekadocs}/changelogs/CHANGELOG_PACKAGES-${release}" toFile="${dist}/README-PACKAGES-${release}.txt"/>
 
-    <zip destfile="${temp}/weka-${release}/wekaexamples.zip" 
-     basedir="${wekaexamples}"/>
+<!--    <zip destfile="${temp}/weka-${release}/wekaexamples.zip" 
+     basedir="${wekaexamples}"/> -->
   </target>
 
   <target name="clean" description="Removes the dist directory">
