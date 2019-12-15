@@ -43,6 +43,7 @@ import weka.gui.explorer.Explorer;
 import weka.gui.graphvisualizer.GraphVisualizer;
 import weka.gui.knowledgeflow.KnowledgeFlowApp;
 import weka.gui.knowledgeflow.MainKFPerspective;
+import weka.gui.scripting.JythonPanel;
 import weka.gui.sql.SqlViewer;
 import weka.gui.treevisualizer.Node;
 import weka.gui.treevisualizer.NodePlace;
@@ -968,9 +969,9 @@ public class GUIChooserApp extends JFrame {
             tigerJythonClass.getMethod("main", String[].class).invoke(null,
                     args);
           } catch (Exception ex) {
-	    ex.printStackTrace();
-	  }
-	}
+	      ex.printStackTrace();
+          }
+        }
       });
     }
 
@@ -1002,7 +1003,7 @@ public class GUIChooserApp extends JFrame {
                   BorderLayout.CENTER);
                 appFrame.addWindowListener(new WindowAdapter() {
                   @Override
-                  public void windowClosed(WindowEvent e) {
+                  public void windowClosing(WindowEvent e) {
                     if (checkWindowShouldBeClosed(e)) {
                       disposeWindow(appFrame, this);
                     }
