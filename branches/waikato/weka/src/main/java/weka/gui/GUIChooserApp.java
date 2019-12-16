@@ -43,7 +43,6 @@ import weka.gui.explorer.Explorer;
 import weka.gui.graphvisualizer.GraphVisualizer;
 import weka.gui.knowledgeflow.KnowledgeFlowApp;
 import weka.gui.knowledgeflow.MainKFPerspective;
-import weka.gui.scripting.JythonPanel;
 import weka.gui.sql.SqlViewer;
 import weka.gui.treevisualizer.Node;
 import weka.gui.treevisualizer.NodePlace;
