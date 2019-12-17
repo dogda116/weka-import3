@@ -16,6 +16,10 @@ An overview of the libraries used in Weka (or some of its packages) during compi
 - java-cup-11b-runtime.jar
   Version: java-cup-bin-11b-20160615
   URL: http://www2.cs.tum.edu/projects/cup/
+
+- java-cup-11b
+  Version: java-cup-bin-11b-20160615
+  URL: http://www2.cs.tum.edu/projects/cup/
   
 - jflex-full-1.7.0.jar
   Version: 1.7.0
@@ -66,4 +70,4 @@ An overview of the libraries used in Weka (or some of its packages) during compi
   Version: 1.2.1
   URL: https://github.com/eclipse-ee4j/jaf
 
-Version: $Revision: 15400 $
+Version: $Revision: 15460 $
