@@ -43,7 +43,6 @@ import weka.gui.explorer.Explorer;
 import weka.gui.graphvisualizer.GraphVisualizer;
 import weka.gui.knowledgeflow.KnowledgeFlowApp;
 import weka.gui.knowledgeflow.MainKFPerspective;
-import weka.gui.scripting.JythonPanel;
 import weka.gui.sql.SqlViewer;
 import weka.gui.treevisualizer.Node;
 import weka.gui.treevisualizer.NodePlace;
@@ -969,25 +968,7 @@ public class GUIChooserApp extends JFrame {
             tigerJythonClass.getMethod("main", String[].class).invoke(null,
                     args);
           } catch (Exception ex) {
-
-            // Default to built-in console
-            final JythonPanel jythonPanel = new JythonPanel();
-            final JFrame frame = Utils.getWekaJFrame(jythonPanel.getPlainTitle(), m_Self);
-            frame.setJMenuBar(jythonPanel.getMenuBar());
-            frame.getContentPane().add(jythonPanel, BorderLayout.CENTER);
-            frame.addWindowListener(new WindowAdapter() {
-              @Override
-              public void windowClosing(WindowEvent w) {
-                if (checkWindowShouldBeClosed(w)) {
-                  disposeWindow(frame, this);
-                }
-              }
-            });
-            frame.pack();
-            frame.setSize(1024, 768);
-            frame.setLocationRelativeTo(m_Self);
-            frame.setVisible(true);
-            m_Frames.add(frame);
+	      ex.printStackTrace();
           }
         }
       });

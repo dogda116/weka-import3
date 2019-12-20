@@ -10,7 +10,7 @@
 
    Type ant -projecthelp for targets and descriptions.
 
-   $Revision$
+   $Revision: 14307 $
   ===========================================================================
 -->
 
@@ -18,9 +18,8 @@
   <property name="temp" value="temp"/>
   <property name="weka" value="weka"/>
   <property name="wekadocs" value="wekadocs"/>
-  <property name="wekaexamples" value="wekaexamples"/>
   <property name="dist"  value="dist"/>
-  <property name="branch" value="weka-development-3-9-distribution"/>
+  <property name="branch" value="weka-waikato-3-8-distribution"/>
 
   <!-- load the last release date -->
   <property file="last-release.props"/>
@@ -39,7 +38,7 @@
     <mkdir dir="${temp}/weka"/>
     <mkdir dir="${temp}/weka/lib"/>
     <mkdir dir="${temp}/changelogs"/>
-    <mkdir dir="${temp}/data"/>
+    <!--mkdir dir="${temp}/data"/-->
     <mkdir dir="${temp}/doc"/>
     <mkdir dir="${dist}"/>
 
@@ -57,14 +56,6 @@
     <ant antfile="build.xml" dir="${weka}" target="remotejar" inheritall="false"/>
   </target>
 
-  <target name="weka-examples" depends="weka-exe">
-    <echo message="Building weka examples..."/>
-    <ant antfile="build.xml" dir="${wekaexamples}" target="clean" inheritall="false"/>
-    <ant antfile="build.xml" dir="${wekaexamples}" inheritall="false">
-      <property name="java.class.path" value="../${weka}/build/classes"/>
-    </ant>
-  </target>
-
   <target name="weka-src" depends="init_all">
     <echo message="Building weka.jar src jar file..."/>
     <ant antfile="build.xml" dir="${weka}" target="srcjar" inheritall="false"/>
@@ -76,12 +67,12 @@
   </target>
 
   <!-- changelog will need -DstartDate property -->
-  <target name="changelog" depends="init_all" description="Create a changelog for Weka development-3-7. Creates a changelog with changes from the date in last-release-props to today">
+  <target name="changelog" depends="init_all" description="Create a changelog for Weka waikato-3-8. Creates a changelog with changes from the date in last-release-props to today">
     <echo message="Creating a changelog for {${lastReleaseDate}}:{${TODAY}}"/>
     <ant antfile="build.xml" dir="${weka}" target="changelog" inheritall="false">
       <property name="date_range" value="{${lastReleaseDate}}:{${TODAY}}"/>
       <property name="release" value="SNAPSHOT"/>
-      <property name="weka_branch" value="trunk"/>
+      <property name="weka_branch" value="branches/waikato-3-8"/>
     </ant>
   </target>
 
@@ -142,27 +133,24 @@
       <fileset dir="${weka}/doc"/>
     </copy>
 
-    <copy todir="${temp}/data">
+    <!--copy todir="${temp}/data">
       <fileset dir="${wekadocs}/data"/>
-    </copy>
+    </copy-->
 
     <copy todir="${temp}">
       <fileset dir="${wekadocs}">
         <include name="documentation.*"/>
-        <include name="README" />
-        <include name="COPYING" />
+        <!--include name="README" /-->
+        <!--include name="COPYING" /-->
         <include name="weka.*" />
       </fileset>
     </copy>
 
-    <copy todir="${temp}">
+    <!--copy todir="${temp}">
       <fileset dir="${wekadocs}/manual">
         <include name="WekaManual.pdf"/>
         </fileset>
-      </copy>
-
-    <zip destfile="${temp}/wekaexamples.zip" 
-     basedir="${wekaexamples}"/>
+      </copy-->
   </target>
 
   <target name="clean" description="Removes the dist directory">

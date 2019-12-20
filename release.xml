@@ -131,7 +131,7 @@
     <ant antfile="build.xml" dir="${weka}" target="changelog" inheritall="false">
       <property name="date_range" value="{${lastReleaseDate}}:{${TODAY}}"/>
       <property name="release" value="${release}"/>
-      <property name="weka_branch" value="trunk"/>
+      <property name="weka_branch" value="branches/waikato-3-8"/>
     </ant>
   </target>
 
@@ -140,7 +140,7 @@
     <ant antfile="build.xml" dir="${weka}" target="packages_changelog" inheritall="false">
       <property name="date_range" value="{${lastReleaseDate}}:{${TODAY}}"/>
       <property name="release" value="${release}"/>
-      <property name="weka_branch" value="trunk"/>
+      <property name="weka_branch" value="branches/waikato-3-8"/>
     </ant>
   </target>
 
@@ -210,8 +210,8 @@
     <copy file="${wekadocs}/changelogs/CHANGELOG-${release}" toFile="${dist}/README-${release}.txt"/>
     <copy file="${wekadocs}/changelogs/CHANGELOG_PACKAGES-${release}" toFile="${dist}/README-PACKAGES-${release}.txt"/>
 
-    <zip destfile="${temp}/weka-${release}/wekaexamples.zip" 
-     basedir="${wekaexamples}"/>
+<!--    <zip destfile="${temp}/weka-${release}/wekaexamples.zip" 
+     basedir="${wekaexamples}"/> -->
   </target>
 
   <target name="clean" description="Removes the dist directory">
@@ -293,6 +293,8 @@
       <arg value="weka-${release}"/>
       <arg value="-ov"/>
       <arg value="${dist}/weka-${release}-${jvm_target}-osx.dmg"/>
+      <arg value="-fs"/>
+      <arg value="HFS+"/>
       <arg value="-fs"/>
       <arg value="HFS+"/>
     </exec>
