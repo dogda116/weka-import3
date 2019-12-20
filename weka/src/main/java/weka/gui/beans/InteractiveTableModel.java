@@ -25,7 +25,7 @@ package weka.gui.beans;
  * in the last cell of a row.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision: 47640 $
+ * @version $Revision$
  * @deprecated Use {@code weka.gui.InteractiveTableModel} instead. Retained for
  * backward compatibility
  */

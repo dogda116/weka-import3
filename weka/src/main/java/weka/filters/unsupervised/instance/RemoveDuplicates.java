@@ -42,7 +42,7 @@ import java.util.HashSet;
  <!-- options-end -->
  *
  * @author  Eibe Frank (eibe@cs.waikato.ac.nz)
- * @version $Revision: 9804 $
+ * @version $Revision$
  */
 public class RemoveDuplicates extends SimpleBatchFilter implements WeightedAttributesHandler, WeightedInstancesHandler{
 
@@ -186,7 +186,7 @@ public class RemoveDuplicates extends SimpleBatchFilter implements WeightedAttri
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision: 9804 $");
+    return RevisionUtils.extract("$Revision$");
   }
 
   /**
