@@ -717,8 +717,6 @@ public class IBk
       this.setNearestNeighbourSearchAlgorithm(new LinearNNSearch());
     
     super.setOptions(options);
-    
-    Utils.checkForRemainingOptions(options);
   }
 
   /**
@@ -910,6 +908,11 @@ public class IBk
   protected void crossValidate() {
 
     try {
+      if (m_NNSearch instanceof weka.core.neighboursearch.CoverTree)
+	throw new Exception("CoverTree doesn't support hold-one-out "+
+			    "cross-validation. Use some other NN " +
+			    "method.");
+
       double [] performanceStats = new double [m_kNNUpper];
       double [] performanceStatsSq = new double [m_kNNUpper];
 
