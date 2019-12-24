@@ -15,16 +15,16 @@
 
 /*
  *    HoldOutSubsetEvaluator.java
- *    Copyright (C) 2000 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2000-2012 University of Waikato, Hamilton, New Zealand
  *
  */
 
 package weka.attributeSelection;
 
+import java.util.BitSet;
+
 import weka.core.Instance;
 import weka.core.Instances;
-
-import java.util.BitSet;
 
 /** 
  * Abstract attribute subset evaluator capable of evaluating subsets with
@@ -45,7 +45,7 @@ public abstract class HoldOutSubsetEvaluator
    * Evaluates a subset of attributes with respect to a set of instances.
    * @param subset a bitset representing the attribute subset to be
    * evaluated
-   * @param holdOut a set of instances (possibly seperate and distinct
+   * @param holdOut a set of instances (possibly separate and distinct
    * from those use to build/train the evaluator) with which to
    * evaluate the merit of the subset
    * @return the "merit" of the subset on the holdOut data

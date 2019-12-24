@@ -50,10 +50,9 @@ import weka.core.Utils;
  * both directions (by considering all possible single attribute additions and
  * deletions at a given point).<br/>
  * <p/>
- <!-- globalinfo-end -->
+ * <!-- globalinfo-end -->
  * 
- <!-- options-start --> 
- * Valid options are:
+ * <!-- options-start --> Valid options are:
  * <p/>
  * 
  * <pre>
@@ -465,7 +464,7 @@ public class BestFirst extends ASSearch implements OptionHandler,
    */
   public String startSetTipText() {
     return "Set the start point for the search. This is specified as a comma "
-      + "seperated list off attribute indexes starting at 1. It can include "
+      + "separated list off attribute indexes starting at 1. It can include "
       + "ranges. Eg. 1,2,5-9,17.";
   }
 
@@ -588,7 +587,7 @@ public class BestFirst extends ASSearch implements OptionHandler,
    * can be specified in different ways from the command line---eg 1,2,3 == 1-3.
    * This is to ensure that stuff that is stored in a database is comparable.
    * 
-   * @return a comma seperated list of individual attribute numbers as a String
+   * @return a comma separated list of individual attribute numbers as a String
    */
   private String startSetToString() {
     StringBuffer FString = new StringBuffer();

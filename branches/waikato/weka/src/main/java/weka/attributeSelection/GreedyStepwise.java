@@ -357,7 +357,7 @@ public class GreedyStepwise extends ASSearch implements RankedOutputSearch,
    */
   public String startSetTipText() {
     return "Set the start point for the search. This is specified as a comma "
-      + "seperated list off attribute indexes starting at 1. It can include "
+      + "separated list off attribute indexes starting at 1. It can include "
       + "ranges. Eg. 1,2,5-9,17.";
   }
 
@@ -473,8 +473,8 @@ public class GreedyStepwise extends ASSearch implements RankedOutputSearch,
    * @return an enumeration of all the available options.
    **/
   @Override
-  public Enumeration listOptions() {
-    Vector newVector = new Vector(5);
+  public Enumeration<Option> listOptions() {
+    Vector<Option> newVector = new Vector<Option>(8);
 
     newVector.addElement(new Option("\tUse conservative forward search", "-C",
       0, "-C"));
@@ -601,42 +601,39 @@ public class GreedyStepwise extends ASSearch implements RankedOutputSearch,
    */
   @Override
   public String[] getOptions() {
-    String[] options = new String[12];
-    int current = 0;
+
+    Vector<String> options = new Vector<String>();
 
     if (getSearchBackwards()) {
-      options[current++] = "-B";
+      options.add("-B");
     }
 
     if (getConservativeForwardSelection()) {
-      options[current++] = "-C";
+      options.add("-C");
     }
 
     if (!(getStartSet().equals(""))) {
-      options[current++] = "-P";
-      options[current++] = "" + startSetToString();
+      options.add("-P");
+      options.add("" + startSetToString());
     }
 
     if (getGenerateRanking()) {
-      options[current++] = "-R";
+      options.add("-R");
     }
-    options[current++] = "-T";
-    options[current++] = "" + getThreshold();
+    options.add("-T");
+    options.add("" + getThreshold());
 
-    options[current++] = "-N";
-    options[current++] = "" + getNumToSelect();
+    options.add("-N");
+    options.add("" + getNumToSelect());
 
-    options[current++] = "-num-slots";
-    options[current++] = "" + getNumExecutionSlots();
+    options.add("-num-slots");
+    options.add("" + getNumExecutionSlots());
 
     if (getDebuggingOutput()) {
-      options[current] = "-D";
+      options.add("-D");
     }
 
-    while (current < options.length) {
-      options[current++] = "";
-    }
-    return options;
+    return options.toArray(new String[0]);
   }
 
   /**
@@ -646,7 +643,7 @@ public class GreedyStepwise extends ASSearch implements RankedOutputSearch,
    * can be specified in different ways from the command line---eg 1,2,3 == 1-3.
    * This is to ensure that stuff that is stored in a database is comparable.
    * 
-   * @return a comma seperated list of individual attribute numbers as a String
+   * @return a comma separated list of individual attribute numbers as a String
    */
   protected String startSetToString() {
     StringBuffer FString = new StringBuffer();
