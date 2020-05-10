@@ -136,7 +136,7 @@ import weka.gui.FilePropertyMetadata;
  * <!-- options-end -->
  *
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision: 14508 $
+ * @version $Revision: 15573 $
  */
 public class FixedDictionaryStringToWordVector extends SimpleStreamFilter
   implements UnsupervisedFilter, EnvironmentHandler, WeightedInstancesHandler {
@@ -379,7 +379,7 @@ public class FixedDictionaryStringToWordVector extends SimpleStreamFilter
     description = "Set whether the word frequencies should be transformed into\n"
       + "log(1+fij), where fij is the frequency of word i in document (instance) "
       + "j.",
-    commandLineParamName = "T", commandLineParamSynopsis = "-T",
+    commandLineParamName = "T", commandLineParamSynopsis = "-T", commandLineParamIsFlag = true,
     displayOrder = 7)
   public void setTFTransform(boolean TFTransform) {
     m_vectorizer.setTFTransform(TFTransform);
@@ -409,7 +409,7 @@ public class FixedDictionaryStringToWordVector extends SimpleStreamFilter
     description = "Set whether the word frequencies in a document should be "
       + "transformed into\nfij*log(num of Docs/num of docs with word i), "
       + "where fij is the frequency\nof word i in document (instance) j.",
-    commandLineParamName = "I", commandLineParamSynopsis = "-I",
+    commandLineParamName = "I", commandLineParamSynopsis = "-I", commandLineParamIsFlag = true,
     displayOrder = 8)
   public void setIDFTransform(boolean IDFTransform) {
     m_vectorizer.setIDFTransform(IDFTransform);
