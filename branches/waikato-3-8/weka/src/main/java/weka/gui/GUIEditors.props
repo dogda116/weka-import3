@@ -23,7 +23,7 @@ java.io.File[]=weka.gui.GenericArrayEditor
 # core
 weka.core.SelectedTag=weka.gui.SelectedTagEditor
 weka.core.DistanceFunction=weka.gui.GenericObjectEditor
-weka.core.Range=weka.gui.GenericObjectEditor
+weka.core.Range=weka.gui.RangeEditor
 weka.core.Range[]=weka.gui.GenericArrayEditor
 weka.core.converters.Loader=weka.gui.GenericObjectEditor
 weka.core.converters.Saver=weka.gui.GenericObjectEditor
@@ -57,7 +57,7 @@ weka.classifiers.bayes.net.search.SearchAlgorithm=weka.gui.GenericObjectEditor
 weka.classifiers.bayes.net.estimate.BayesNetEstimator=weka.gui.GenericObjectEditor
 weka.classifiers.evaluation.output.prediction.AbstractOutput=weka.gui.GenericObjectEditor
 weka.classifiers.functions.supportVector.Kernel=weka.gui.GenericObjectEditor
-#weka.classifiers.functions.supportVector.RegOptimizer=weka.gui.GenericObjectEditor
+weka.classifiers.functions.supportVector.RegOptimizer=weka.gui.GenericObjectEditor
 #weka.classifiers.meta.generators.Generator=weka.gui.GenericObjectEditor
 #weka.classifiers.meta.ensembleSelection.EnsembleSelectionLibrary=weka.gui.EnsembleSelectionLibraryEditor
 
