@@ -130,7 +130,7 @@ import weka.core.WeightedInstancesHandler;
  * 
  * @author Eibe Frank (eibe@cs.waikato.ac.nz)
  * @author Len Trigg (trigg@cs.waikato.ac.nz)
- * @version $Revision$
+ * @version $Revision: 15519 $
  */
 public class AdaBoostM1 extends RandomizableIteratedSingleClassifierEnhancer
   implements WeightedInstancesHandler, Sourcable, TechnicalInformationHandler,
@@ -876,7 +876,7 @@ public class AdaBoostM1 extends RandomizableIteratedSingleClassifierEnhancer
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision$");
+    return RevisionUtils.extract("$Revision: 15519 $");
   }
 
   /**
