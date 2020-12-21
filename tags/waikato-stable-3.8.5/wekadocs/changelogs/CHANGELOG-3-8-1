@@ -1,0 +1,910 @@
+------------------------------------------------------------------------
+r12848 | mhall | 2016-04-15 12:10:57 +1200 (Fri, 15 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/pom.xml
+   M /branches/waikato/weka/src/main/java/weka/core/version.txt
+
+Increased heap for maven javadoc target. Version is now at 3.9.1-SNAPSHOT
+------------------------------------------------------------------------
+r12888 | mhall | 2016-04-15 21:38:13 +1200 (Fri, 15 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Attribute.java
+
+New constructors for simpler creation of string attributes.
+------------------------------------------------------------------------
+r12889 | mhall | 2016-04-15 21:38:42 +1200 (Fri, 15 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/meta/Bagging.java
+
+Fixed memory leak: m_inBag was not set to null (only relevant if out-of-bag statistics were computed; also, effect quite small because m_inBag is 2D-array of booleans). Small code cleanup and Javadoc improvement. Inserted newlines in output of model.
+------------------------------------------------------------------------
+r12890 | mhall | 2016-04-15 21:39:01 +1200 (Fri, 15 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/REPTree.java
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/RandomTree.java
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/m5/RuleNode.java
+   D /branches/waikato/weka/src/test/resources/wekarefs/weka/classifiers/functions/FLDATest.ref
+
+Number of decimal places in output can now be specified for RandomTree and REPTree (and, consequently, also in RandomForest).
+------------------------------------------------------------------------
+r12899 | mhall | 2016-04-25 21:29:27 +1200 (Mon, 25 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/RandomForest.java
+
+From Eibe: Fixed small (inconsequential) bug in setOptions(). Added methods so that debugging state, batch size and number of decimal places for RandomTree can be set in the GUIs.
+------------------------------------------------------------------------
+r12902 | mhall | 2016-04-25 21:32:28 +1200 (Mon, 25 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/estimators/MultivariateGaussianEstimator.java
+
+From Eibe: Improved runtime of MultivariateGaussianEstimator by making more use of MTJ.
+------------------------------------------------------------------------
+r12907 | mhall | 2016-04-26 16:28:37 +1200 (Tue, 26 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/metastore/XMLFileBasedMetaStore.java
+   M /branches/waikato/weka/src/main/java/weka/core/xml/XMLSerialization.java
+
+Added a method to suppress the output of warnings related to loading older/newer versions etc.
+------------------------------------------------------------------------
+r12908 | mhall | 2016-04-26 16:28:52 +1200 (Tue, 26 Apr 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/StepManagerImpl.java
+
+Removed an unused settings variable
+------------------------------------------------------------------------
+r12932 | mhall | 2016-05-04 09:15:28 +1200 (Wed, 04 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/DictionaryBuilder.java
+
+Fixed a bug that affected the -P option when used in conjuction with the IDF transform
+------------------------------------------------------------------------
+r12944 | mhall | 2016-05-09 14:13:40 +1200 (Mon, 09 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericObjectEditor.java
+
+Prevented the instantiation of non class-based entries in the GUIEditors.props file. Previously, it was trying to enstantiate the boolean property ShowGlobalInfoToolTip, resulting in a warning message in the log.
+------------------------------------------------------------------------
+r12948 | mhall | 2016-05-09 14:25:16 +1200 (Mon, 09 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/ListOptions.java
+
+Made ListOptions implement CommandlineRunnable and use Utils.forName(), so that weka.Run and partial scheme name matching can be used
+------------------------------------------------------------------------
+r12959 | mhall | 2016-05-17 11:56:22 +1200 (Tue, 17 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Utils.java
+
+joinOptions now checks for single and double quotes in an element when deciding whether character escaping is necessary. Previously, there was an issue with parsing the enclosure character list returned by the CSVLoader's options.
+------------------------------------------------------------------------
+r12967 | mhall | 2016-05-18 21:07:17 +1200 (Wed, 18 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/JSONFlowUtils.java
+
+Fixed a bug that affected the parsing of step properties involving files containing Windows separator charactors
+------------------------------------------------------------------------
+r12970 | mhall | 2016-05-19 09:25:25 +1200 (Thu, 19 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/experiment/SetupModePanel.java
+
+Fixed a couple of GUI bugs to do with switching between simple and advanced experiment setups.
+------------------------------------------------------------------------
+r12973 | mhall | 2016-05-19 09:26:43 +1200 (Thu, 19 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/experiment/Experimenter.java
+
+Fixed a couple of GUI bugs to do with switching between simple and advanced experiment setups.
+------------------------------------------------------------------------
+r12977 | mhall | 2016-05-20 09:45:51 +1200 (Fri, 20 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/WekaAlgorithmWrapper.java
+
+Now makes sure that the name property is either null or empty string before setting it based on the wrapped algorithm's class. This fixes a bug where custom names for wrapped algorithm steps were being overwritten during the loading process simply because the setWrappedAlgorithm() method got invoked after the name property had been set
+------------------------------------------------------------------------
+r12979 | mhall | 2016-05-23 22:17:33 +1200 (Mon, 23 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/WekaAlgorithmWrapper.java
+
+Fixed a bug introduced with the last change
+------------------------------------------------------------------------
+r12983 | mhall | 2016-05-23 22:19:18 +1200 (Mon, 23 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/WekaAlgorithmWrapper.java
+
+Removed a commented out line
+------------------------------------------------------------------------
+r13012 | mhall | 2016-05-26 22:47:53 +1200 (Thu, 26 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericArrayEditor.java
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericObjectEditor.java
+
+Fixed a bug where cancelling from the GOE when editing an entry in the GAE would change the entry in the GAE to a previously edited one.
+------------------------------------------------------------------------
+r13016 | mhall | 2016-05-31 09:36:31 +1200 (Tue, 31 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/functions/LinearRegression.java
+
+Fixed redundant output in listOptions().
+------------------------------------------------------------------------
+r13020 | mhall | 2016-05-31 09:44:53 +1200 (Tue, 31 May 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/DefaultPackageManager.java
+
+Now automatically deletes the installedPackageCache.ser file if there is a problem deserializing it. This allows Weka to continue functioning and the file will be regenerated automatically at the next start up
+------------------------------------------------------------------------
+r13024 | mhall | 2016-06-01 10:12:33 +1200 (Wed, 01 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/VisibleLayout.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/BaseExecutionEnvironment.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/FlowRunner.java
+
+Added a method to BaseExecutionEnvironment that allows applications to get the preferred default flow executor for the environment (subclasses can override to provide their own preferred default executor if FlowRunner is not suitable).
+------------------------------------------------------------------------
+r13028 | mhall | 2016-06-01 10:17:30 +1200 (Wed, 01 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/ExecutionEnvironment.java
+
+Small javadoc improvement
+------------------------------------------------------------------------
+r13032 | mhall | 2016-06-01 16:44:33 +1200 (Wed, 01 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/DataVisualizerInteractiveView.java
+
+Interactive viewer for DataVisualizer was not providing settings - fixed
+------------------------------------------------------------------------
+r13036 | mhall | 2016-06-02 10:34:55 +1200 (Thu, 02 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/DataVisualizerInteractiveView.java
+
+Now applies the settings when first opened
+------------------------------------------------------------------------
+r13048 | mhall | 2016-06-06 22:11:04 +1200 (Mon, 06 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+
+Fixed a bug in the set method for updating an incremental classifier
+------------------------------------------------------------------------
+r13064 | mhall | 2016-06-15 09:58:56 +1200 (Wed, 15 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/LayoutPanel.java
+
+Fixed a bug where a component could be connected to itself
+------------------------------------------------------------------------
+r13068 | mhall | 2016-06-26 15:08:52 +1200 (Sun, 26 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Saver.java
+
+Fixed a bug where the relation name was being used as the table name even when the option for this was set to false
+------------------------------------------------------------------------
+r13072 | mhall | 2016-06-27 16:36:09 +1200 (Mon, 27 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/misc/InputMappedClassifier.java
+
+classifyInstance() and distributionForInstance() are not thread safe due to constructMappedInstance() not being thread safe. Made constructMappedInstance() synchronized to avoid concurrency problems
+------------------------------------------------------------------------
+r13076 | mhall | 2016-06-28 20:05:47 +1200 (Tue, 28 Jun 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/EnvironmentField.java
+
+Fixed a feedback affect that made it very difficult to enter ranges for range properties (when entering a comma it would disappear unless the next number was typed very quickly in succession).
+------------------------------------------------------------------------
+r13090 | mhall | 2016-07-01 16:58:25 +1200 (Fri, 01 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+
+Fixed a NPE that could occur when processing training and test sets coming from separate data sources
+------------------------------------------------------------------------
+r13094 | mhall | 2016-07-01 19:54:39 +1200 (Fri, 01 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/PredictionAppender.java
+
+Fixed a bug where instances in the output format, instead of original format, were being passed to the model for prediction
+------------------------------------------------------------------------
+r13098 | mhall | 2016-07-04 14:50:22 +1200 (Mon, 04 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/arffviewer/ArffPanel.java
+
+Fixed an NPE that would occur under certain circumstances when replacing values with missing value
+------------------------------------------------------------------------
+r13103 | mhall | 2016-07-06 10:03:23 +1200 (Wed, 06 Jul 2016) | 1 line
+Changed paths:
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/AlterRelationName.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/steps.props
+
+Added a relation name modifier step
+------------------------------------------------------------------------
+r13107 | mhall | 2016-07-14 11:10:16 +1200 (Thu, 14 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+
+Classifier step was not handling an InputMappedClassifier (which loads a serialized model) correctly in the case where there is just a single incoming testSet connection - fixed
+------------------------------------------------------------------------
+r13111 | mhall | 2016-07-14 14:17:07 +1200 (Thu, 14 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/ClassifierPerformanceEvaluator.java
+
+Now throws an exception if the incoming batch classifier is null
+------------------------------------------------------------------------
+r13115 | mhall | 2016-07-14 14:21:27 +1200 (Thu, 14 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/ResultHistoryPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/TextViewerInteractiveView.java
+
+Added a facility to register a callback for list deletions to ResultHistoryPanel. Deleting a single entry in TextViewer now actually sticks when closing and re-opening the viewer in the GUI Knowledge Flow
+------------------------------------------------------------------------
+r13119 | mhall | 2016-07-15 12:09:43 +1200 (Fri, 15 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/ResultHistoryPanel.java
+
+Extended the entryDeleted() method in the RDeleteListener interface to take both the name and index of the entry deleted from the results list
+------------------------------------------------------------------------
+r13123 | mhall | 2016-07-15 12:13:33 +1200 (Fri, 15 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/AttributeSummarizerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/CostBenefitAnalysisInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/DataVisualizerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/GraphViewerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/ImageViewerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/ScatterPlotMatrixInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/TextViewerInteractiveView.java
+
+Now handles the delete key press correctly in the result list
+------------------------------------------------------------------------
+r13127 | mhall | 2016-07-19 15:15:09 +1200 (Tue, 19 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/KnowledgeFlowApp.java
+
+Execution environment setting picklist is now a LinkedList because the XML serialization does not support ArrayList
+------------------------------------------------------------------------
+r13131 | mhall | 2016-07-21 15:07:10 +1200 (Thu, 21 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/ClassAssigner.java
+
+Fixed a bug in class assigning that affected streaming data containing string attributes
+------------------------------------------------------------------------
+r13135 | mhall | 2016-07-22 10:55:48 +1200 (Fri, 22 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/FileEnvironmentField.java
+
+Fixed a bug where '.' was returned when the field was empty in the case where the editor has been configured for files only (rather than directories)
+------------------------------------------------------------------------
+r13139 | mhall | 2016-07-22 10:58:12 +1200 (Fri, 22 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/ClassifierPerformanceEvaluator.java
+
+Was not handling BatchPredictor correctly; was not checking implementsMoreEfficientBatchPrediciton() - fixed
+------------------------------------------------------------------------
+r13143 | mhall | 2016-07-23 20:49:15 +1200 (Sat, 23 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/BaseExecutionEnvironment.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/FlowRunner.java
+
+Small tweaks to the flow busy monitor and executor service shutdown process
+------------------------------------------------------------------------
+r13147 | mhall | 2016-07-23 20:54:11 +1200 (Sat, 23 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/ClustererPerformanceEvaluator.java
+
+Classifier was not setting its busy status when processing just a single incoming test set - fixed. ClustererPerformanceEvaluator was duplicating training evaluation results in the output generated for test sets - fixed.
+------------------------------------------------------------------------
+r13151 | mhall | 2016-07-25 13:45:55 +1200 (Mon, 25 Jul 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Filter.java
+
+Filter step now uses correct icons for those built-in filters that have custom icons.
+------------------------------------------------------------------------
+r13155 | mhall | 2016-08-01 15:45:07 +1200 (Mon, 01 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/TrainTestSplitMaker.java
+
+Added an option to preserve instance order when making the split
+------------------------------------------------------------------------
+r13159 | mhall | 2016-08-04 14:50:06 +1200 (Thu, 04 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/meta/LogitBoost.java
+
+Removed the buggy option settings for batch size from LogitBoost as they were returning an empty string from batch size. These methods are now in AbstractClassifier, plus LogitBoost now returns true from implementsMoreEfficientBatchPrediction()
+------------------------------------------------------------------------
+r13169 | mhall | 2016-08-10 11:17:19 +1200 (Wed, 10 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/ClassifierPanel.java
+
+Fixed a bug in the holdout evaluation textual output
+------------------------------------------------------------------------
+r13173 | mhall | 2016-08-12 16:08:02 +1200 (Fri, 12 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageManager.java
+
+Package manager now completely deletes the existing repCache directory before performing a cache refresh. This should allow for outdated/deprecated packages to be removed from the central repository (and hence the list in the package manager). If a user happens to have such a package installed, it will then appear to be an 'unofficial' package
+------------------------------------------------------------------------
+r13178 | mhall | 2016-08-18 20:04:19 +1200 (Thu, 18 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/SerializedModelSaver.java
+
+Fixed a bug where the training data header was not getting saved for incremental models
+------------------------------------------------------------------------
+r13181 | mhall | 2016-08-18 20:06:31 +1200 (Thu, 18 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/clusterers/HierarchicalClusterer.java
+
+Fixed bug in globalInfo() method.
+------------------------------------------------------------------------
+r13193 | mhall | 2016-08-24 16:16:03 +1200 (Wed, 24 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/meta/Bagging.java
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/RandomForest.java
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/RandomTree.java
+
+Added an option to output the average-impurity-decrease-based attribute importance ranking
+------------------------------------------------------------------------
+r13212 | mhall | 2016-08-25 22:26:45 +1200 (Thu, 25 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/DataGenerator.java
+
+Fixed a bug in the overall throughput status
+------------------------------------------------------------------------
+r13214 | mhall | 2016-08-25 22:43:12 +1200 (Thu, 25 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/GUIChooserApp.java
+
+The Mac menu bar in TigerJython can be removed by changing the look and feel. When setting L&F to the empty string in TigerJython's configuration file, TigerJython will not change the L&F and simply use WEKA's one (e.g., Nimbus)! However, bad things still happen if users change the L&F manually in TigerJython via the preferences.
+------------------------------------------------------------------------
+r13226 | mhall | 2016-08-26 22:35:53 +1200 (Fri, 26 Aug 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/FileEnvironmentField.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/LoaderStepEditorDialog.java
+
+Added a method to set the file filter to be pre-selected in the drop down box in FileEnvironmentField. File chooser for Loaders in the Knowledge Flow now shows loader-specific file filters
+------------------------------------------------------------------------
+r13282 | mhall | 2016-09-02 13:48:16 +1200 (Fri, 02 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/functions/SGDText.java
+
+Fixed a bug in the document length normalization process
+------------------------------------------------------------------------
+r13285 | mhall | 2016-09-02 13:48:41 +1200 (Fri, 02 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/bayes/NaiveBayesMultinomialText.java
+
+Fixed a bug in the document length normalization process
+------------------------------------------------------------------------
+r13297 | mhall | 2016-09-10 21:23:16 +1200 (Sat, 10 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/RandomForest.java
+
+Change of seed of random number generator in GUI did not cause change in corresponding command-line parameter (and the corresponding parameter signature). Fixed now
+------------------------------------------------------------------------
+r13304 | mhall | 2016-09-16 15:03:43 +1200 (Fri, 16 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/FlowByExpression.java
+
+Fixed a small bug in FlowByExpression - object holding streaming data output did not get set to null in reset() method
+------------------------------------------------------------------------
+r13310 | mhall | 2016-09-17 21:04:29 +1200 (Sat, 17 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/bayes/BayesNet.java
+
+Attribute names, etc., are now quoted in the XML-based graph() output. This is primarily so that empty attribute names, etc., are quoted because they cause problems for the BIFReader.
+------------------------------------------------------------------------
+r13324 | mhall | 2016-09-20 20:31:00 +1200 (Tue, 20 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Filter.java
+
+Fixed a small bug in processing of string attributes
+------------------------------------------------------------------------
+r13330 | mhall | 2016-09-23 20:29:46 +1200 (Fri, 23 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/AttributeSummarizer.java
+
+Fixed a few bugs in offscreen rendering that affected stacked histograms
+------------------------------------------------------------------------
+r13335 | mhall | 2016-09-26 09:48:01 +1300 (Mon, 26 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Utils.java
+
+Added static dateToMillis() method, which can be used by some filters.
+------------------------------------------------------------------------
+r13340 | mhall | 2016-09-26 10:28:35 +1300 (Mon, 26 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/filters/unsupervised/attribute/AddUserFields.java
+
+Fixed a bug in the help info for the -A option
+------------------------------------------------------------------------
+r13361 | mhall | 2016-09-27 14:08:47 +1300 (Tue, 27 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/ClassAssigner.java
+
+Fixed a bug where ClassAssigner should have been copying incoming batch instances and emitting them in a new Data object
+------------------------------------------------------------------------
+r13366 | mhall | 2016-09-27 22:20:42 +1300 (Tue, 27 Sep 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/PredictionAppender.java
+
+PredictionAppender was not accepting incoming connections from a Clusterer - fixed
+------------------------------------------------------------------------
+r13372 | mhall | 2016-10-02 21:47:51 +1300 (Sun, 02 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/meta/CVParameterSelection.java
+
+Deleted code in getOptions() of CVParameterSelection that called setOptions() on base classifier! Depending on the base classifier (e.g., SMOreg), this could reset the base classifier (e.g., when loading a saved model in the Classify tab of the Explorer). I could not see a reason why this code should be there. Now CVParameterSelection ensures consistency of results even if base classifier does not initialize itself properly or base classifier is sensitive to the order of the instances.
+------------------------------------------------------------------------
+r13377 | mhall | 2016-10-04 09:30:13 +1300 (Tue, 04 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/attributeSelection/ReliefFAttributeEval.java
+
+Fixed a bug class prior computation and the process of finding neareset hits/misses (in the nominal class case) that occurs when instances have missing class values
+------------------------------------------------------------------------
+r13383 | mhall | 2016-10-05 21:22:05 +1300 (Wed, 05 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/AttributeVisualizationPanel.java
+
+Background colour is now explicitly set to white using fillRect() in attribute visualization panel, so that export to png, bmp, and jpg works properly.
+------------------------------------------------------------------------
+r13389 | mhall | 2016-10-07 10:12:50 +1300 (Fri, 07 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/rules/DecisionTable.java
+
+Moved a couple of methods from default access to protected, in order to potential move to seperate classloaders for packages
+------------------------------------------------------------------------
+r13396 | mhall | 2016-10-11 17:03:01 +1300 (Tue, 11 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/filters/supervised/instance/ClassBalancer.java
+
+Now also works for numeric classes via discretization.
+------------------------------------------------------------------------
+r13410 | mhall | 2016-10-18 14:03:31 +1300 (Tue, 18 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/rules/JRip.java
+
+Now implements clean-up step that removes redundant numeric attribute-value tests from rules.
+------------------------------------------------------------------------
+r13433 | mhall | 2016-10-26 11:28:43 +1300 (Wed, 26 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/stemmers/SnowballStemmer.java
+
+Fixed a bug that prevented snowball classes from being found when static entries in GenericObjectEditor.props are being used (instead of dynamic class discovery)
+------------------------------------------------------------------------
+r13481 | mhall | 2016-10-28 16:01:52 +1300 (Fri, 28 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/Run.java
+   M /branches/waikato/weka/src/main/java/weka/associations/ItemSet.java
+   M /branches/waikato/weka/src/main/java/weka/classifiers/evaluation/Evaluation.java
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/j48/ClassifierSplitModel.java
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/j48/ClassifierTree.java
+   M /branches/waikato/weka/src/main/java/weka/core/ClassCache.java
+   M /branches/waikato/weka/src/main/java/weka/core/ClassDiscovery.java
+   M /branches/waikato/weka/src/main/java/weka/core/PluginManager.java
+   M /branches/waikato/weka/src/main/java/weka/core/SerializationHelper.java
+   M /branches/waikato/weka/src/main/java/weka/core/SerializedObject.java
+   M /branches/waikato/weka/src/main/java/weka/core/Utils.java
+   A /branches/waikato/weka/src/main/java/weka/core/WekaPackageClassLoaderManager.java
+   A /branches/waikato/weka/src/main/java/weka/core/WekaPackageLibIsolatingClassLoader.java
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageManager.java
+   M /branches/waikato/weka/src/main/java/weka/core/converters/ConverterUtils.java
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/DefaultPackage.java
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/Package.java
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/VersionRangePackageConstraint.java
+   M /branches/waikato/weka/src/main/java/weka/core/xml/XMLSerialization.java
+   M /branches/waikato/weka/src/main/java/weka/experiment/DatabaseUtils.java
+   M /branches/waikato/weka/src/main/java/weka/experiment/Experiment.java
+   M /branches/waikato/weka/src/main/java/weka/filters/Filter.java
+   M /branches/waikato/weka/src/main/java/weka/gui/AbstractPerspective.java
+   M /branches/waikato/weka/src/main/java/weka/gui/ConverterFileChooser.java
+   M /branches/waikato/weka/src/main/java/weka/gui/GUIChooserApp.java
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericObjectEditor.java
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericPropertiesCreator.java
+   M /branches/waikato/weka/src/main/java/weka/gui/PackageManager.java
+   M /branches/waikato/weka/src/main/java/weka/gui/beans/BeanVisual.java
+   M /branches/waikato/weka/src/main/java/weka/gui/beans/BeansProperties.java
+   M /branches/waikato/weka/src/main/java/weka/gui/beans/Classifier.java
+   M /branches/waikato/weka/src/main/java/weka/gui/beans/KnowledgeFlowApp.java
+   M /branches/waikato/weka/src/main/java/weka/gui/beans/xml/XMLBeans.java
+   M /branches/waikato/weka/src/main/java/weka/gui/experiment/SetupPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/AssociationsPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/ClassifierPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/ClustererPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/Explorer.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/LayoutPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/StepTree.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/StepTreeLeafDetails.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/StepVisual.java
+   M /branches/waikato/weka/src/main/java/weka/gui/visualize/VisualizeUtils.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/JSONFlowUtils.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+
+Changes necessary to support using child classloaders for packages
+------------------------------------------------------------------------
+r13493 | mhall | 2016-10-30 21:50:09 +1300 (Sun, 30 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/filters/unsupervised/instance/ReservoirSample.java
+
+Was broken for string attributes - fixed.
+------------------------------------------------------------------------
+r13512 | mhall | 2016-10-31 11:31:35 +1300 (Mon, 31 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageLibIsolatingClassLoader.java
+
+Now checks for missing files (as specified in a package's description.props) as part of the integrity check
+------------------------------------------------------------------------
+r13516 | mhall | 2016-10-31 16:27:14 +1300 (Mon, 31 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/VisibleLayout.java
+
+Was adding a new execution callback for every invocation of each open flow - fixed. Now just adds a single callback per open flow
+------------------------------------------------------------------------
+r13521 | mhall | 2016-10-31 21:09:40 +1300 (Mon, 31 Oct 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/meta/Vote.java
+
+Fixed an option handling bug
+------------------------------------------------------------------------
+r13533 | mhall | 2016-11-01 21:17:00 +1300 (Tue, 01 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/AttributeVisualizationPanel.java
+
+Now draws histograms correctly (again) when class attribute is numeric. Was rendering them in white on a white background :-)
+------------------------------------------------------------------------
+r13538 | mhall | 2016-11-02 11:33:05 +1300 (Wed, 02 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/FlowRunner.java
+
+Made FlowRunner implement CommandlineRunnable
+------------------------------------------------------------------------
+r13544 | mhall | 2016-11-02 11:50:23 +1300 (Wed, 02 Nov 2016) | 1 line
+Changed paths:
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/AbstractGraphicalCommand.java
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/GetPerspectiveNamesGraphicalCommand.java
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/GraphicalEnvironmentCommandHandler.java
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/KFGraphicalEnvironmentCommandHandler.java
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/SendToPerspectiveGraphicalCommand.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/StepEditorDialog.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/VisibleLayout.java
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/SendToPerspectiveStepEditorDialog.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/BaseExecutionEnvironment.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/ExecutionEnvironment.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/SendToPerspective.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/steps.props
+
+Added a mechanism for steps (and their editors) to invoke a graphical command. Added a step to send instances to a named perspective
+------------------------------------------------------------------------
+r13557 | mhall | 2016-11-06 22:01:57 +1300 (Sun, 06 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/ClassifierPerformanceEvaluatorStepEditorDialog.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/ClassifierPerformanceEvaluator.java
+
+Can now configure a cost matrix to use for cost-sensitive evaluation
+------------------------------------------------------------------------
+r13564 | mhall | 2016-11-07 21:19:27 +1300 (Mon, 07 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageLibIsolatingClassLoader.java
+
+Fixed a bug in the native lib installation routine
+------------------------------------------------------------------------
+r13577 | mhall | 2016-11-14 11:49:35 +1300 (Mon, 14 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericObjectEditor.java
+
+Fixed deserialization of configurations
+------------------------------------------------------------------------
+r13589 | mhall | 2016-11-16 10:07:43 +1300 (Wed, 16 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Option.java
+
+getOptions now works correctly for array properties that return an empty array. Previously, there was a stray option identifier that would screw up option parsing in setOptions
+------------------------------------------------------------------------
+r13594 | mhall | 2016-11-18 09:56:42 +1300 (Fri, 18 Nov 2016) | 1 line
+Changed paths:
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/WriteWekaLog.gif
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/StepManagerImpl.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/WriteWekaLog.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/steps.props
+
+Added a WriteWekaLog step for writing incoming data to the log
+------------------------------------------------------------------------
+r13610 | mhall | 2016-11-21 13:47:14 +1300 (Mon, 21 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/DefaultPackageManager.java
+   M /branches/waikato/weka/src/main/java/weka/gui/PackageManager.java
+
+Now keeps download and refresh progress on one line
+------------------------------------------------------------------------
+r13618 | fracpete | 2016-11-22 12:58:41 +1300 (Tue, 22 Nov 2016) | 1 line
+Changed paths:
+   M /branches/stable-3-6/weka/src/main/java/weka/filters/unsupervised/attribute/PartitionedMultiFilter.java
+   M /branches/waikato/weka/src/main/java/weka/filters/unsupervised/attribute/PartitionedMultiFilter.java
+   M /trunk/weka/src/main/java/weka/filters/unsupervised/attribute/PartitionedMultiFilter.java
+
+now handles string and relation-valued class attributes
+------------------------------------------------------------------------
+r13619 | fracpete | 2016-11-22 13:06:44 +1300 (Tue, 22 Nov 2016) | 1 line
+Changed paths:
+   M /branches/stable-3-6/weka/src/main/java/weka/filters/unsupervised/attribute/PartitionedMultiFilter.java
+   M /branches/waikato/weka/src/main/java/weka/filters/unsupervised/attribute/PartitionedMultiFilter.java
+   M /trunk/weka/src/main/java/weka/filters/unsupervised/attribute/PartitionedMultiFilter.java
+
+proper handling of missing values
+------------------------------------------------------------------------
+r13628 | mhall | 2016-11-26 20:25:05 +1300 (Sat, 26 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/Data.java
+
+Now automatically sets the StepManager.CON_AUX_DATA_IS_INCREMENTAL flag for all 'standard' incremental connections types
+------------------------------------------------------------------------
+r13635 | mhall | 2016-11-26 20:37:24 +1300 (Sat, 26 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageClassLoaderManager.java
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageLibIsolatingClassLoader.java
+
+Fixed a bug in the getResources() method that prevented multiple resources from being found correctly
+------------------------------------------------------------------------
+r13639 | mhall | 2016-11-26 22:28:36 +1300 (Sat, 26 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/ClassAssignerStepEditorDialog.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Filter.java
+
+Fixed a bug in the ClassAssignerStepEditorDialog that caused a npe in the case where the structure of the upstream data can't be determined prior to runtime. Fixed a further npe in the Filter step
+------------------------------------------------------------------------
+r13661 | mhall | 2016-11-29 21:19:27 +1300 (Tue, 29 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/EnumHelper.java
+   M /branches/waikato/weka/src/main/java/weka/core/Option.java
+
+Option.setOptions() now handles enums. EnumHelper now uses WekaPackageClassLoaderManager.forName
+------------------------------------------------------------------------
+r13665 | mhall | 2016-11-30 09:45:31 +1300 (Wed, 30 Nov 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+
+loaded/trained classifier instances header was not getting set to null in stepInit() - fixed
+------------------------------------------------------------------------
+r13672 | mhall | 2016-12-01 14:12:24 +1300 (Thu, 01 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/JSONFlowUtils.java
+
+Now prints a warning and continues when encountering a property that can't be set on a loaded component
+------------------------------------------------------------------------
+r13679 | mhall | 2016-12-01 15:03:33 +1300 (Thu, 01 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/LegacyFlowLoader.java
+
+Added some extra code as a last ditch attempt to find a new Knowledge Flow implementation of a legacy component
+------------------------------------------------------------------------
+r13685 | mhall | 2016-12-01 16:32:59 +1300 (Thu, 01 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/BaseExecutionEnvironment.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/SingleThreadedExecution.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/StepManager.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/StepManagerImpl.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/StepTask.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/BaseStep.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+
+Knowledge Flow now has a executer service that uses a single worker thread. This can be used to execute Steps and StepTasks in the case where there must only be one copy of said Step/Task executing at any one time in the JVM. One example might be a classifier implemented using Spark, because Spark only allows one SparkContext to be active at any one time. Steps can indicate that they are to run in this executor service by using the SingleThreadedExecution class annotation. Alternatively, they may call getStepManager().setStepMustRunSingleThreaded(true) at initialization.
+------------------------------------------------------------------------
+r13693 | mhall | 2016-12-04 20:27:19 +1300 (Sun, 04 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/scripting/Groovy.java
+   M /branches/waikato/weka/src/main/java/weka/gui/GUIChooserApp.java
+
+Changes Groovy.java and GUIChooserApp.java to enable groovy console to work under new classloader scheme
+------------------------------------------------------------------------
+r13703 | mhall | 2016-12-05 10:33:15 +1300 (Mon, 05 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/BaseStep.java
+
+Fixed a bug that could cause Knowledge Flow files to fail to load. This was inadvertently introduced with the single threaded executor addition
+------------------------------------------------------------------------
+r13707 | mhall | 2016-12-05 11:44:09 +1300 (Mon, 05 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/DefaultPackageManager.java
+
+Added a mechanism to handle HTTP redirects for dowloaded resources
+------------------------------------------------------------------------
+r13718 | mhall | 2016-12-07 12:16:33 +1300 (Wed, 07 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/DefaultPackageManager.java
+
+Now tries http instead of https (if needed) for original download URLs (not just if a redirect is generated by the server).
+------------------------------------------------------------------------
+r13723 | mhall | 2016-12-07 12:27:21 +1300 (Wed, 07 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/packageManagement/DefaultPackageManager.java
+
+Removed a stray line of debugging output
+------------------------------------------------------------------------
+r13727 | mhall | 2016-12-07 12:30:01 +1300 (Wed, 07 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/DictionaryBuilder.java
+
+Now works properly if class is numeric.
+------------------------------------------------------------------------
+r13733 | mhall | 2016-12-07 20:50:51 +1300 (Wed, 07 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/GUIChooserApp.java
+
+GUIChooser now keeps a list of all open JFrames. Arbitrary many Explorers, etc., can be opened.
+------------------------------------------------------------------------
+r13747 | mhall | 2016-12-08 16:42:39 +1300 (Thu, 08 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageManager.java
+
+Installing a package from the command line when when no explicit version number has been given now installs the latest version that is compatible with the installed Weka version (instead of just the very latest version).
+------------------------------------------------------------------------
+r13752 | mhall | 2016-12-08 19:46:51 +1300 (Thu, 08 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/PropertyPanel.java
+
+Can now copy configuration stored in generic array editor to clipboard and paste it back.
+------------------------------------------------------------------------
+r13755 | mhall | 2016-12-08 19:52:10 +1300 (Thu, 08 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/ResultHistoryPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/AttributeSummarizerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/CostBenefitAnalysisInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/DataVisualizerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/GraphViewerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/ImageViewerInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/ScatterPlotMatrixInteractiveView.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/TextViewerInteractiveView.java
+
+Can now delete multiple entries in one go in the ResultHistoryPanel
+------------------------------------------------------------------------
+r13775 | mhall | 2016-12-09 13:07:53 +1300 (Fri, 09 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Utils.java
+   M /branches/waikato/weka/src/main/java/weka/gui/PropertyPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/experiment/AlgorithmListPanel.java
+
+Fixed a couple of bugs in latest mods to PropertyPanel. Added support for multiple selections when copying and adding configurations in the AlgorithmListPanel. Changed forName() method in Utils so that it now also works when array class name is used.
+------------------------------------------------------------------------
+r13810 | mhall | 2016-12-09 17:42:37 +1300 (Fri, 09 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Utils.java
+
+WekaPackageClassLoaderManager.forName() is now used instead of Class.forName() in forName() in Utils.
+------------------------------------------------------------------------
+r13813 | mhall | 2016-12-09 17:43:32 +1300 (Fri, 09 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageClassLoaderManager.java
+
+getLoaderForClass() now takes care of array types as well.
+------------------------------------------------------------------------
+r13816 | mhall | 2016-12-09 17:52:08 +1300 (Fri, 09 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericArrayEditor.java
+   M /branches/waikato/weka/src/main/java/weka/gui/GenericObjectEditor.java
+   M /branches/waikato/weka/src/main/java/weka/gui/experiment/AlgorithmListPanel.java
+
+Various changes from Eibe
+------------------------------------------------------------------------
+r13822 | mhall | 2016-12-09 22:44:37 +1300 (Fri, 09 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageClassLoaderManager.java
+
+getLoaderForClass() now checks the weka classloader and globally visible package classes first before searching in package's lib directories
+------------------------------------------------------------------------
+r13826 | mhall | 2016-12-10 22:41:43 +1300 (Sat, 10 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/PackageManager.java
+
+Load status check for installed packages was being done based on the latest version of a package instead of the installed version. This was resulting in the GUI package manager stating that some packages had not been loaded, when, in fact, they had
+------------------------------------------------------------------------
+r13832 | mhall | 2016-12-11 20:41:25 +1300 (Sun, 11 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/TextViewer.java
+
+Fixed data pass through in TextViewer
+------------------------------------------------------------------------
+r13835 | mhall | 2016-12-11 20:45:26 +1300 (Sun, 11 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Loader.java
+
+Loader now prints full path to the log (with variables substituted) for file-based loaders
+------------------------------------------------------------------------
+r13844 | mhall | 2016-12-12 08:45:46 +1300 (Mon, 12 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageManager.java
+
+Now checks the disbabled flag during install. Previously was only checking this at package load
+------------------------------------------------------------------------
+r13848 | mhall | 2016-12-12 09:22:24 +1300 (Mon, 12 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/PackageManager.java
+
+Now checks the disbabled flag during install. Previously was only checking this at package load
+------------------------------------------------------------------------
+r13856 | mhall | 2016-12-12 11:16:02 +1300 (Mon, 12 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/PackageManager.java
+
+Can now turn off the displaying of special installation instructions when installing a package
+------------------------------------------------------------------------
+r13867 | mhall | 2016-12-12 15:33:25 +1300 (Mon, 12 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/classifiers/trees/RandomTree.java
+
+Removed an unneeded import
+------------------------------------------------------------------------
+r13871 | mhall | 2016-12-12 16:07:02 +1300 (Mon, 12 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageManager.java
+   M /branches/waikato/weka/src/main/java/weka/gui/PackageManager.java
+
+Added a new method to check if a package has been loaded in WekaPackageManager. This now checks to see if a package classloader is in place for the named package. PackageManager now uses the new method to check whether a package has been loaded - previously it was reporting a succesful load status for some packages that failed the integrity check
+------------------------------------------------------------------------
+r13877 | mhall | 2016-12-12 21:26:34 +1300 (Mon, 12 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/SerializationHelper.java
+   M /branches/waikato/weka/src/main/java/weka/core/SerializedObject.java
+
+Fixed (hopefully) deserialization problems involving third-party classes
+------------------------------------------------------------------------
+r13881 | mhall | 2016-12-13 11:37:03 +1300 (Tue, 13 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageManager.java
+   M /branches/waikato/weka/src/main/java/weka/gui/PackageManager.java
+
+Now shows the latest compatible version of a package available in the installed and all lists as well as the available list
+------------------------------------------------------------------------
+r13885 | mhall | 2016-12-13 15:22:37 +1300 (Tue, 13 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/WekaPackageManager.java
+
+Changed some outputs of '[Weka]' to [WekaPackageManager]' in WekaPackageManager
+------------------------------------------------------------------------
+r13891 | mhall | 2016-12-15 16:51:32 +1300 (Thu, 15 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/DataGridStepEditorDialog.java
+
+Now makes columns optimal width
+------------------------------------------------------------------------
+r13895 | mhall | 2016-12-16 10:23:07 +1300 (Fri, 16 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Environment.java
+   M /branches/waikato/weka/src/main/java/weka/gui/beans/templates/templates.props
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/GetDataFromResult.gif
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/Job.gif
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/SetPropertiesFromEnvironment.gif
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/SetVariables.gif
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/StorePropertiesInEnvironment.gif
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/WriteDataToResult.gif
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/icons/WriteWekaLog.gif
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/JobStepEditorDialog.java
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/SetVariablesStepEditorDialog.java
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/steps/StorePropertiesInEnvironmentStepEditorDialog.java
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/templates/jobExample.kf
+   A /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/templates/jobSubFlow.kf
+   M /branches/waikato/weka/src/main/java/weka/gui/knowledgeflow/templates/templates.props
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/Data.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/FlowExecutor.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/FlowRunner.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/JobEnvironment.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/StepManager.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Classifier.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/GetDataFromResult.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/Job.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/SetPropertiesFromEnvironment.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/SetVariables.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/StorePropertiesInEnvironment.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/TextViewer.java
+   A /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/WriteDataToResult.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/WriteWekaLog.java
+   M /branches/waikato/weka/src/main/java/weka/knowledgeflow/steps/steps.props
+
+Added a bunch of steps to support running and parameterizing a sub-flow as a job in the KnowledgeFlow
+------------------------------------------------------------------------
+r13899 | mhall | 2016-12-16 16:14:23 +1300 (Fri, 16 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/core/Utils.java
+
+Added a new readProperties() method to Utils that takes a class loader to obtain the properties from. The original readProperties() method used the class loader that loaded the Utils class to find properties, which was causing problems for some plugin packages under the new class loading scheme
+------------------------------------------------------------------------
+r13904 | mhall | 2016-12-18 21:20:07 +1300 (Sun, 18 Dec 2016) | 1 line
+Changed paths:
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/AssociationsPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/AttributeSelectionPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/ClassifierPanel.java
+   M /branches/waikato/weka/src/main/java/weka/gui/explorer/ClustererPanel.java
+
+More improvements to multi-selection in the ResultHistoryPanel
+------------------------------------------------------------------------
