@@ -35,7 +35,7 @@ import org.rosuda.javaGD.JGDPanel;
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
  * @author Eibe Frank
- * @version $Revision$
+ * @version $Revision: 14954 $
  */
 public class JavaGDOffscreenRenderer extends JGDPanel implements JavaGDNotifier {
 

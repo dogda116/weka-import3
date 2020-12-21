@@ -62,7 +62,7 @@ import org.rosuda.REngine.REngineOutputInterface;
  *
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
  * @author Eibe Frank
- * @version $Revision$
+ * @version $Revision: 15631 $
  */
 public class RSessionImpl implements RSessionAPI, REngineCallbacks,
                                      REngineOutputInterface {

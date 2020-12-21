@@ -38,7 +38,7 @@ import org.rosuda.REngine.RList;
  * Static utility methods for pushing/pulling data to/from R.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @Version $Revision$
+ * @Version $Revision: 14484 $
  */
 public class RUtils {
 

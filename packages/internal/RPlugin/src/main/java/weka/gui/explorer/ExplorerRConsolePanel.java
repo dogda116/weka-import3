@@ -37,7 +37,7 @@ import weka.gui.explorer.Explorer.LogHandler;
  * Explorer plugin providing the r console and JavaGD graphics display.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 10426 $
  */
 public class ExplorerRConsolePanel extends JPanel implements ExplorerPanel,
   LogHandler {

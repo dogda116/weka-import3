@@ -47,7 +47,7 @@ import org.rosuda.REngine.REngineException;
  * https://code.google.com/p/snappy-java/.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 15546 $
  */
 public class RSession {
 

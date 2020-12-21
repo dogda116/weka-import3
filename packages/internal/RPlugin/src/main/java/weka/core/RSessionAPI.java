@@ -29,7 +29,7 @@ import org.rosuda.REngine.REngineException;
  * Interface to an RSession.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 10582 $
  */
 public interface RSessionAPI {
 

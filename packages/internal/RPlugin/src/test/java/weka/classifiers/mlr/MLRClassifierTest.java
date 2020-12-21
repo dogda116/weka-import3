@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  * java weka.classifiers.functions.MLRClassifierTest
  *
  * @author Mark Hall
- * @version $Revision$
+ * @version $Revision: 10426 $
  */
 public class MLRClassifierTest extends AbstractClassifierTest {
 

@@ -94,7 +94,7 @@ import weka.gui.visualize.VisualizeUtils;
  * evaluating R commands.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 15631 $
  */
 public class JavaGDConsolePanel extends JPanel implements JavaGDListener {
 
@@ -107,7 +107,7 @@ public class JavaGDConsolePanel extends JPanel implements JavaGDListener {
    * Implements a logger for status messages only.
    * 
    * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
-   * @version $Revision$
+   * @version $Revision: 15631 $
    */
   private class StatusOnlyLogger extends JPanel implements Logger {
 
@@ -149,7 +149,7 @@ public class JavaGDConsolePanel extends JPanel implements JavaGDListener {
    * Inner class for displaying a BufferedImage.
    * 
    * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
-   * @version $Revision$
+   * @version $Revision: 15631 $
    */
   private class ImageDisplayer extends JPanel {
 
@@ -233,7 +233,7 @@ public class JavaGDConsolePanel extends JPanel implements JavaGDListener {
    * is beyond the prompt position
    * 
    * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
-   * @version $Revision$
+   * @version $Revision: 15631 $
    */
   private class Filter extends DocumentFilter {
     @Override

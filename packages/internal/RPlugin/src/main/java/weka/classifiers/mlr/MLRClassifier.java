@@ -35,7 +35,7 @@ import java.util.Enumeration;
  * so has to be injected into the root class loader.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 15548 $
  */
 public class MLRClassifier extends RandomizableClassifier
   implements OptionHandler, CapabilitiesHandler, BatchPredictor,
@@ -983,7 +983,7 @@ public class MLRClassifier extends RandomizableClassifier
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision$");
+    return RevisionUtils.extract("$Revision: 15548 $");
   }
 
   /**

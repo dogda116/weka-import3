@@ -54,9 +54,9 @@
   </parent>
 
   <scm>
-    <connection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/trunk/packages/internal/DTNB</connection>
-    <developerConnection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/trunk/packages/internal/DTNB</developerConnection>
-    <url>https://svn.cms.waikato.ac.nz/svn/weka/trunk/packages/internal/DTNB</url>
+    <connection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/branches/stable-3-8/packages/internal/DTNB</connection>
+    <developerConnection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/branches/stable-3-8/packages/internal/DTNB</developerConnection>
+    <url>https://svn.cms.waikato.ac.nz/svn/weka/branches/stable-3-8/packages/internal/DTNB</url>
   </scm>
 
   <profiles>
@@ -107,7 +107,7 @@
     <dependency>
       <groupId>nz.ac.waikato.cms.weka</groupId>
       <artifactId>weka-dev</artifactId>
-      <version>[3.7.11,)</version>
+      <version>[3.7.1,)</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

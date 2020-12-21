@@ -45,7 +45,7 @@ import static com.sun.jna.platform.win32.WinReg.HKEY_CURRENT_USER;
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
  * @author Eibe Frank
- * @version $Revision$
+ * @version $Revision: 15612 $
  */
 public class JRILoader {
 

@@ -131,7 +131,7 @@
     <ant antfile="build.xml" dir="${weka}" target="changelog" inheritall="false">
       <property name="date_range" value="{${lastReleaseDate}}:{${TODAY}}"/>
       <property name="release" value="${release}"/>
-      <property name="weka_branch" value="trunk"/>
+      <property name="weka_branch" value="branches/stable-3-8"/>
     </ant>
   </target>
 
@@ -140,7 +140,7 @@
     <ant antfile="build.xml" dir="${weka}" target="packages_changelog" inheritall="false">
       <property name="date_range" value="{${lastReleaseDate}}:{${TODAY}}"/>
       <property name="release" value="${release}"/>
-      <property name="weka_branch" value="trunk"/>
+      <property name="weka_branch" value="branches/stable-3-8"/>
     </ant>
   </target>
 
@@ -366,6 +366,7 @@
     <delete dir="${temp}/nsis"/>
     <mkdir dir="${temp}/weka-${release}/jre"/>
     <untar src="${jre-linux}" dest="${temp}/weka-${release}/jre" compression="gzip"/>
+    <chmod dir="${temp}/weka-${release}/jre" perm="ugo+rx" includes="**/bin/*"/>
     <copy file="${weka}/src/main/scripts/weka.sh" tofile="${temp}/weka-${release}/weka.sh"/>
     <chmod file="${temp}/weka-${release}/weka.sh" perm="ugo+rx"/>
     <echo message="Making weka-${release}-${jvm-vendor}-linux.zip ..."/>

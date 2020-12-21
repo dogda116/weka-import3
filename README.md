@@ -1,12 +1,12 @@
-# WEKA (developer version)
+# WEKA (stable version)
 
 Read-only git mirror of Weka's subversion repository.
 
 ## Source code
 
-The official WEKA source code of the developer version is available from this URL:
+The official WEKA source code of the stable version is available from this URL:
 
-https://svn.cms.waikato.ac.nz/svn/weka/trunk/
+https://svn.cms.waikato.ac.nz/svn/weka/branches/stable-3-8/
 
 ## Contributions/Bug fixes
 

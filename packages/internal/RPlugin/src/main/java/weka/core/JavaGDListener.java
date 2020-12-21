@@ -28,7 +28,7 @@ import java.awt.image.BufferedImage;
  * JavaGD graphics device.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 10426 $
  */
 public interface JavaGDListener {
 

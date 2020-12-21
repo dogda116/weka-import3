@@ -26,7 +26,7 @@ package weka.core;
  * in graphics produced from R via the JavaGD graphics device.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 10426 $
  */
 public interface JavaGDNotifier {
 

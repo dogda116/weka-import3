@@ -25,7 +25,7 @@ package weka.core;
  * Exception for R-related problems.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 10426 $
  */
 public class RSessionException extends Exception {
 

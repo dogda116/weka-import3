@@ -82,7 +82,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
  * @author Eibe Frank
- * @version $Revision$
+ * @version $Revision: 15547 $
  */
 public class MLRClassifierImpl implements BatchPredictor, OptionHandler,
   CapabilitiesHandler, RevisionHandler, Serializable {
@@ -1415,6 +1415,6 @@ public class MLRClassifierImpl implements BatchPredictor, OptionHandler,
    */
   @Override
   public String getRevision() {
-    return RevisionUtils.extract("$Revision$");
+    return RevisionUtils.extract("$Revision: 15547 $");
   }
 }

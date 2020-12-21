@@ -64,7 +64,7 @@ import weka.gui.visualize.VisualizeUtils;
  * Customizer for the RScriptExecutor
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 15546 $
  */
 public class RScriptExecutorCustomizer extends JPanel implements
   BeanCustomizer, EnvironmentHandler, CustomizerCloseRequester {

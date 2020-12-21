@@ -100,7 +100,7 @@ import weka.gui.Logger;
  * Console/Visualize perspective.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 14966 $
  */
 public class RScriptExecutor extends JPanel implements BeanCommon, Visible,
   EventConstraints, Serializable, TrainingSetListener, TestSetListener,
@@ -146,7 +146,7 @@ public class RScriptExecutor extends JPanel implements BeanCommon, Visible,
    * KF component in the KF status area of the log.
    * 
    * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
-   * @version $Revision$
+   * @version $Revision: 14966 $
    */
   protected class LogWrapper implements RLoggerAPI {
     protected Logger m_wrappedLog;

@@ -32,7 +32,7 @@ import org.rosuda.javaGD.GDInterface;
  * <code>Sys.putenv('JAVAGD_CLASS_NAME'='weka/core/WekaJavaGD')</code>
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 10426 $
  */
 public class WekaJavaGD extends GDInterface {
 

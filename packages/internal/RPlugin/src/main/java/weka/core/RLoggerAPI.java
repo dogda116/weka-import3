@@ -26,7 +26,7 @@ package weka.core;
  * messages
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 10426 $
  */
 public interface RLoggerAPI {
   void statusMessage(String message);

@@ -31,7 +31,7 @@ import org.rosuda.JRI.Rengine;
  * ensure that the native library is visible to all child class loaders.
  * 
  * @author Mark Hall (mhall{[at]}pentaho{[dot]}com)
- * @version $Revision$
+ * @version $Revision: 14952 $
  */
 public class JRINativeLoader {
 
