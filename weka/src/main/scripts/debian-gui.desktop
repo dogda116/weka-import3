@@ -5,5 +5,5 @@ Version=1.0
 Type=Application
 Terminal=true
 Icon=${project.name}
-Name=Weka (developer)
+Name=Weka (stable/waikato)
 Exec=/usr/bin/${project.name}-gui

@@ -4,15 +4,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>nz.ac.waikato.cms.weka</groupId>
-  <artifactId>weka-dev</artifactId>
-  <version>3.9.5-SNAPSHOT</version><!-- weka-version -->
+  <artifactId>weka-waikato-stable</artifactId>
+  <version>3.8.4-SNAPSHOT</version><!-- weka-version -->
   <packaging>jar</packaging>
 
-  <name>weka-dev</name>
+  <name>weka-waikato-stable</name>
   <description>The Waikato Environment for Knowledge Analysis (WEKA), a machine
-    learning workbench. This version represents the developer version, the
-    "bleeding edge" of development, you could say. New functionality gets added
-    to this version.
+    learning workbench. This version represents the stable version. Apart from bugfixes, this version
+    does not receive any other breaking updates.
   </description>
   <url>http://www.cs.waikato.ac.nz/ml/weka/</url>
   <organization>
@@ -51,9 +50,9 @@
   </parent>
 
   <scm>
-    <connection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka</connection>
-    <developerConnection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka</developerConnection>
-    <url>https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka</url>
+    <connection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/branches/waikato-3-8/weka</connection>
+    <developerConnection>scm:svn:https://svn.cms.waikato.ac.nz/svn/weka/branches/waikato-3-8/weka</developerConnection>
+    <url>https://svn.cms.waikato.ac.nz/svn/weka/branches/waikato-3-8/weka</url>
   </scm>
 
   <profiles>
@@ -146,7 +145,7 @@
             <artifactId>debian-maven-plugin</artifactId>
             <configuration>
               <packageName>${project.name}</packageName>
-              <packageTitle>Weka (developer version)</packageTitle>
+              <packageTitle>Weka (stable version)</packageTitle>
               <packageVersion>${project.version}</packageVersion>
               <projectUrl>${project.url}</projectUrl>
               <packageDescription>Weka is a collection of machine learning algorithms for data mining tasks.
@@ -209,7 +208,7 @@
             <artifactId>debian-maven-plugin</artifactId>
             <configuration>
               <packageName>${project.name}</packageName>
-              <packageTitle>Weka (developer version)</packageTitle>
+              <packageTitle>Weka (stable version)</packageTitle>
               <packageVersion>${project.version}</packageVersion>
               <projectUrl>${project.url}</projectUrl>
               <packageDescription>Weka is a collection of machine learning algorithms for data mining tasks.
