@@ -74,7 +74,7 @@ public interface OptionHandler {
    *
    * @exception Exception if the object could not be deep copied either
    */
-  static OptionHandler makeCopy_(OptionHandler toCopy) throws Exception {
+  static OptionHandler makeCopy(OptionHandler toCopy) throws Exception {
 
     try {
       return (OptionHandler)Utils.forName(Object.class, toCopy.getClass().getCanonicalName(), toCopy.getOptions());
