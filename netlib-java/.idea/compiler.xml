@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="core" />
+        <module name="netlib-native_system-win-x86_64" />
+        <module name="generator" />
+        <module name="netlib-native_ref-osx-x86_64" />
+        <module name="netlib-native_system-win-i686" />
+        <module name="netlib-native_ref-win-i686" />
+        <module name="netlib-native_system-osx-x86_64" />
+        <module name="netlib-native_ref-win-x86_64" />
+        <module name="native_system-java" />
+        <module name="native_ref-java" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="core" target="1.8" />
+      <module name="generator" target="1.8" />
+      <module name="native_ref" target="1.5" />
+      <module name="native_ref-java" target="1.8" />
+      <module name="native_system" target="1.5" />
+      <module name="native_system-java" target="1.8" />
+      <module name="netlib-java" target="1.8" />
+      <module name="netlib-native_ref-osx-x86_64" target="1.8" />
+      <module name="netlib-native_ref-win-i686" target="1.8" />
+      <module name="netlib-native_ref-win-x86_64" target="1.8" />
+      <module name="netlib-native_system-osx-x86_64" target="1.8" />
+      <module name="netlib-native_system-win-i686" target="1.8" />
+      <module name="netlib-native_system-win-x86_64" target="1.8" />
+      <module name="parent" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/generator/generator.iml" filepath="$PROJECT_DIR$/generator/generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_ref/native_ref.iml" filepath="$PROJECT_DIR$/native_ref/native_ref.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_ref/java/native_ref-java.iml" filepath="$PROJECT_DIR$/native_ref/java/native_ref-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_system/native_system.iml" filepath="$PROJECT_DIR$/native_system/native_system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_system/java/native_system-java.iml" filepath="$PROJECT_DIR$/native_system/java/native_system-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_ref/osx-aarch64/netlib-native_ref-osx-aarch64.iml" filepath="$PROJECT_DIR$/native_ref/osx-aarch64/netlib-native_ref-osx-aarch64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_ref/osx-x86_64/netlib-native_ref-osx-x86_64.iml" filepath="$PROJECT_DIR$/native_ref/osx-x86_64/netlib-native_ref-osx-x86_64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_ref/win-i686/netlib-native_ref-win-i686.iml" filepath="$PROJECT_DIR$/native_ref/win-i686/netlib-native_ref-win-i686.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_ref/win-x86_64/netlib-native_ref-win-x86_64.iml" filepath="$PROJECT_DIR$/native_ref/win-x86_64/netlib-native_ref-win-x86_64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_system/osx-aarch64/netlib-native_system-osx-aarch64.iml" filepath="$PROJECT_DIR$/native_system/osx-aarch64/netlib-native_system-osx-aarch64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_system/osx-x86_64/netlib-native_system-osx-x86_64.iml" filepath="$PROJECT_DIR$/native_system/osx-x86_64/netlib-native_system-osx-x86_64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_system/win-i686/netlib-native_system-win-i686.iml" filepath="$PROJECT_DIR$/native_system/win-i686/netlib-native_system-win-i686.iml" />
+      <module fileurl="file://$PROJECT_DIR$/native_system/win-x86_64/netlib-native_system-win-x86_64.iml" filepath="$PROJECT_DIR$/native_system/win-x86_64/netlib-native_system-win-x86_64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent.iml" filepath="$PROJECT_DIR$/parent.iml" />
+    </modules>
+  </component>
+</project>

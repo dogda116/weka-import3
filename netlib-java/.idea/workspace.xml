@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fb3b0fe9-a2d0-4458-8c7f-78e9c06f3a7d" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1q2rwEBguTP9Ue5WSmmO0z4bm6M" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/native_system" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.23935556" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/native_system" />
+      <recent name="$PROJECT_DIR$/native_ref" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fb3b0fe9-a2d0-4458-8c7f-78e9c06f3a7d" name="Default Changelist" comment="" />
+      <created>1616288764320</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1616288764320</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="793" y="418" key="#Notifications" timestamp="1616625952235">
+      <screen x="48" y="23" width="2000" height="1129" />
+    </state>
+    <state x="793" y="418" key="#Notifications/48.23.2000.1129/2048.23.2560.1417@48.23.2000.1129" timestamp="1616625952235" />
+    <state x="549" y="169" key="#Project_Structure" timestamp="1616381447830">
+      <screen x="49" y="23" width="1999" height="1129" />
+    </state>
+    <state x="549" y="169" key="#Project_Structure/49.23.1999.1129/2048.23.2560.1417@49.23.1999.1129" timestamp="1616381447830" />
+    <state x="525" y="249" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1616300294891">
+      <screen x="49" y="23" width="1999" height="1129" />
+    </state>
+    <state x="525" y="249" key="#com.intellij.execution.impl.EditConfigurationsDialog/49.23.1999.1129/2048.23.2560.1417@49.23.1999.1129" timestamp="1616300294891" />
+    <state x="874" y="310" key="#com.intellij.ide.util.MemberChooser" timestamp="1616296750750">
+      <screen x="49" y="23" width="1999" height="1129" />
+    </state>
+    <state x="874" y="310" key="#com.intellij.ide.util.MemberChooser/49.23.1999.1129/2048.23.2560.1417@49.23.1999.1129" timestamp="1616296750750" />
+    <state x="599" y="249" key="Maven.ArtifactSearchDialog" timestamp="1616296715826">
+      <screen x="49" y="23" width="1999" height="1129" />
+    </state>
+    <state x="599" y="249" key="Maven.ArtifactSearchDialog/49.23.1999.1129/2048.23.2560.1417@49.23.1999.1129" timestamp="1616296715826" />
+    <state x="549" y="169" key="SettingsEditor" timestamp="1616381120061">
+      <screen x="49" y="23" width="1999" height="1129" />
+    </state>
+    <state x="549" y="169" key="SettingsEditor/49.23.1999.1129/2048.23.2560.1417@49.23.1999.1129" timestamp="1616381120061" />
+    <state x="762" y="342" width="608" height="490" key="find.popup" timestamp="1616302091082">
+      <screen x="49" y="23" width="1999" height="1129" />
+    </state>
+    <state x="762" y="342" width="608" height="490" key="find.popup/49.23.1999.1129/2048.23.2560.1417@49.23.1999.1129" timestamp="1616302091082" />
+    <state x="695" y="210" key="new project wizard" timestamp="1616380527221">
+      <screen x="49" y="23" width="1999" height="1129" />
+    </state>
+    <state x="695" y="210" key="new project wizard/49.23.1999.1129/2048.23.2560.1417@49.23.1999.1129" timestamp="1616380527221" />
+  </component>
+</project>

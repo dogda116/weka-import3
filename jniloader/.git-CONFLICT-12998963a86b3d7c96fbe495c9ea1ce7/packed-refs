@@ -1,0 +1,6 @@
+# pack-refs with: peeled fully-peeled sorted 
+b5bfbf8ff7d2fedc2c441a307497ef9c4f1b5d0e refs/remotes/origin/master
+3aec492cce15754872d08d370fa0abc4f694cbf4 refs/tags/jniloader-1.0
+^59436f5473cc88c6cd479864e92427a75a9566fa
+2be253593834a6c0e27fa44a642bff55a51c3b14 refs/tags/jniloader-1.1
+^d9c4eb7c554138d1f20392b07bd471a7b0c19c77
